@@ -17,7 +17,8 @@ eleje_egyensulymeret = 46;
 
 var Vec2D = toxi.geom.Vec2D,
 		Line2D = toxi.geom.Line2D,
-		Ray2D = toxi.geom.Ray2D;
+		Ray2D = toxi.geom.Ray2D,
+		Circle = toxi.geom.Circle;
 
 var p1 = new Vec2D(0,0);
 
@@ -62,9 +63,21 @@ var _p17a = p6.add(0, - (hata_egyensulymeret + 1));
 function perpendicularLine(line, pointOnLine) {
 	return pointOnLine.add(line.getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(10))
 }
+function perpendicularLine1(line, pointOnLine) {
+	return pointOnLine.add(line.getDirection().getRotated(toxi.math.mathUtils.radians(-90)).scale(10))
+}
 
 function distance(point1, point2) {
 	return new Line2D(point1, point2).getLength();
+}
+
+function intersection(line1, line2) {
+	return line1.intersectLine(line2).pos;
+}
+
+function lineRight(point, distance) {
+	distance = distance || 100;
+	return new Line2D(point, point.add(distance, 0));
 }
 
 var _p17b = perpendicularLine(l_p1_p9, p16);;
@@ -130,7 +143,7 @@ var p52 = p49.add(- 2.5, 0);
 var p53 = p35.add(new Vec2D(mellkivet + kulcsszam / 4, 0 ));
 
 var csipomeret = csb + 7;
-var p54 = p53.add(csipomeret - new Line2D(p22, p23).getLength(), 0);
+var p54 = p53.add(csipomeret - distance(p22, p23), 0);
 
 var eleje_oldalvonal = new Line2D(p54, new Line2D( perpendicularLine(new Line2D(p20, p21), new Line2D(p20, new Line2D(p20, p21).toRay2D().getPointAtDistance(100)).closestPointTo(p54)), p54).toRay2D().getPointAtDistance(100));
 
@@ -176,9 +189,12 @@ var p71 = p67.add(1, 0);
 
 var p72 = new Line2D(p65, p52).toRay2D().getPointAtDistance(distance(p35, p53));
 
+
 var elejenyitas = kulcsszam / 2;
 var p73 = p34.add(0, elejenyitas);
 var p74 = p73.add(0, distance(p21,p25) +1);
+
+var p72_bottom = intersection(new Line2D(p72, p72.add(0, 100)), new Line2D(p74, p61));
 
 var p61a = new Line2D(p61, p74).intersectLine(_temp_43_65.copy().scale(10)).pos;
 
@@ -186,16 +202,49 @@ var p61a = new Line2D(p61, p74).intersectLine(_temp_43_65.copy().scale(10)).pos;
 var mellnyitas = kulcsszam / 2 + 0.8;
 var p75 = p33.add(0, - mellnyitas);
 
-function intersection(line1, line2) {
-	return line1.intersectLine(line2).pos;
+
+var p76 = p38; // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
+
+var l_76 = perpendicularLine1(new Line2D(p75, p76), p76);
+
+function circleLineIntersect(line, circlecenter, radius, which) {
+	which = which ||  'intersection2';
+	var _p77 = getIntersections([line.a.x, line.a.y], [line.b.x, line.b.y], [circlecenter.x, circlecenter.y, radius]).points[which].coords;
+	return new Vec2D(_p77[0], _p77[1]);
 }
 
-function lineRight(point, distance) {
-	distance = distance || 100;
-	return new Line2D(point, point.add(distance, 0));
-}
+// 45-től eleje-egyensúlyméret + 1 távolságra,
+// a 76-ból induló merőlegest elmetszi valahol fent
+var p77 = circleLineIntersect(new Line2D(p76, l_76), p45, eleje_egyensulymeret + 1);
 
-//var p76 = intersection(lineRight(p75), new Line2D(p39, p40));
+
+// nyakmélység
+var nyakmelyseg = mb / 10 + 3;
+var p78 = new Line2D(p77, p76).toRay2D().getPointAtDistance(nyakmelyseg);
+
+var l_79 = new Line2D(p78, perpendicularLine(new Line2D(p77, p76), p78));
+var p79 = l_79.toRay2D().getPointAtDistance(distance(p15, p16) + 1);
+
+var vallmagassag = kulcsszam + 4;
+var p80 = new Line2D(p77, p45).toRay2D().getPointAtDistance(vallmagassag);
+
+var vallszelesseg = distance(p17, p18) -1;
+var l_80  = perpendicularLine1(new Line2D(p77, p80), p80).scale(10);
+var p81 = circleLineIntersect(new Line2D(p80, l_80), p77, vallszelesseg, 'intersection1');
+
+var segedpont_82 = 0.6;
+var p82 =p81.add(0, 0.6);
+
+var galler_szelesseg = 3;
+var p83 = new Ray2D(p77, new Line2D(p81, p77).toRay2D().getDirection()).getPointAtDistance(galler_szelesseg);
+
+var p85 = new Line2D(p83, p39).toRay2D().getPointAtDistance(distance(p77, p78) - 0.5);
+var p86 = new Line2D(p85, p39).toRay2D().getPointAtDistance(4.5);
+
+
+var p87 = new Line2D(p86, perpendicularLine1(new Line2D(p39, p83), p86)).toRay2D().getPointAtDistance(4.5) // hajtóka legszélesebb pontja
+
+
 
 //-----
 //
@@ -237,7 +286,7 @@ connect(p15, p5, p4, p19, p23, p20, p21, p22, p25, p11, p13, p12, p10, p18, p17,
 
 connect(p65, p71, p62, p60, p59, p56, p58, p54, p61, p61a, p65)
 
-connect(p66, p70, p68, p51, p50, p48, p45, p49, p72, p35, p34a, p84.add(-1.5,0), p75, p42  )
+connect(p77, p82, p42, p66, p70, p68, p51, p50, p48, p45, p49, p72, p72_bottom, p74, p35, p34a, p84.add(-1.5,0), p75, p87, p85, p77 )
 
 function keyhole(point) {
 	s.line(point.x, point.y, (point.x + 2), point.y).attr({strokeWidth: '0.1'})
