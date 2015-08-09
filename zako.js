@@ -20,7 +20,7 @@ var Vec2D = toxi.geom.Vec2D,
 		Ray2D = toxi.geom.Ray2D,
 		Circle = toxi.geom.Circle;
 
-var p1 = new Vec2D(0,0);
+var p1 = new Vec2D();
 
 // HÁTA
 
@@ -88,28 +88,28 @@ var p17 = l_p16_p17b.closestPointTo(_p17a);
 var p18 = new Line2D(p17, p9).toRay2D().getPointAtDistance(vallszelesseg + 1 + 0.5);
 
 var derekbeallitas = 3;
-var p19 = p6.add(new Vec2D(- derekbeallitas, 0));
+var p19 = p6.add(- derekbeallitas, 0);
 
 var aljabeallitas = 4;
-var p20 = p8.add(new Vec2D(- aljabeallitas, 0));
+var p20 = p8.add(- aljabeallitas, 0);
 
 var aljaszelesseg = csb / 10 * 3.5;
 var p21 = new Ray2D(p20.x, p20.y, new Line2D(p19, p20).getDirection().getRotated(toxi.math.mathUtils.radians(90))).getPointAtDistance(aljaszelesseg)
-var p22 = new Line2D(p21, p21.add(new Line2D(p20, p21).getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p7, new Vec2D(p7.add(-100,0)))).pos;
+var p22 = new Line2D(p21, p21.add(new Line2D(p20, p21).getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p7, p7.add(-100,0))).pos;
 var p23 = new Line2D(p20, p19).intersectLine(new Line2D(p7, p22)).pos;
-var p24 = new Line2D(p21, p21.add(new Line2D(p20, p21).getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p6, new Vec2D(p6.add(-100,0)))).pos;
-var p25 = p24.add(new Vec2D(1, 0));
+var p24 = new Line2D(p21, p21.add(new Line2D(p20, p21).getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p6, p6.add(-100,0))).pos;
+var p25 = p24.add(1, 0);
 //
 // ELEJE
-var p33 = p3.add(new Vec2D(- (mb + 25), 0));
-var p34 = p6.add(new Vec2D(- (mb + 25), 0));
-var p35 = p7.add(new Vec2D(- (mb + 25), 0));
+var p33 = p3.add(- (mb + 25), 0);
+var p34 = p6.add(- (mb + 25), 0);
+var p35 = p7.add(- (mb + 25), 0);
 
 var derekszelesseg = db / 10 * 5
-var p36 = p33.add(new Vec2D(derekszelesseg, 0));
-var p37 = p36.add(new Vec2D(0, - kulcsszam));
-var p38 = p36.add(new Vec2D(- (derekszelesseg / 2 + kulcsszam / 2), 0));
-var p39 = p38.add(new Vec2D(- (mb / 10 * 2), 0)) // ebben az esetben a 33 és a 39 pont megegyezik
+var p36 = p33.add(derekszelesseg, 0);
+var p37 = p36.add(0, - kulcsszam);
+var p38 = p36.add(- (derekszelesseg / 2 + kulcsszam / 2), 0);
+var p39 = p38.add(- (mb / 10 * 2), 0) // ebben az esetben a 33 és a 39 pont megegyezik
 
 var mellszelesseg = mb / 10 * 4 + 4;
 var p40 = new Ray2D(p39.x, p39.y, new Line2D(p39, p37).getDirection()).getPointAtDistance(mellszelesseg)
@@ -118,14 +118,14 @@ var p41 = new Line2D(p40, p40.add(new Line2D(p37, p40).getDirection().getRotated
 
 var p42 = new Ray2D(p40.x, p40.y, new Line2D(p37, p40).getDirection().getRotated(toxi.math.mathUtils.radians(-90))).getPointAtDistance(3) // ujja illeszkedési pont
 
-var p43 = p41.add(new Vec2D(5, 0)); // kis oldalvarrás helye
+var p43 = p41.add(5, 0); // kis oldalvarrás helye
 
 var honaljszelesseg = mb / 10 * 2.5 + 3;
-var p44 = p41.add(new Vec2D(honaljszelesseg, 0));
+var p44 = p41.add(honaljszelesseg, 0);
 
 // mellformázó varrás helye
 var mellformazo_varras_helye = db / 10 * 2 + 6;
-var p45 = p34.add(new Vec2D(mellformazo_varras_helye, 0));
+var p45 = p34.add(mellformazo_varras_helye, 0);
 
 var p46 = new Vec2D(p45.x, p3.y);
 
@@ -140,7 +140,7 @@ var p50 =p45.add(mellkivet, 0) // TODO FIXME ez valamilyen szögben van
 var p51 = p49.add(mellkivet -2 + 0.3, 0);
 var p52 = p49.add(- 2.5, 0);
 
-var p53 = p35.add(new Vec2D(mellkivet + kulcsszam / 4, 0 ));
+var p53 = p35.add(mellkivet + kulcsszam / 4, 0 );
 
 var csipomeret = csb + 7;
 var p54 = p53.add(csipomeret - distance(p22, p23), 0);
