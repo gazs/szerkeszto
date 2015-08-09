@@ -4,20 +4,39 @@
 
 	<title></title>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
 
 
-<script src="svg.js" type="text/javascript" charset="utf-8"></script>
-<script src="js-2dmath-browser.js" type="text/javascript" charset="utf-8"></script>
+<script src="snap.svg.js" type="text/javascript" charset="utf-8"></script>
+<script src="toxiclibs.js" type="text/javascript" charset="utf-8"></script>
 
+<style type="text/css" media="all">
+#drawing {
+	height: 100%;
+	width: 100%;
+	fill: #000;
+	stroke: #000;
+}
+svg text {
+	display: none;
+
+	font-size:2px;
+	stroke-width:0.1;
+	font-style: italic;
+	stroke: #000;
+}
+svg g:hover text {
+	display: block;
+}
+</style>
 
 </head>
 <body>
 
-<div id="drawing"></div>
+<svg id="drawing" width=800 height=800></svg>
 
 </body>
 <script src="zako.js"></script>
