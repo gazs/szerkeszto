@@ -324,7 +324,9 @@ draw();
 
 [].forEach.call(document.querySelectorAll('input'), function (input) {
 	input.addEventListener('input', function () {
-		window[input.id] = parseInt(input.value, 10);
+		var value = parseInt(input.value, 10);
+		window[input.id] = value;
+		input.parentNode.querySelector('span').innerHTML = value;
 		draw();
 	});
 });
