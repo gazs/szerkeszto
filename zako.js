@@ -197,7 +197,7 @@ p['40a'] = new Line2D(p[40], p[39]).toRay2D().getPointAtDistance(mb/10);
 p['40b'] = new Line2D(p[40], p[39]).toRay2D().getPointAtDistance(mb/10 + mb/10 + 6);
 
 
-p[57] = eleje_oldalvonal.intersectLine((new Line2D(p[12], p[13])).copy().scale(100)).pos;
+p[57] = eleje_oldalvonal.intersectLine((new Line2D(p[12], p[13])).copy().scale(1000)).pos;
 
 p[59] = p[57].add(0.5, 0);
 p[60] = p[57].add(-0.5, 0);
@@ -288,6 +288,16 @@ p[87] = perpendicularRay(p[83], p[39], p[86]).getPointAtDistance(hajtoka_szeless
 p['87b'] = perpendicularRay(p[39], p[83], p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
 
 
+s.path(`M${p[35].x},${p[35].y}C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`).attr({fill:'transparent'});
+
+//s.path(``);
+var ujjaszelesseg = mb / 10 * 2.5 + 11;
+var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
+s.path(`M${p[66].x},${p[66].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[82].x},${p[82].y}`).attr({fill:'transparent'}) 
+
+s.path(`M${p[62].x},${p[62].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}`).attr({fill:'transparent'}) 
+
+s.path(`M${p[12].x},${p[12].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[18].x},${p[18].y}`).attr({fill:'transparent'}) 
 
 //-----
 //
@@ -341,9 +351,6 @@ connect(p[77], p[82], p[42], p[66], p[70], p[68], p[51], p[50], p[48], p[45], p[
 
 connect(p[85], p['87b'], p[84].add(-1.5,0));
 
-s.path(`M${p[35].x},${p[35].y}C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`).attr({fill:'transparent'});
-
-s.path(``);
 
 function keyhole(point) {
 	s.line(point.x, point.y, (point.x + 2), point.y).attr({strokeWidth: '0.1'})
