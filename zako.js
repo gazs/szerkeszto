@@ -20,6 +20,9 @@ var Vec2D = toxi.geom.Vec2D,
 		Ray2D = toxi.geom.Ray2D,
 		Circle = toxi.geom.Circle;
 
+function drawLine(line) {
+	s.line(line.a.x, line.a.y, line.b.x, line.b.y);
+}
 
 function zako() {
 var tm = testmagassag,
@@ -27,7 +30,7 @@ mb = mellboseg / 2,
 db = derekboseg / 2,
 csb = csipoboseg / 2;
 	//
-	var p = [];
+var p = [];
 
 p[1] = new Vec2D();
 
@@ -35,6 +38,11 @@ p[1] = new Vec2D();
 
 // kulcsszám
 var kulcsszam = db / 10 + ((mb / 10) * 0.5) - 5
+// alacsony = db /10 + mb/10 *0.5 - 1.5
+// nagyhasú = db /10 + mb/10*0.5 - 5
+// sportos = db /10 + mb/10*0.5 - 5
+// magas, kissé hajlott = db /10 + mb/10*0.5 - 5 + 1.5
+//
 
 p[2] = p[1].add(0,  kulcsszam);
 
@@ -45,11 +53,17 @@ p[3] = p[2].add(0,  honaljmelyseg);
 p[4] = p[2].add(0,  honaljmelyseg / 2);
 p[5] = p[2].add(0,  honaljmelyseg / 4);
 p[6] = p[1].add(0,  derekhossza);
+
+
 // csipomelyseg
 var csipomelyseg = tm / 10;
 
 p[7] = p[6].add(0,  csipomelyseg);
 p[8] = p[1].add(0,  zakohossza);
+
+l3 = new Line2D(p[3], p[3].add(-100,0));
+l6 = new Line2D(p[6], p[6].add(-100, 0));
+l7 = new Line2D(p[7], p[7].add(-100, 0))
 
 p[9] = p[2].add(- (hataszelesseg + 1), 0);
 
@@ -64,16 +78,12 @@ p[15] = l_p1_p9.closestPointTo(p[5]);
 
 // nyakszélesség
 var nyakszelesseg = mb / 10 + 3.5;
-//var p[16] = p[1].add(l_p[1]_p[9].toRay2D().getPointAtDistance(nyakszelesseg));
 p[16] = new Line2D(p[1], p[9]).toRay2D().getPointAtDistance(nyakszelesseg);
 
 var _p17a = p[6].add(0, - (hata_egyensulymeret + 1));
 
 function perpendicularLine(line, pointOnLine) {
 	return pointOnLine.add(line.getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(10))
-}
-function perpendicularLine1(line, pointOnLine) {
-	return pointOnLine.add(line.getDirection().getRotated(toxi.math.mathUtils.radians(-90)).scale(10))
 }
 
 function distance(point1, point2) {
@@ -102,32 +112,51 @@ var aljabeallitas = 4;
 p[20] = p[8].add(- aljabeallitas, 0);
 
 var aljaszelesseg = csb / 10 * 3.5;
-p[21] = new Ray2D(p[20].x, p[20].y, new Line2D(p[19], p[20]).getDirection().getRotated(toxi.math.mathUtils.radians(90))).getPointAtDistance(aljaszelesseg)
-p[22] = new Line2D(p[21], p[21].add(new Line2D(p[20], p[21]).getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p[7], p[7].add(-100,0))).pos;
-p[23] = new Line2D(p[20], p[19]).intersectLine(new Line2D(p[7], p[22])).pos;
-p[24] = new Line2D(p[21], p[21].add(new Line2D(p[20], p[21]).getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p[6], p[6].add(-100,0))).pos;
-p[25] = p[24].add(1, 0);
+
+
+function perpendicularRay(line_part_1, line_part_2, point_on_line) {
+	return new Line2D(point_on_line, perpendicularLine(new Line2D(line_part_1, line_part_2), point_on_line)).toRay2D();
+}
+// merőleges a 20-19 szakaszra, a 20 pontból, `aljaszelesseg` hosszú
+
+p[21] = perpendicularRay(p[19], p[20], p[20]).getPointAtDistance(aljaszelesseg);
+
+
+l22 = perpendicularRay(p[20], p[21], p[21]).toLine2DWithPointAtDistance(100);
+
+p[22] = intersection(l7, l22);
+
+p[23] = intersection(new Line2D(p[20], p[19]), l7);
+
+
+
+p[24] = intersection(l6, l22);
+
+var hat_karcsusitas = 1;
+p[25] = p[24].add(hat_karcsusitas, 0);
 //
 // ELEJE
-p[33] = p[3].add(- (mb + 25), 0);
-p[34] = p[6].add(- (mb + 25), 0);
-p[35] = p[7].add(- (mb + 25), 0);
 
-var derekszelesseg = db / 10 * 5
+var eleje_tavolsag = 25;
+p[33] = p[3].add(- (mb + eleje_tavolsag), 0);
+p[34] = p[6].add(- (mb + eleje_tavolsag), 0);
+p[35] = p[7].add(- (mb + eleje_tavolsag), 0);
+
+var derekszelesseg = db / 10 * 5;
 p[36] = p[33].add(derekszelesseg, 0);
 p[37] = p[36].add(0, - kulcsszam);
 p[38] = p[36].add(- (derekszelesseg / 2 + kulcsszam / 2), 0);
 p[39] = p[38].add(- (mb / 10 * 2), 0) // ebben az esetben a 33 és a 39 pont megegyezik
 
 var mellszelesseg = mb / 10 * 4 + 4;
-p[40] = new Ray2D(p[39].x, p[39].y, new Line2D(p[39], p[37]).getDirection()).getPointAtDistance(mellszelesseg)
+p[40] = new Line2D(p[39], p[37]).toRay2D().getPointAtDistance(mellszelesseg);
 
 p[41] = new Line2D(p[40], p[40].add(new Line2D(p[37], p[40]).getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p[3], p[36])).pos;
 
 p[42] = new Ray2D(p[40].x, p[40].y, new Line2D(p[37], p[40]).getDirection().getRotated(toxi.math.mathUtils.radians(-90))).getPointAtDistance(3) // ujja illeszkedési pont
 
-p[43] = p[41].add(5, 0); // kis oldalvarrás helye
-
+var kis_oldalvarras = 5;
+p[43] = p[41].add(kis_oldalvarras, 0);
 var honaljszelesseg = mb / 10 * 2.5 + 3;
 p[44] = p[41].add(honaljszelesseg, 0);
 
@@ -144,8 +173,10 @@ p[48] = p[47].add(-0.5, 0); // segédpont
 p[49] = p[47].add(0, (p[8].y - p[46].y) / 2 + 3);
 
 var mellkivet = 3;
-p[50] =p[45].add(mellkivet, 0) // TODO FIXME ez valamilyen szögben van
-p[51] = p[49].add(mellkivet -2 + 0.3, 0);
+p[50] =p[45].add(mellkivet - 2, 0) // TODO FIXME ez valamilyen szögben van
+
+
+p[51] = p[49].add(mellkivet - 2 + 0.3, 0);
 p[52] = p[49].add(- 2.5, 0);
 
 p[53] = p[35].add(mellkivet + kulcsszam / 4, 0 );
@@ -153,10 +184,12 @@ p[53] = p[35].add(mellkivet + kulcsszam / 4, 0 );
 var csipomeret = csb + 7;
 p[54] = p[53].add(csipomeret - distance(p[22], p[23]), 0);
 
-var eleje_oldalvonal = new Line2D(p[54], new Line2D( perpendicularLine(new Line2D(p[20], p[21]), new Line2D(p[20], new Line2D(p[20], p[21]).toRay2D().getPointAtDistance(100)).closestPointTo(p[54])), p[54]).toRay2D().getPointAtDistance(100));
 
-p[55] = eleje_oldalvonal.intersectLine(new Line2D(p[6], p[34])).pos;
-p[56] = eleje_oldalvonal.intersectLine(new Line2D(p[3], p[33])).pos;
+p61a = (new Line2D(p[20], p[21]).copy().scale(10)).closestPointTo(p[54]);
+var eleje_oldalvonal = new Line2D(p61a, p[54]).copy().scale(10);
+
+p[55] = eleje_oldalvonal.intersectLine(l6).pos;
+p[56] = eleje_oldalvonal.intersectLine(l3).pos;
 
 //kihajtó
 p['33a'] = p[33].add(0, mb /10 * 0.5);
@@ -166,11 +199,12 @@ p['40b'] = new Line2D(p[40], p[39]).toRay2D().getPointAtDistance(mb/10 + mb/10 +
 
 p[57] = eleje_oldalvonal.intersectLine((new Line2D(p[12], p[13])).copy().scale(100)).pos;
 
-p[60] = p[59] = p[57];
+p[59] = p[57].add(0.5, 0);
+p[60] = p[57].add(-0.5, 0);
 
 p[58] = p[55].add(-1, 0); // karcsúsítás TODO hiányzik a simából
 
-p[61] = new Line2D(p[58], p[54]).toRay2D().getPointAtDistance(distance(p[21], p[25])); 
+p[61] = new Line2D(p[58], p[54]).toRay2D().getPointAtDistance(distance(p[21], p[25]));
 p[62] = p[43].add(distance(p[44], p[56]), 0);
 p[63] = p[43].add(distance(p[44], p[56]) / 3, 0);
 
@@ -210,9 +244,9 @@ var mellnyitas = kulcsszam / 2 + 0.8;
 p[75] = p[33].add(0, - mellnyitas);
 
 
-p[76] = p[38]; // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
+p[76] = p[38].add(0, -1.5); // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
 
-var l_76 = perpendicularLine1(new Line2D(p[75], p[76]), p[76]);
+var l_76 = perpendicularLine(new Line2D(p[76], p[75]), p[76]);
 
 function circleLineIntersect(line, circlecenter, radius, which) {
 	which = which ||  'intersection2';
@@ -236,7 +270,7 @@ var vallmagassag = kulcsszam + 4;
 p[80] = new Line2D(p[77], p[45]).toRay2D().getPointAtDistance(vallmagassag);
 
 var vallszelesseg1 = vallszelesseg + 1 + 0.5 -1; //distance(p[17], p[18]) -1;
-var l_80  = perpendicularLine1(new Line2D(p[77], p[80]), p[80]).scale(10);
+var l_80  = perpendicularLine(new Line2D(p[80], p[77]), p[80]).scale(10);
 p[81] = circleLineIntersect(new Line2D(p[80], l_80), p[77], vallszelesseg, 'intersection1');
 
 var segedpont_82 = 0.6;
@@ -249,7 +283,9 @@ p[85] = new Line2D(p[83], p[39]).toRay2D().getPointAtDistance(distance(p[77], p[
 p[86] = new Line2D(p[85], p[39]).toRay2D().getPointAtDistance(4.5);
 
 
-p[87] = new Line2D(p[86], perpendicularLine1(new Line2D(p[39], p[83]), p[86])).toRay2D().getPointAtDistance(4.5) // hajtóka legszélesebb pontja
+var hajtoka_szelesseg = 4.5;
+p[87] = perpendicularRay(p[83], p[39], p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
+p['87b'] = perpendicularRay(p[39], p[83], p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
 
 
 
@@ -273,14 +309,15 @@ s.clear();
 
 var points = zako();
 var p = points;
+window.p = points;
 
 var point;
-for (point in points) {
-	if (points[point]) {
-		var point = points[point];
+for (key in points) {
+	if (points[key]) {
+		var point = points[key];
 		s.group(
-			s.circle(point.x, point.y, 0.1)
-			//s.text(point.x, point.y, key)
+			s.circle(point.x, point.y, 0.1),
+			s.text(point.x, point.y, key)
 		)
 	}
 }
@@ -300,7 +337,13 @@ connect(p[15], p[5], p[4], p[19], p[23], p[20], p[21], p[22], p[25], p[11], p[13
 
 connect(p[65], p[71], p[62], p[60], p[59], p[56], p[58], p[54], p[61], p['61a'], p[65])
 
-connect(p[77], p[82], p[42], p[66], p[70], p[68], p[51], p[50], p[48], p[45], p[49], p[72], p['72_bottom'], p[74], p[35], p['34a'], p[84].add(-1.5,0), p[75], p[87], p[85], p[77] )
+connect(p[77], p[82], p[42], p[66], p[70], p[68], p[51], p[50], p[48], p[45], p[49], p[72], p['72_bottom'], p[74], p[35], p['34a'], p[84].add(-1.5,0), p[87], p[85], p[77] )
+
+connect(p[85], p['87b'], p[84].add(-1.5,0));
+
+s.path(`M${p[35].x},${p[35].y}C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`).attr({fill:'transparent'});
+
+s.path(``);
 
 function keyhole(point) {
 	s.line(point.x, point.y, (point.x + 2), point.y).attr({strokeWidth: '0.1'})
@@ -308,12 +351,18 @@ function keyhole(point) {
 
 function breastpocket(point1, point2) {
 	var breaspocket_height = 1;
-	connect(point1, point2, point2.add(0,-1), point1.add(0,-1)).attr({strokeWidth: 0.1});
+	connect(point1, point2, point2.add(0,-2), point1.add(0,-2)).attr({strokeWidth: 0.1});
 }
 
-keyhole(p[84]);
-keyhole(p[34]);
-keyhole(p[34].add(0, 8));
+
+
+var button1 = p[84];
+var button3 = new Vec2D(p[34].x, p[49].y);
+var button2 = (new Line2D(button1, button3)).getMidPoint();
+
+keyhole(button1);
+keyhole(button2);
+keyhole(button3);
 
 breastpocket(p['40a'], p['40b']);
 
@@ -330,3 +379,5 @@ draw();
 		draw();
 	});
 });
+
+
