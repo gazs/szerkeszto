@@ -283,7 +283,7 @@ p[85] = new Line2D(p[83], p[39]).toRay2D().getPointAtDistance(distance(p[77], p[
 p[86] = new Line2D(p[85], p[39]).toRay2D().getPointAtDistance(4.5);
 
 
-var hajtoka_szelesseg = 4.5;
+var hajtoka_szelesseg = mb / 10 + 3;
 p[87] = perpendicularRay(p[83], p[39], p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
 p['87b'] = perpendicularRay(p[39], p[83], p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
 
