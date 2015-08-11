@@ -138,6 +138,23 @@ function drawLine(line) {
 	s.line(line.a.x, line.a.y, line.b.x, line.b.y);
 }
 
+function perpendicularLine(line, pointOnLine) {
+	return pointOnLine.add(line.getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(10))
+}
+
+function distance(point1, point2) {
+	return new Line2D(point1, point2).getLength();
+}
+
+function intersection(line1, line2) {
+	return line1.intersectLine(line2).pos;
+}
+
+function lineRight(point, distance) {
+	distance = distance || 100;
+	return new Line2D(point, point.add(distance, 0));
+}
+
 function zako() {
 var tm = testmagassag,
 mb = mellboseg / 2,
@@ -196,22 +213,6 @@ p[16] = new Line2D(p[1], p[9]).toRay2D().getPointAtDistance(nyakszelesseg);
 
 var _p17a = p[6].add(0, - (hata_egyensulymeret + 1));
 
-function perpendicularLine(line, pointOnLine) {
-	return pointOnLine.add(line.getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(10))
-}
-
-function distance(point1, point2) {
-	return new Line2D(point1, point2).getLength();
-}
-
-function intersection(line1, line2) {
-	return line1.intersectLine(line2).pos;
-}
-
-function lineRight(point, distance) {
-	distance = distance || 100;
-	return new Line2D(point, point.add(distance, 0));
-}
 
 var _p17b = perpendicularLine(l_p1_p9, p[16]);
 var l_p16_p17b = new Line2D(p[16], _p17b);
@@ -424,7 +425,7 @@ s.path(`M${p[66].x},${p[66].y}
 			 L${p[77].x},${p[77].y}
 			 L${p[85].x},${p[85].y} // TODO nyakív
 			 L${p[87].x},${p[87].y}
-			 L${p[84].x -1.5},${p[84].y}
+			 ${ '' /* L${p[84].x -1.5},${p[84].y} */ }
 			 L${p['34a'].x},${p['34a'].y}
 			 L${p[35].x},${p[35].y}
 			 C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}
@@ -439,7 +440,8 @@ s.path(`M${p[66].x},${p[66].y}
 			 `)
 s.path(`
 			 M${p[85].x},${p[85].y}
-			 L${p[84].x -1.5},${p[84].y}
+			 ${ '' /* L${p[84].x -1.5},${p[84].y} */}
+			 L${p['34a'].x},${p['34a'].y}
 			 L${p['87b'].x},${p['87b'].y}
 			 L${p[85].x},${p[85].y}
 `)
