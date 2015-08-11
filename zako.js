@@ -279,31 +279,84 @@ p[82] =p[81].add(0, 0.6);
 var galler_szelesseg = 3;
 p[83] = new Ray2D(p[77], new Line2D(p[81], p[77]).toRay2D().getDirection()).getPointAtDistance(galler_szelesseg);
 
-p[85] = new Line2D(p[83], p[39]).toRay2D().getPointAtDistance(distance(p[77], p[78]) - 0.5);
-p[86] = new Line2D(p[85], p[39]).toRay2D().getPointAtDistance(4.5);
-
-
 var hajtoka_szelesseg = mb / 10 + 3;
-p[87] = perpendicularRay(p[83], p[39], p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
-p['87b'] = perpendicularRay(p[39], p[83], p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
+var kihajto_alja = p[39];
+
+p[85] = new Line2D(p[83], kihajto_alja).toRay2D().getPointAtDistance(distance(p[77], p[78]) - 0.5);
+p[86] = new Line2D(p[85], kihajto_alja).toRay2D().getPointAtDistance(4.5);
 
 
-s.path(`M${p[35].x},${p[35].y}C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`).attr({fill:'transparent'});
+p[87] = perpendicularRay(p[83], kihajto_alja, p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
+p['87b'] = perpendicularRay(kihajto_alja, p[83], p[86]).getPointAtDistance(hajtoka_szelesseg) // hajtóka legszélesebb pontja
 
-//s.path(``);
-var ujjaszelesseg = mb / 10 * 2.5 + 11;
-var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
-s.path(`M${p[66].x},${p[66].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[82].x},${p[82].y}`).attr({fill:'transparent'}) 
 
-s.path(`M${p[62].x},${p[62].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}`).attr({fill:'transparent'}) 
-
-s.path(`M${p[12].x},${p[12].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[18].x},${p[18].y}`).attr({fill:'transparent'}) 
-
-//-----
-//
 p[84] = p[34].add(0, - 8); // felső gomblyuk helye
 
 p['34a'] = p[34].add(-1.5, 0);
+
+var ujjaszelesseg = mb / 10 * 2.5 + 11;
+var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
+
+
+// első rész
+s.path(`M${p[66].x},${p[66].y}
+			 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[82].x},${p[82].y}
+			 L${p[77].x},${p[77].y}
+			 L${p[85].x},${p[85].y} // TODO nyakív
+			 L${p[87].x},${p[87].y}
+			 L${p[84].x -1.5},${p[84].y}
+			 L${p['34a'].x},${p['34a'].y}
+			 L${p[35].x},${p[35].y}
+			 C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}
+			 L${p[72].x},${p[72].y}
+			 L${p[49].x},${p[49].y}
+			 L${p[48].x},${p[48].y}
+			 L${p[51].x},${p[51].y}
+			 L${p[68].x},${p[68].y}
+			 L${p[70].x},${p[70].y}
+			 L${p[66].x},${p[66].y}
+
+			 `)
+s.path(`
+			 M${p[85].x},${p[85].y}
+			 L${p[84].x -1.5},${p[84].y}
+			 L${p['87b'].x},${p['87b'].y}
+			 L${p[85].x},${p[85].y}
+`)
+
+// oldalrész
+s.path(`M${p[62].x},${p[62].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}
+			 L${p[59].x},${p[59].y}
+			 L${p[56].x},${p[56].y}
+			 L${p[58].x},${p[58].y}
+			 L${p[54].x},${p[54].y}
+			 L${p[61].x},${p[61].y}
+			 L${p['61a'].x},${p['61a'].y}
+			 L${p[65].x},${p[65].y}
+			 L${p[71].x},${p[71].y}
+			 L${p[62].x},${p[62].y}
+			 `).attr({fill:'rgba(0,0,0,0.2)', stroke:'rgba(0,0,0,0.2)'})
+
+
+// hát
+s.path(`M${p[12].x},${p[12].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[18].x},${p[18].y}
+			 L${p[17].x},${p[17].y}
+			 L${p[15].x},${p[15].y} // TODO nyakív
+			 L${p[5].x},${p[5].y}
+			 L${p[4].x},${p[4].y}
+			 L${p[19].x},${p[19].y}
+			 L${p[23].x},${p[23].y}
+			 L${p[20].x},${p[20].y}
+			 L${p[21].x},${p[21].y}
+			 L${p[22].x},${p[22].y}
+			 L${p[25].x},${p[25].y}
+			 L${p[11].x},${p[11].y}
+			 L${p[13].x},${p[13].y}
+			 L${p[12].x},${p[12].y}
+			 `).attr({fill:'rgba(0,0,0,0.2)', stroke:'rgba(0,0,0,0.2)'})
+
+//-----
+//
 
 return p;
 
@@ -343,13 +396,6 @@ function connect() {
 	return s.polyline(Array.prototype.slice.call(arguments).map(function (v) {return [v.x, v.y]}).reduce(flatten)).attr({fill:'rgba(0,0,0,0.2)', stroke:'rgba(0,0,0,0.2)'});
 }
 
-connect(p[15], p[5], p[4], p[19], p[23], p[20], p[21], p[22], p[25], p[11], p[13], p[12], p[10], p[18], p[17], p[15])
-
-connect(p[65], p[71], p[62], p[60], p[59], p[56], p[58], p[54], p[61], p['61a'], p[65])
-
-connect(p[77], p[82], p[42], p[66], p[70], p[68], p[51], p[50], p[48], p[45], p[49], p[72], p['72_bottom'], p[74], p[35], p['34a'], p[84].add(-1.5,0), p[87], p[85], p[77] )
-
-connect(p[85], p['87b'], p[84].add(-1.5,0));
 
 
 function keyhole(point) {
