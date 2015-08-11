@@ -1,20 +1,134 @@
 var testmagassag = 170,
-//tm = testmagassag,
 mellboseg = 100,
-//mb = mellboseg / 2,
 derekboseg = 88,
-//db = derekboseg / 2,
 csipoboseg = 106,
-//csb = csipoboseg / 2,
 derekhossza = 44.5,
 zakohossza = 76,
 hataszelesseg = 22,
 vallszelesseg = 15.5,
 ujjahossza = 78,
-
 hata_egyensulymeret = 47,
 eleje_egyensulymeret = 46;
 
+//alacsony
+//var testmagassag = 160,
+//mellboseg = 100,
+//derekboseg = 88,
+//csipoboseg = 106,
+//derekhossza = 41.5,
+//zakohossza = 72,
+//hataszelesseg = 21,
+//vallszelesseg = 15.5,
+//ujjahossza = 78,
+//hata_egyensulymeret = 44.7,
+//eleje_egyensulymeret = 44.7;
+
+// telt (korpulens)
+//var testmagassag = 170,
+//mellboseg = 106,
+//derekboseg = 106,
+//csipoboseg = 106,
+//derekhossza = 46.5,
+//zakohossza = 76,
+//hataszelesseg = 23, // hátahossza-nak írva
+//vallszelesseg = 16,
+//ujjahossza = 78,
+//hata_egyensulymeret = 49,
+//eleje_egyensulymeret = 48.3;
+
+// nagyhasú
+//var testmagassag = 170,
+//mellboseg = 128,
+//derekboseg = 136,
+//csipoboseg = 140,
+//derekhossza = 47.5,
+//zakohossza = 76,
+//hataszelesseg = 25.5,
+//vallszelesseg = 17.5,
+//ujjahossza = 79,
+//hata_egyensulymeret = 49.2,
+//eleje_egyensulymeret = 49.7;
+//
+
+// karcsú, sportos 
+//var testmagassag = 180,
+//mellboseg = 100,
+//derekboseg = 80,
+//csipoboseg = 106,
+//derekhossza = 46.5,
+//zakohossza = 81,
+//hataszelesseg = 22.5,
+//vallszelesseg = 16,
+//ujjahossza = 81,
+//hata_egyensulymeret = 49.2,
+//eleje_egyensulymeret = 49.2;
+
+// magas, kissé hajlott
+//var testmagassag = 180,
+//mellboseg = 100,
+//derekboseg = 88,
+//csipoboseg = 106,
+//derekhossza = 47.4,
+//zakohossza = 81,
+//hataszelesseg = 23,
+//vallszelesseg = 16,
+//ujjahossza = 81,
+//hata_egyensulymeret = 49.8,
+//eleje_egyensulymeret = 47.8;
+
+// magas, hosszú és vékony nyakú, csapott vállú
+//var testmagassag = 190,
+//mellboseg = 98,
+//derekboseg = 90,
+//csipoboseg = 104,
+//derekhossza = 49.5,
+//zakohossza = 85.5, // "hátahossza"
+//hataszelesseg = 22.5,
+//vallszelesseg = 16.5,
+//ujjahossza = 85.5,
+//hata_egyensulymeret = 51.5,
+//eleje_egyensulymeret = 50;
+
+// erősen feszes
+//var testmagassag = 166,
+//mellboseg = 110,
+//derekboseg = 98,
+//csipoboseg = 110,
+//derekhossza = 41.5,
+//zakohossza = 75, // "hátahossza"
+//hataszelesseg = 22.2,
+//vallszelesseg = 16,
+//ujjahossza = 77.5,
+//hata_egyensulymeret = 44.5,
+//eleje_egyensulymeret = 47.5;
+
+
+// beesett derekú hajlott
+//var testmagassag = 174,
+//mellboseg = 92,
+//derekboseg = 80,
+//csipoboseg = 100,
+//derekhossza = 48,
+//zakohossza = 78, // "hátahossza"
+//hataszelesseg = 21.5,
+//vallszelesseg = 15.5,
+//ujjahossza = 79,
+//hata_egyensulymeret = 49.5,
+//eleje_egyensulymeret = 47.5;
+
+
+// púpos
+//var testmagassag = 172,
+//mellboseg = 94,
+//derekboseg = 86,
+//csipoboseg = 102,
+//derekhossza = 50.5,
+//zakohossza = 77, // "hátahossza"
+//hataszelesseg = 21.5 + 1.5,
+//vallszelesseg = 15.5,
+//ujjahossza = 78,
+//hata_egyensulymeret = 50.5,
+//eleje_egyensulymeret = 45.5;
 var Vec2D = toxi.geom.Vec2D,
 		Line2D = toxi.geom.Line2D,
 		Ray2D = toxi.geom.Ray2D,
@@ -293,6 +407,12 @@ p['87b'] = perpendicularRay(kihajto_alja, p[83], p[86]).getPointAtDistance(hajto
 p[84] = p[34].add(0, - 8); // felső gomblyuk helye
 
 p['34a'] = p[34].add(-1.5, 0);
+
+
+/// GALLÉR
+
+
+////
 
 var ujjaszelesseg = mb / 10 * 2.5 + 11;
 var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
