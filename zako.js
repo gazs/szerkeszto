@@ -217,8 +217,20 @@ function lineRight(point, distance) {
 	return new Line2D(point, point.add(distance, 0));
 }
 
-function zako() {
-var tm = testmagassag,
+function zako(m) {
+//var testmagassag = m.testmagassag,
+//mellboseg = m.mellboseg,
+//derekboseg = m.derekboseg,
+//csipoboseg = m.csipoboseg,
+//derekhossza = m.derekhossza,
+//zakohossza = m.zakohossza,
+//hataszelesseg = m.hataszelesseg,
+//vallszelesseg = m.vallszelesseg,
+//ujjahossza = m.ujjahossza,
+//hata_egyensulymeret = m.hata_egyensulymeret,
+//eleje_egyensulymeret = m.eleje_egyensulymeret,
+
+tm = testmagassag,
 mb = mellboseg / 2,
 db = derekboseg / 2,
 csb = csipoboseg / 2;
@@ -421,7 +433,12 @@ var mellnyitas = kulcsszam / 2 + 0.8;
 p[75] = p[33].add(0, - mellnyitas);
 
 
-p[76] = p[38].add(0, -1.5); // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
+//p[76] = p[38].add(0, -1.5); // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
+
+// a konfekciós részben így számolja a p[76]-ot (ott p[43])
+var hasszelesseg = db / 10 * 5;
+//hasszelesseg / 2 + kulcsszam / 2
+p[76] = new Line2D(p[40], p[33]).toRay2D().getPointAtDistance(hasszelesseg / 2 + kulcsszam + 2);
 
 var l_76 = perpendicularLine(new Line2D(p[76], p[75]), p[76]);
 
@@ -483,6 +500,7 @@ var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
 
 // első rész
 s.path(`M${p[66].x},${p[66].y}
+			 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[42].x},${p[42].y}
 			 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[82].x},${p[82].y}
 			 L${p[77].x},${p[77].y}
 			 L${p[85].x},${p[85].y} // TODO nyakív
@@ -509,7 +527,8 @@ s.path(`
 `)
 
 // oldalrész
-s.path(`M${p[62].x},${p[62].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}
+s.path(`M${p[62].x},${p[62].y}
+			 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}
 			 L${p[59].x},${p[59].y}
 			 L${p[56].x},${p[56].y}
 			 L${p[58].x},${p[58].y}
@@ -523,7 +542,9 @@ s.path(`M${p[62].x},${p[62].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p
 
 
 // hát
-s.path(`M${p[12].x},${p[12].y} A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[18].x},${p[18].y}
+s.path(`M${p[12].x},${p[12].y}
+			 A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}
+			 A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[18].x},${p[18].y}
 			 L${p[17].x},${p[17].y}
 			 L${p[15].x},${p[15].y} // TODO nyakív
 			 L${p[5].x},${p[5].y}
@@ -554,20 +575,13 @@ var s = Snap('#drawing');
 function draw() {
 s.clear();
 
-var points = zako();
-var p = points;
+var points = zako(meretek.alacsony);
 window.p = points;
 
-var point;
-for (key in points) {
-	if (points[key]) {
-		var point = points[key];
-		s.group(
-			s.circle(point.x, point.y, 0.1),
-			s.text(point.x, point.y, key)
-		)
-	}
-}
+
+points.map(function (point) {
+	s.circle(point.x, point.y, 0.1);
+})
 var flatten = function(a, b) {
   return a.concat(b);
 };
@@ -617,4 +631,33 @@ draw();
 	});
 });
 
+///// ez az a pont ahol el kéne kezdenem modulokban gondolkodni
 
+//var Measures = Backbone.Model.extend({});
+
+
+//var MeasuresControl = Backbone.View.extend({
+	//model: Measures,
+	//events: {
+		//'input input': 'onChange'
+	//},
+
+	//template: _.template(`
+											 //<% Object.keys(model).map(function (measure) { %>
+													//<label for="<%= measure %>"><%= name %><input type="range" min=0 max=200 value=<%= model[measure]%> id="<%= measure %>"><span class="value"><%= model[measure] %></span></label>'),
+											//<% }) %> `),
+	//render: function () {
+		//console.log(this.template({model: this.model.toJSON()}));
+
+	//},
+	//onChange: function (e) {
+		//console.log(e)
+		//this.model.set('value', e.target.valueAsNumber);
+	//}
+//});
+
+
+
+//var measures = new MeasuresControl({
+	//model: new Measures(meretek.normal)
+//});
