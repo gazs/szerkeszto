@@ -1,3 +1,4 @@
+
 var testmagassag = 170,
 mellboseg = 100,
 derekboseg = 88,
@@ -188,20 +189,19 @@ var szamok = {
 	galler_szelesseg: 3,
 	hajtoka_szelesseg: 'mb / 10 + 3',
 	ujjaszelesseg: 'mb / 10 * 2.5 + 11',
-	honaljmelyseg: '(distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3'
+	//honaljmelyseg: '(distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3'
 }
 
-var Vec2D = toxi.geom.Vec2D,
-		Line2D = toxi.geom.Line2D,
-		Ray2D = toxi.geom.Ray2D,
-		Circle = toxi.geom.Circle;
+var Vec2D = require('./toxi/geom/Vec2D'),
+		Line2D = require('./toxi/geom/Line2D'),
+		Ray2D = require('./toxi/geom/Ray2D'),
+		Circle = require('./toxi/geom/Circle'),
+		mathUtils = require('./toxi/math/mathUtils'),
+		getIntersections = require('./geometricFunctions');
 
-function drawLine(line) {
-	s.line(line.a.x, line.a.y, line.b.x, line.b.y);
-}
 
 function perpendicularLine(line, pointOnLine) {
-	return pointOnLine.add(line.getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(10))
+	return pointOnLine.add(line.getDirection().getRotated(mathUtils.radians(90)).scale(10))
 }
 
 function distance(point1, point2) {
@@ -230,7 +230,7 @@ function zako(m) {
 //hata_egyensulymeret = m.hata_egyensulymeret,
 //eleje_egyensulymeret = m.eleje_egyensulymeret,
 
-tm = testmagassag,
+var tm = testmagassag,
 mb = mellboseg / 2,
 db = derekboseg / 2,
 csb = csipoboseg / 2;
@@ -266,9 +266,9 @@ var csipomelyseg = tm / 10;
 p[7] = p[6].add(0,  csipomelyseg);
 p[8] = p[1].add(0,  zakohossza);
 
-l3 = new Line2D(p[3], p[3].add(-100,0));
-l6 = new Line2D(p[6], p[6].add(-100, 0));
-l7 = new Line2D(p[7], p[7].add(-100, 0))
+var l3 = new Line2D(p[3], p[3].add(-100,0));
+var l6 = new Line2D(p[6], p[6].add(-100, 0));
+var l7 = new Line2D(p[7], p[7].add(-100, 0))
 
 p[9] = p[2].add(- (hataszelesseg + 1), 0);
 
@@ -311,7 +311,7 @@ function perpendicularRay(line_part_1, line_part_2, point_on_line) {
 p[21] = perpendicularRay(p[19], p[20], p[20]).getPointAtDistance(aljaszelesseg);
 
 
-l22 = perpendicularRay(p[20], p[21], p[21]).toLine2DWithPointAtDistance(100);
+var l22 = perpendicularRay(p[20], p[21], p[21]).toLine2DWithPointAtDistance(100);
 
 p[22] = intersection(l7, l22);
 
@@ -340,9 +340,9 @@ p[39] = p[38].add(- (mb / 10 * 2), 0) // ebben az esetben a 33 és a 39 pont meg
 var mellszelesseg = mb / 10 * 4 + 4;
 p[40] = new Line2D(p[39], p[37]).toRay2D().getPointAtDistance(mellszelesseg);
 
-p[41] = new Line2D(p[40], p[40].add(new Line2D(p[37], p[40]).getDirection().getRotated(toxi.math.mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p[3], p[36])).pos;
+p[41] = new Line2D(p[40], p[40].add(new Line2D(p[37], p[40]).getDirection().getRotated(mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p[3], p[36])).pos;
 
-p[42] = new Ray2D(p[40].x, p[40].y, new Line2D(p[37], p[40]).getDirection().getRotated(toxi.math.mathUtils.radians(-90))).getPointAtDistance(3) // ujja illeszkedési pont
+p[42] = new Ray2D(p[40].x, p[40].y, new Line2D(p[37], p[40]).getDirection().getRotated(mathUtils.radians(-90))).getPointAtDistance(3) // ujja illeszkedési pont
 
 var kis_oldalvarras = 5;
 p[43] = p[41].add(kis_oldalvarras, 0);
@@ -374,7 +374,7 @@ var csipomeret = csb + 7;
 p[54] = p[53].add(csipomeret - distance(p[22], p[23]), 0);
 
 
-p61a = (new Line2D(p[20], p[21]).copy().scale(10)).closestPointTo(p[54]);
+var p61a = (new Line2D(p[20], p[21]).copy().scale(10)).closestPointTo(p[54]);
 var eleje_oldalvonal = new Line2D(p61a, p[54]).copy().scale(10);
 
 p[55] = eleje_oldalvonal.intersectLine(l6).pos;
@@ -520,7 +520,7 @@ s.path(`M${p[66].x},${p[66].y}
 			 `)
 s.path(`
 			 M${p[85].x},${p[85].y}
-			 ${ '' /* L${p[84].x -1.5},${p[84].y} */}
+			 ${ '' /* L${p[84].x -1.5},${p[84].y} */ }
 			 L${p['34a'].x},${p['34a'].y}
 			 L${p['87b'].x},${p['87b'].y}
 			 L${p[85].x},${p[85].y}
@@ -538,9 +538,7 @@ s.path(`M${p[62].x},${p[62].y}
 			 L${p[65].x},${p[65].y}
 			 L${p[71].x},${p[71].y}
 			 L${p[62].x},${p[62].y}
-			 `).attr({fill:'rgba(0,0,0,0.2)', stroke:'rgba(0,0,0,0.2)'})
-
-
+			 `)
 // hát
 s.path(`M${p[12].x},${p[12].y}
 			 A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}
@@ -558,8 +556,7 @@ s.path(`M${p[12].x},${p[12].y}
 			 L${p[11].x},${p[11].y}
 			 L${p[13].x},${p[13].y}
 			 L${p[12].x},${p[12].y}
-			 `).attr({fill:'rgba(0,0,0,0.2)', stroke:'rgba(0,0,0,0.2)'})
-
+			 `)
 //-----
 //
 
@@ -573,91 +570,57 @@ var s = Snap('#drawing');
 
 
 function draw() {
-s.clear();
+	s.clear();
 
-var points = zako(meretek.alacsony);
-window.p = points;
-
-
-points.map(function (point) {
-	s.circle(point.x, point.y, 0.1);
-})
-var flatten = function(a, b) {
-  return a.concat(b);
-};
-
-function drawLine(line) {
-	s.line(line.a.x, line.a.y, line.b.x, line.b.y);
-}
-
-function connect() {
-	return s.polyline(Array.prototype.slice.call(arguments).map(function (v) {return [v.x, v.y]}).reduce(flatten)).attr({fill:'rgba(0,0,0,0.2)', stroke:'rgba(0,0,0,0.2)'});
-}
+	var points = zako(meretek.alacsony);
+	window.p = points;
 
 
+	points.map(function (point) {
+		s.circle(point.x, point.y, 0.1);
+	})
+	var flatten = function(a, b) {
+		return a.concat(b);
+	};
 
-function keyhole(point) {
-	s.line(point.x, point.y, (point.x + 2), point.y).attr({strokeWidth: '0.1'})
-}
+	function drawLine(line) {
+		s.line(line.a.x, line.a.y, line.b.x, line.b.y);
+	}
 
-function breastpocket(point1, point2) {
-	var breaspocket_height = 1;
-	connect(point1, point2, point2.add(0,-2), point1.add(0,-2)).attr({strokeWidth: 0.1});
-}
+	function connect() {
+		return s.polyline(Array.prototype.slice.call(arguments).map(function (v) {return [v.x, v.y]}).reduce(flatten))
+	}
 
 
 
-var button1 = p[84];
-var button3 = new Vec2D(p[34].x, p[49].y);
-var button2 = (new Line2D(button1, button3)).getMidPoint();
+	function keyhole(point) {
+		s.line(point.x, point.y, (point.x + 2), point.y).attr({strokeWidth: '0.1'})
+	}
 
-keyhole(button1);
-keyhole(button2);
-keyhole(button3);
+	function breastpocket(point1, point2) {
+		var breaspocket_height = 1;
+		connect(point1, point2, point2.add(0,-2), point1.add(0,-2)).attr({strokeWidth: 0.1});
+	}
 
-breastpocket(p['40a'], p['40b']);
 
-s.attr({viewBox: s.getBBox().vb});
+
+	var button1 = p[84];
+	var button3 = new Vec2D(p[34].x, p[49].y);
+	var button2 = (new Line2D(button1, button3)).getMidPoint();
+
+	keyhole(button1);
+	keyhole(button2);
+	keyhole(button3);
+
+	breastpocket(p['40a'], p['40b']);
+
+	s.attr({viewBox: s.getBBox().vb});
 }
 
 draw();
 
-[].forEach.call(document.querySelectorAll('input'), function (input) {
-	input.addEventListener('input', function () {
-		var value = parseInt(input.value, 10);
-		window[input.id] = value;
-		input.parentNode.querySelector('span').innerHTML = value;
-		draw();
-	});
-});
+var React = require('react');
+var Measurements = require('./range.jsx');
 
-///// ez az a pont ahol el kéne kezdenem modulokban gondolkodni
+React.render(React.createElement(Measurements, {items: meretek.normal}), document.querySelector('#a'));
 
-//var Measures = Backbone.Model.extend({});
-
-
-//var MeasuresControl = Backbone.View.extend({
-	//model: Measures,
-	//events: {
-		//'input input': 'onChange'
-	//},
-
-	//template: _.template(`
-											 //<% Object.keys(model).map(function (measure) { %>
-													//<label for="<%= measure %>"><%= name %><input type="range" min=0 max=200 value=<%= model[measure]%> id="<%= measure %>"><span class="value"><%= model[measure] %></span></label>'),
-											//<% }) %> `),
-	//render: function () {
-		//console.log(this.template({model: this.model.toJSON()}));
-
-	//},
-	//onChange: function (e) {
-		//console.log(e)
-		//this.model.set('value', e.target.valueAsNumber);
-	//}
-//});
-
-
-
-//var measures = new MeasuresControl({
-	//model: new Measures(meretek.normal)
-//});

@@ -12,8 +12,6 @@
 
 
 <script src="snap.svg.js" type="text/javascript" charset="utf-8"></script>
-<script src="toxiclibs.js" type="text/javascript" charset="utf-8"></script>
-<script src="geometricFunctions.js" type="text/javascript" charset="utf-8"></script>
 
 <style type="text/css" media="all">
 #drawing {
@@ -27,18 +25,8 @@ pre {
 	float: left;
 
 }
-svg text {
-//	display: none;
 
-	font-size:2px;
-	stroke-width:0.1;
-	font-style: italic;
-	stroke: #000;
-}
-svg g:hover text {
-	display: block;
-}
-svg path {
+svg path, svg polyline {
 fill:rgba(0,0,0,0.2);
 stroke:rgba(0,0,0,0.2)
 }
@@ -48,6 +36,9 @@ stroke:rgba(0,0,0,0.2)
 <body>
 
 <svg id="drawing" width=800 height=800></svg>
+
+
+<div id="a"</div>
 
 <pre>
 <label for="testmagassag">testmagassag <input type="range" min=0 max=200 value=170 id="testmagassag"><span class="value">170</span></label>
@@ -64,5 +55,5 @@ stroke:rgba(0,0,0,0.2)
 </pre>
 
 </body>
-<script src="zako.js"></script>
+<script src="bundle.js"></script>
 </html>

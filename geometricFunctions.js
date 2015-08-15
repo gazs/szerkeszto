@@ -4,15 +4,15 @@
 // GEOMETRIC function to get the intersections
 function getIntersections(a, b, c) {
 	// Calculate the euclidean distance between a & b
-	eDistAtoB = Math.sqrt( Math.pow(b[0]-a[0], 2) + Math.pow(b[1]-a[1], 2) );
+	var eDistAtoB = Math.sqrt( Math.pow(b[0]-a[0], 2) + Math.pow(b[1]-a[1], 2) );
 
 	// compute the direction vector d from a to b
-	d = [ (b[0]-a[0])/eDistAtoB, (b[1]-a[1])/eDistAtoB ];
+	var d = [ (b[0]-a[0])/eDistAtoB, (b[1]-a[1])/eDistAtoB ];
 
 	// Now the line equation is x = dx*t + ax, y = dy*t + ay with 0 <= t <= 1.
 
 	// compute the value t of the closest point to the circle center (cx, cy)
-	t = (d[0] * (c[0]-a[0])) + (d[1] * (c[1]-a[1]));
+	var t = (d[0] * (c[0]-a[0])) + (d[1] * (c[1]-a[1]));
 
 	// compute the coordinates of the point e on line and closest to c
     var e = {coords:[], onLine:false};
@@ -20,12 +20,12 @@ function getIntersections(a, b, c) {
 	e.coords[1] = (t * d[1]) + a[1];
 
 	// Calculate the euclidean distance between c & e
-	eDistCtoE = Math.sqrt( Math.pow(e.coords[0]-c[0], 2) + Math.pow(e.coords[1]-c[1], 2) );
+	var eDistCtoE = Math.sqrt( Math.pow(e.coords[0]-c[0], 2) + Math.pow(e.coords[1]-c[1], 2) );
 
 	// test if the line intersects the circle
 	if( eDistCtoE < c[2] ) {
 		// compute distance from t to circle intersection point
-	    dt = Math.sqrt( Math.pow(c[2], 2) - Math.pow(eDistCtoE, 2));
+	    var dt = Math.sqrt( Math.pow(c[2], 2) - Math.pow(eDistCtoE, 2));
 
 	    // compute first intersection point
 	    var f = {coords:[], onLine:false};
@@ -53,11 +53,11 @@ function getIntersections(a, b, c) {
 }
 
 // BASIC GEOMETRIC functions
-function _distance(a,b) {
+function distance(a,b) {
 	return Math.sqrt( Math.pow(a[0]-b[0], 2) + Math.pow(a[1]-b[1], 2) )
 }
 function is_on(a, b, c) {
-	return _distance(a,c) + _distance(c,b) == _distance(a,b);
+	return distance(a,c) + distance(c,b) == distance(a,b);
 }
 
 function getAngles(a, b, c) {
@@ -69,3 +69,5 @@ function getAngles(a, b, c) {
 	angleB = Math.abs((angleAB - angleBC) * (180/Math.PI));
 	return [angleA, angleB];
 }
+
+module.exports = getIntersections;
