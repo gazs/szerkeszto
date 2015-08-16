@@ -106,6 +106,8 @@ class Zako extends React.Component {
 			var nyakszelesseg = eval(sz.nyakszelesseg);
 			p[16] = new Line2D(p[1], p[9]).toRay2D().getPointAtDistance(nyakszelesseg);
 
+			var hata_nyakmagassag = eval('mb / 10 * 0.5 + 1.5')
+
 			var _p17a = p[6].add(0, - (hata_egyensulymeret + 1));
 
 
@@ -352,6 +354,7 @@ class Zako extends React.Component {
 								 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[42].x},${p[42].y}
 								 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[82].x},${p[82].y}
 								 L${p[77].x},${p[77].y}
+								 A${nyakszelesseg},${nyakszelesseg} 0  0, 1 ${p[85].x},${p[85].y}
 								 L${p[85].x},${p[85].y}
 								 L${p[87].x},${p[87].y}
 								 ${ '' /* L${p[84].x -1.5},${p[84].y} */ }
@@ -393,6 +396,7 @@ class Zako extends React.Component {
 										A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}
 										A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[18].x},${p[18].y}
 										L${p[17].x},${p[17].y}
+										A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}
 										L${p[15].x},${p[15].y}
 										L${p[5].x},${p[5].y}
 										L${p[4].x},${p[4].y}
@@ -408,7 +412,6 @@ class Zako extends React.Component {
 										`)
 										//-----
 			//
-			//breastpocket(p['40a'], p['40b']);
 			paths.szivarzseb = (`M${p['40a'].x},${p['40a'].y}
 													L${p['40b'].x},${p['40b'].y}
 													L${p['40b'].x},${p['40b'].y-2}
@@ -416,7 +419,6 @@ class Zako extends React.Component {
 													L${p['40a'].x},${p['40a'].y}
 			`)
 
-			console.log(paths)
 			return {paths: paths, points: p};
 
 		}
@@ -425,33 +427,9 @@ class Zako extends React.Component {
 
 
 		function draw() {
-
-			//points.map(function (point) {
-			//s.circle(point.x, point.y, 0.1);
-			//})
-			//var flatten = function(a, b) {
-			//return a.concat(b);
-			//};
-
-			//function drawLine(line) {
-			//s.line(line.a.x, line.a.y, line.b.x, line.b.y);
-			//}
-
-			//function connect() {
-			//return s.polyline(Array.prototype.slice.call(arguments).map(function (v) {return [v.x, v.y]}).reduce(flatten))
-			//}
-
-
-
 			//function keyhole(point) {
 			//s.line(point.x, point.y, (point.x + 2), point.y).attr({strokeWidth: '0.1'})
 			//}
-
-			//function breastpocket(point1, point2) {
-			//var breaspocket_height = 1;
-			//connect(point1, point2, point2.add(0,-2), point1.add(0,-2)).attr({strokeWidth: 0.1});
-			//}
-
 
 
 			//var button1 = p[84];
@@ -462,16 +440,14 @@ class Zako extends React.Component {
 			//keyhole(button2);
 			//keyhole(button3);
 
-			//breastpocket(p['40a'], p['40b']);
 
-			/*s.attr({viewBox: s.getBBox().vb});*/
 		//}
 
 
 		}
 		var {paths, points}= zako(this.state.meretek, this.state.szamok);
 		var p = points;
-		var viewBox = `${p[87].x} ${p[83].y} ${Math.abs(p[87].x-p[5].x)}  ${Math.abs(p[17].y-p[74].y - 8)}`
+		var viewBox = `${p[87].x} ${p[83].y} ${Math.abs(p[87].x-p[5].x)}  ${Math.abs(p[17].y-p[74].y - 8)}` // TODO: automatic viewbox calc
 
 		return (
       <svg

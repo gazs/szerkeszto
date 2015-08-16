@@ -231,9 +231,7 @@ class Main extends React.Component {
 				<Zako meretek={this.state.meretek} szamok={this.state.szamok}/>
 				<div className="configs col-xs-12 col-md-4 col-md-offset-8">
 				<form className="form-horizontal">
-					<Dropdown options={meretek} />
 					<Measurements items={this.state.meretek} model={this.meretekmodel}/>
-					<Dropdown options={testtartasok} />
 					<Measurements items={this.state.szamok} model={this.szamokmodel}/>
 				</form>
 				</div>
