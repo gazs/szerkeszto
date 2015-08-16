@@ -15,15 +15,6 @@ class Zako extends React.Component {
 		this.state = this.props;
 	}
 
-	//componentDidMount () {
-		//MesuresStore.addChangeListener(this._onChange);
-		//SzamokStore.addChangeListener(this._onChange);
-	//}
-
-	//_onChange () {
-		//this.setState(getStateFromStores());
-	//}
-
 	render () {
 
 		function perpendicularLine(line, pointOnLine) {
@@ -417,7 +408,15 @@ class Zako extends React.Component {
 										`)
 										//-----
 			//
+			//breastpocket(p['40a'], p['40b']);
+			paths.szivarzseb = (`M${p['40a'].x},${p['40a'].y}
+													L${p['40b'].x},${p['40b'].y}
+													L${p['40b'].x},${p['40b'].y-2}
+													L${p['40a'].x},${p['40a'].y-2}
+													L${p['40a'].x},${p['40a'].y}
+			`)
 
+			console.log(paths)
 			return {paths: paths, points: p};
 
 		}
