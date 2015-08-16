@@ -7,7 +7,23 @@ import Circle from "./toxi/geom/Circle"
 import mathUtils from "./toxi/math/mathUtils"
 import getIntersections from "./geometricFunctions"
 
+
+
 class Zako extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = this.props;
+	}
+
+	//componentDidMount () {
+		//MesuresStore.addChangeListener(this._onChange);
+		//SzamokStore.addChangeListener(this._onChange);
+	//}
+
+	//_onChange () {
+		//this.setState(getStateFromStores());
+	//}
+
 	render () {
 
 		function perpendicularLine(line, pointOnLine) {
@@ -27,7 +43,7 @@ class Zako extends React.Component {
 			return new Line2D(point, point.add(distance, 0));
 		}
 
-		function zako(m) {
+		function zako(m, sz) {
 			var testmagassag = m.testmagassag,
 			mellboseg = m.mellboseg,
 			derekboseg = m.derekboseg,
@@ -52,7 +68,8 @@ class Zako extends React.Component {
 			// HÁTA
 
 			// kulcsszám
-			var kulcsszam = db / 10 + ((mb / 10) * 0.5) - 5
+			//var kulcsszam = db / 10 + ((mb / 10) * 0.5) - 5
+			var kulcsszam = eval(sz.kulcsszam);
 			// alacsony = db /10 + mb/10 *0.5 - 1.5
 			// nagyhasú = db /10 + mb/10*0.5 - 5
 			// sportos = db /10 + mb/10*0.5 - 5
@@ -62,7 +79,8 @@ class Zako extends React.Component {
 			p[2] = p[1].add(0,  kulcsszam);
 
 			// hónaljmélység
-			var honaljmelyseg = tm / 10 + mb / 10
+			//var honaljmelyseg = tm / 10 + mb / 10
+			var honaljmelyseg = eval(sz.honaljmelyseg);
 
 			p[3] = p[2].add(0,  honaljmelyseg);
 			p[4] = p[2].add(0,  honaljmelyseg / 2);
@@ -71,7 +89,8 @@ class Zako extends React.Component {
 
 
 			// csipomelyseg
-			var csipomelyseg = tm / 10;
+			//var csipomelyseg = tm / 10;
+			var csipomelyseg = eval(sz.csipomelyseg);
 
 			p[7] = p[6].add(0,  csipomelyseg);
 			p[8] = p[1].add(0,  zakohossza);
@@ -92,7 +111,8 @@ class Zako extends React.Component {
 			p[15] = l_p1_p9.closestPointTo(p[5]);
 
 			// nyakszélesség
-			var nyakszelesseg = mb / 10 + 3.5;
+			//var nyakszelesseg = mb / 10 + 3.5;
+			var nyakszelesseg = eval(sz.nyakszelesseg);
 			p[16] = new Line2D(p[1], p[9]).toRay2D().getPointAtDistance(nyakszelesseg);
 
 			var _p17a = p[6].add(0, - (hata_egyensulymeret + 1));
@@ -104,13 +124,16 @@ class Zako extends React.Component {
 
 			p[18] = new Line2D(p[17], p[9]).toRay2D().getPointAtDistance(vallszelesseg + 1 + 0.5);
 
-			var derekbeallitas = 3;
+			//var derekbeallitas = 3;
+			var derekbeallitas = eval(sz.derekbeallitas);
 			p[19] = p[6].add(- derekbeallitas, 0);
 
-			var aljabeallitas = 4;
+			//var aljabeallitas = 4;
+			var aljabeallitas = eval(sz.aljabeallitas);
 			p[20] = p[8].add(- aljabeallitas, 0);
 
-			var aljaszelesseg = csb / 10 * 3.5;
+			//var aljaszelesseg = csb / 10 * 3.5;
+			var aljaszelesseg = eval(sz.aljaszelesseg);
 
 
 			function perpendicularRay(line_part_1, line_part_2, point_on_line) {
@@ -131,47 +154,62 @@ class Zako extends React.Component {
 
 			p[24] = intersection(l6, l22);
 
-			var hat_karcsusitas = 1;
+			//var hat_karcsusitas = 1;
+			var hat_karcsusitas= eval(sz.hat_karcsusitas);
 			p[25] = p[24].add(hat_karcsusitas, 0);
 			//
 			// ELEJE
 
-			var eleje_tavolsag = 25;
+			//var eleje_tavolsag = 25;
+			var eleje_tavolsag = eval(sz.eleje_tavolsag);
 			p[33] = p[3].add(- (mb + eleje_tavolsag), 0);
 			p[34] = p[6].add(- (mb + eleje_tavolsag), 0);
 			p[35] = p[7].add(- (mb + eleje_tavolsag), 0);
 
-			var derekszelesseg = db / 10 * 5;
+			//var derekszelesseg = db / 10 * 5;
+			var derekszelesseg = eval(sz.derekszelesseg);
 			p[36] = p[33].add(derekszelesseg, 0);
 			p[37] = p[36].add(0, - kulcsszam);
 			p[38] = p[36].add(- (derekszelesseg / 2 + kulcsszam / 2), 0);
 			p[39] = p[38].add(- (mb / 10 * 2), 0) // ebben az esetben a 33 és a 39 pont megegyezik
 
-			var mellszelesseg = mb / 10 * 4 + 4;
+			//var mellszelesseg = mb / 10 * 4 + 4;
+			var mellszelesseg = eval(sz.mellszelesseg);
+
 			p[40] = new Line2D(p[39], p[37]).toRay2D().getPointAtDistance(mellszelesseg);
 
 			p[41] = new Line2D(p[40], p[40].add(new Line2D(p[37], p[40]).getDirection().getRotated(mathUtils.radians(90)).scale(100))).intersectLine(new Line2D(p[3], p[36])).pos;
 
 			p[42] = new Ray2D(p[40].x, p[40].y, new Line2D(p[37], p[40]).getDirection().getRotated(mathUtils.radians(-90))).getPointAtDistance(3) // ujja illeszkedési pont
 
-			var kis_oldalvarras = 5;
+			//var kis_oldalvarras = 5;
+			var kis_oldalvarras= eval(sz.kis_oldalvarras);
+
 			p[43] = p[41].add(kis_oldalvarras, 0);
-			var honaljszelesseg = mb / 10 * 2.5 + 3;
+
+			//var honaljszelesseg = mb / 10 * 2.5 + 3;
+			var honaljszelesseg= eval(sz.honaljszelesseg);
+
 			p[44] = p[41].add(honaljszelesseg, 0);
 
 			// mellformázó varrás helye
-			var mellformazo_varras_helye = db / 10 * 2 + 6;
+			//var mellformazo_varras_helye = db / 10 * 2 + 6;
+			var mellformazo_varras_helye = eval(sz.mellformazo_varras_helye);;
+
 			p[45] = p[34].add(mellformazo_varras_helye, 0);
 
 			p[46] = new Vec2D(p[45].x, p[3].y);
 
-			var mellformazo_varras_felso_vege = 3;
+			//var mellformazo_varras_felso_vege = 3;
+			var mellformazo_varras_felso_vege= eval(sz.mellformazo_varras_felso_vege);
+
 			p[47] = p[46].add(0, mellformazo_varras_felso_vege);
 			p[48] = p[47].add(-0.5, 0); // segédpont
 
 			p[49] = p[47].add(0, (p[8].y - p[46].y) / 2 + 3);
 
-			var mellkivet = 3;
+			//var mellkivet = 3;
+			var mellkivet = eval(sz.mellkivet);
 			p[50] =p[45].add(mellkivet - 2, 0) // TODO FIXME ez valamilyen szögben van
 
 
@@ -180,7 +218,8 @@ class Zako extends React.Component {
 
 			p[53] = p[35].add(mellkivet + kulcsszam / 4, 0 );
 
-			var csipomeret = csb + 7;
+			//var csipomeret = csb + 7;
+			var csipomeret = eval(sz.csipomeret);
 			p[54] = p[53].add(csipomeret - distance(p[22], p[23]), 0);
 
 
@@ -230,7 +269,8 @@ class Zako extends React.Component {
 
 			p[72] = new Line2D(p[65], p[52]).toRay2D().getPointAtDistance(distance(p[35], p[53]));
 
-			var elejenyitas = kulcsszam / 2;
+			//var elejenyitas = kulcsszam / 2;
+			var elejenyitas = eval(sz.elejenyitas);
 			p[73] = p[34].add(0, elejenyitas);
 			p[74] = p[73].add(0, distance(p[21],p[25]) +1);
 
@@ -239,7 +279,8 @@ class Zako extends React.Component {
 			p['61a'] = new Line2D(p[61], p[74]).intersectLine(_temp_43_65.copy().scale(10)).pos;
 
 
-			var mellnyitas = kulcsszam / 2 + 0.8;
+			//var mellnyitas = kulcsszam / 2 + 0.8;
+			var mellnyitas = eval(sz.mellnyitas);
 			p[75] = p[33].add(0, - mellnyitas);
 
 
@@ -264,13 +305,15 @@ class Zako extends React.Component {
 
 
 			// nyakmélység
-			var nyakmelyseg = mb / 10 + 3;
+			//var nyakmelyseg = mb / 10 + 3;
+			var nyakmelyseg = eval(sz.nyakmelyseg);
 			p[78] = new Line2D(p[77], p[76]).toRay2D().getPointAtDistance(nyakmelyseg);
 
 			var l_79 = new Line2D(p[78], perpendicularLine(new Line2D(p[77], p[76]), p[78]));
 			p[79] = l_79.toRay2D().getPointAtDistance(distance(p[15], p[16]) + 1);
 
-			var vallmagassag = kulcsszam + 4;
+			//var vallmagassag = kulcsszam + 4;
+			var vallmagassag = eval(sz.vallmagassag);
 			p[80] = new Line2D(p[77], p[45]).toRay2D().getPointAtDistance(vallmagassag);
 
 			var vallszelesseg1 = vallszelesseg + 1 + 0.5 -1; //distance(p[17], p[18]) -1;
@@ -280,10 +323,12 @@ class Zako extends React.Component {
 			var segedpont_82 = 0.6;
 			p[82] =p[81].add(0, 0.6);
 
-			var galler_szelesseg = 3;
+			//var galler_szelesseg = 3;
+			var galler_szelesseg = eval(sz.galler_szelesseg);
 			p[83] = new Ray2D(p[77], new Line2D(p[81], p[77]).toRay2D().getDirection()).getPointAtDistance(galler_szelesseg);
 
-			var hajtoka_szelesseg = mb / 10 + 3;
+			//var hajtoka_szelesseg = mb / 10 + 3;
+			var hajtoka_szelesseg = eval(sz.hajtoka_szelesseg);
 			var kihajto_alja = p[39];
 
 			p[85] = new Line2D(p[83], kihajto_alja).toRay2D().getPointAtDistance(distance(p[77], p[78]) - 0.5);
@@ -304,14 +349,15 @@ class Zako extends React.Component {
 
 			////
 
-			var ujjaszelesseg = mb / 10 * 2.5 + 11;
-			var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
+			//var ujjaszelesseg = mb / 10 * 2.5 + 11;
+			var ujjaszelesseg = eval(sz.ujjaszelesseg);
+			//var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
 
 
-			var paths = [];
+			var paths = {};
 
 			// első rész
-			paths.push(`M${p[66].x},${p[66].y}
+			paths.elso = (`M${p[66].x},${p[66].y}
 								 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[42].x},${p[42].y}
 								 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[82].x},${p[82].y}
 								 L${p[77].x},${p[77].y}
@@ -330,7 +376,7 @@ class Zako extends React.Component {
 								 L${p[66].x},${p[66].y}
 
 								 `)
-			 paths.push(`
+			 paths.kihajto_dup = (`
 									M${p[85].x},${p[85].y}
 									${ '' /* L${p[84].x -1.5},${p[84].y} */ }
 									L${p['34a'].x},${p['34a'].y}
@@ -339,7 +385,7 @@ class Zako extends React.Component {
 									`)
 
 				// oldalrész
-				paths.push(`M${p[62].x},${p[62].y}
+				paths.oldalresz = (`M${p[62].x},${p[62].y}
 									 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}
 									 L${p[59].x},${p[59].y}
 									 L${p[56].x},${p[56].y}
@@ -352,7 +398,7 @@ class Zako extends React.Component {
 									 L${p[62].x},${p[62].y}
 									 `)
 				 // hát
-				 paths.push(`M${p[12].x},${p[12].y}
+				 paths.hatresz = (`M${p[12].x},${p[12].y}
 										A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}
 										A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[18].x},${p[18].y}
 										L${p[17].x},${p[17].y}
@@ -424,7 +470,7 @@ class Zako extends React.Component {
 
 
 		}
-		var {paths, points}= zako(this.props.meretek);
+		var {paths, points}= zako(this.state.meretek, this.state.szamok);
 		var p = points;
 		var viewBox = `${p[87].x} ${p[83].y} ${Math.abs(p[87].x-p[5].x)}  ${Math.abs(p[17].y-p[74].y - 8)}`
 
@@ -434,13 +480,14 @@ class Zako extends React.Component {
         width="800"
         height="800"
         fill="currentcolor">
-				{paths.map (pathData=>
-					<path d={pathData} />
+				{Object.keys(paths).map (key =>
+					<path d={paths[key]} key={'path_' + key}/>
 				)}
-			</svg> 
+				{Object.keys(points).map (key =>
+					<circle cx={points[key].x} cy={points[key].y} r={0.5} key={key}/>
+				)}
+			</svg>
 		)
-	}
-	componentDidUpdate () {
 	}
 }
 

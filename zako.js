@@ -160,11 +160,13 @@ var szamok = {
 	hat_karcsusitas : 1,
 	eleje_tavolsag : 25,
 	derekszelesseg : 'db / 10 * 5',
-	mellszelesseg : 'db / 10 * 5',
+	mellszelesseg : 'mb / 10 * 4 + 4',
 	kis_oldalvarras : 5,
 	honaljszelesseg : 'mb / 10 * 2.5 + 3',
 	mellformazo_varras_helye: 'db / 10 * 2 + 6',
 	mellformazo_varras_felso_vege: 3,
+	mellkivet: 3,
+	csipomeret: 'csb + 7',
 	// segédpont
 	// p49 zsebvonal helye
 	zsebvonal_helye: 'p[47].add(0, (p[8].y - p[46].y) / 2 + 3)',
@@ -179,22 +181,68 @@ var szamok = {
 	//honaljmelyseg: '(distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3'
 }
 
+var testtartasok = {
+	normal: szamok,
+	alacsony: {},
+	telt: { },
+	nagyhasu: {},
+	sportos: { },
+	magas_kisse_hajlott: { },
+	magas_hosszu_vekony_nyaku_csaputt_vallu: { },
+	erosen_feszes: {},
+	beesett_dereku_hajlott: { },
+	pupos: {}
+
+}
 
 
 var React = require('react');
-var {Measurements, Formulas} = require('./range.jsx');
+var {Dropdown, Measurements} = require('./range.jsx');
 var Zako = require('./zako.jsx');
+//var Zakoujja = require('./zakoujja.jsx');
 
+
+var BBModel = require('backbone-model').Model;
 
 class Main extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.meretekmodel = new BBModel(this.props.meretek.normal)
+		this.szamokmodel = new BBModel(this.props.szamok)
+		this.presetmodel = new BBModel({preset: 'normal'})
+
+		this.state = {
+			meretek: this.meretekmodel.toJSON(),
+			szamok: this.szamokmodel.toJSON(),
+		};
+	}
+	componentDidMount () {
+		this.meretekmodel.on('change', this._onChange.bind(this))
+		this.szamokmodel.on('change', this._onChange.bind(this))
+	}
+	_onChange () {
+		console.log(this.meretekmodel.get('testmagassag'))
+		this.setState({meretek: this.meretekmodel.toJSON(), szamok: this.szamokmodel.toJSON()});
+	}
 	render () {
-		return <div>
-		<Zako meretek={this.props.meretek} />
-		<Measurements meretek={this.props.meretek} />
-		<Formulas items={this.props.szamok} />
-		</div>
+		return (
+			<div>
+				<Zako meretek={this.state.meretek} szamok={this.state.szamok}/>
+				<div className="configs col-xs-12 col-md-4 col-md-offset-8">
+				<form className="form-horizontal">
+					<Dropdown options={meretek} />
+					<Measurements items={this.state.meretek} model={this.meretekmodel}/>
+					<Dropdown options={testtartasok} />
+					<Measurements items={this.state.szamok} model={this.szamokmodel}/>
+				</form>
+				</div>
+			</div>
+		)
 	}
 }
 
-React.render(React.createElement(Main, {meretek: meretek.normal, szamok: szamok}), document.querySelector('#gombok2'));
+React.render(
+	<Main meretek={meretek} szamok={szamok} />,
+	document.querySelector('#gombok2'));
 
