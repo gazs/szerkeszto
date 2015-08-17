@@ -364,6 +364,7 @@ class Zako extends React.Component {
 								 L${p[72].x},${p[72].y}
 								 L${p[49].x},${p[49].y}
 								 L${p[48].x},${p[48].y}
+								 L${p[50].x},${p[50].y}
 								 L${p[51].x},${p[51].y}
 								 L${p[68].x},${p[68].y}
 								 L${p[70].x},${p[70].y}
@@ -447,7 +448,7 @@ class Zako extends React.Component {
 		}
 		var {paths, points}= zako(this.state.meretek, this.state.szamok);
 		var p = points;
-		var viewBox = `${p[87].x} ${p[83].y} ${Math.abs(p[87].x-p[5].x)}  ${Math.abs(p[17].y-p[74].y - 8)}` // TODO: automatic viewbox calc
+		var viewBox = `${p[87].x} ${p[83].y -5} ${Math.abs(p[87].x-p[5].x)}  ${Math.abs(p[17].y-p[74].y - 8)}` // TODO: automatic viewbox calc
 
 		return (
       <svg
