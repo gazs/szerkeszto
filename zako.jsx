@@ -336,6 +336,13 @@ class Zako extends React.Component {
 
 
 			/// GALLÉR
+			// 77, 83, 85, 86
+			//
+			var galler1 = 3.5;
+			//p[87] = new Line2D(p[86], p[85]).toRay2D().getPointAtDistance(galler1);
+			//p[88] = new Line2D(p[85], p[83]).toRay2D().getPointAtDistance(distance(p[15], p[17])); // TODO: nyakív miatt nem légvonalban kéne
+			//p[89] = 
+
 
 
 			////
@@ -366,7 +373,7 @@ class Zako extends React.Component {
 								 L${p[51].x},${p[51].y}
 								 L${p[68].x},${p[68].y}
 								 L${p[70].x},${p[70].y}
-								 L${p[66].x},${p[66].y}
+								 Z
 
 								 `)
 			 paths.kihajto_dup = (`
@@ -374,7 +381,7 @@ class Zako extends React.Component {
 									${ '' /* L${p[84].x -1.5},${p[84].y} */ }
 									L${p['34a'].x},${p['34a'].y}
 									L${p['87b'].x},${p['87b'].y}
-									L${p[85].x},${p[85].y}
+									Z
 									`)
 
 				// oldalrész
@@ -388,7 +395,7 @@ class Zako extends React.Component {
 									 L${p['61a'].x},${p['61a'].y}
 									 L${p[65].x},${p[65].y}
 									 L${p[71].x},${p[71].y}
-									 L${p[62].x},${p[62].y}
+									 Z
 									 `)
 				 // hát
 				 paths.hatresz = (`M${p[12].x},${p[12].y}
@@ -407,7 +414,7 @@ class Zako extends React.Component {
 										L${p[25].x},${p[25].y}
 										L${p[11].x},${p[11].y}
 										L${p[13].x},${p[13].y}
-										L${p[12].x},${p[12].y}
+										Z
 										`)
 										//-----
 			//
@@ -415,7 +422,7 @@ class Zako extends React.Component {
 													L${p['40b'].x},${p['40b'].y}
 													L${p['40b'].x},${p['40b'].y-2}
 													L${p['40a'].x},${p['40a'].y-2}
-													L${p['40a'].x},${p['40a'].y}
+													Z
 			`)
 
 			return {paths: paths, points: p};
