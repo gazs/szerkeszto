@@ -171,7 +171,7 @@ var szamok = {
 	// p49 zsebvonal helye
 	zsebvonal_helye: 'p[47].add(0, (p[8].y - p[46].y) / 2 + 3)',
 	elejenyitas: 'kulcsszam / 2',
-	mellynitas: 'kulcsszam / 2 + 0.8',
+	mellnyitas: 'kulcsszam / 2 + 0.8',
 	nyakmelyseg: 'mb / 10 + 3',
 	vallmagassag: 'kulcsszam + 4',
 	//vallszelsseg1 ,??

@@ -7,8 +7,6 @@ import Circle from "./toxi/geom/Circle"
 import mathUtils from "./toxi/math/mathUtils"
 import getIntersections from "./geometricFunctions"
 
-
-
 class Zako extends React.Component {
 	constructor(props) {
 		super(props);
@@ -277,12 +275,12 @@ class Zako extends React.Component {
 			p[75] = p[33].add(0, - mellnyitas);
 
 
-			//p[76] = p[38].add(0, -1.5); // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
+			p[76] = p[38].add(0, -1.5); // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
 
 			// a konfekciós részben így számolja a p[76]-ot (ott p[43])
 			var hasszelesseg = db / 10 * 5;
 			//hasszelesseg / 2 + kulcsszam / 2
-			p[76] = new Line2D(p[40], p[33]).toRay2D().getPointAtDistance(hasszelesseg / 2 + kulcsszam + 2);
+			//p[76] = new Line2D(p[40], p[33]).toRay2D().getPointAtDistance(hasszelesseg / 2 + kulcsszam + 2);
 
 			var l_76 = perpendicularLine(new Line2D(p[76], p[75]), p[76]);
 
@@ -450,6 +448,7 @@ class Zako extends React.Component {
 		var p = points;
 		var viewBox = `${p[87].x} ${p[83].y -5} ${Math.abs(p[87].x-p[5].x)}  ${Math.abs(p[17].y-p[74].y - 8)}` // TODO: automatic viewbox calc
 
+		console.log(p[75], p[39])
 		return (
       <svg
         viewBox={viewBox}
@@ -460,7 +459,10 @@ class Zako extends React.Component {
 					<path d={paths[key]} key={'path_' + key}/>
 				)}
 				{Object.keys(points).map (key =>
-					<circle cx={points[key].x} cy={points[key].y} r={0.5} key={key}/>
+					<g>
+						<circle cx={points[key].x} cy={points[key].y} r={0.5} key={key}/>
+						<text x={points[key].x} y={points[key].y} fontSize="2">{key}</text>
+					</g>
 				)}
 			</svg>
 		)
