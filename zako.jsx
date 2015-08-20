@@ -7,10 +7,21 @@ import Circle from "./toxi/geom/Circle"
 import mathUtils from "./toxi/math/mathUtils"
 import getIntersections from "./geometricFunctions"
 
+window.Vec2D = Vec2D
+window.Line2D = Line2D
+window.Ray2D = Ray2D
+window.mathUtils = mathUtils
+
+
 class Zako extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = this.props;
+	}
+	componentDidMount () {
+		var $0 = React.findDOMNode(this)
+		var bbox = $0.getBBox();
+		$0.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
 	}
 
 	render () {
@@ -27,25 +38,20 @@ class Zako extends React.Component {
 			return line1.intersectLine(line2).pos;
 		}
 
-		function lineRight(point, distance) {
-			distance = distance || 100;
-			return new Line2D(point, point.add(distance, 0));
-		}
-
 		function zako(m, sz) {
-			var testmagassag = m.testmagassag,
-			mellboseg = m.mellboseg,
-			derekboseg = m.derekboseg,
-			csipoboseg = m.csipoboseg,
-			derekhossza = m.derekhossza,
-			zakohossza = m.zakohossza,
-			hataszelesseg = m.hataszelesseg,
-			vallszelesseg = m.vallszelesseg,
-			ujjahossza = m.ujjahossza,
-			hata_egyensulymeret = m.hata_egyensulymeret,
-			eleje_egyensulymeret = m.eleje_egyensulymeret,
+			var {testmagassag,
+						mellboseg,
+						csipoboseg,
+						derekhossza,
+						derekboseg,
+						zakohossza,
+						hataszelesseg,
+						vallszelesseg,
+						ujjahossza,
+						hata_egyensulymeret,
+						eleje_egyensulymeret} = m;
 
-			tm = testmagassag,
+			var tm = testmagassag,
 			mb = mellboseg / 2,
 			db = derekboseg / 2,
 			csb = csipoboseg / 2;
@@ -57,13 +63,7 @@ class Zako extends React.Component {
 			// HÁTA
 
 			// kulcsszám
-			//var kulcsszam = db / 10 + ((mb / 10) * 0.5) - 5
 			var kulcsszam = eval(sz.kulcsszam);
-			// alacsony = db /10 + mb/10 *0.5 - 1.5
-			// nagyhasú = db /10 + mb/10*0.5 - 5
-			// sportos = db /10 + mb/10*0.5 - 5
-			// magas, kissé hajlott = db /10 + mb/10*0.5 - 5 + 1.5
-			//
 
 			p[2] = p[1].add(0,  kulcsszam);
 
@@ -458,7 +458,6 @@ class Zako extends React.Component {
 		console.log(p[75], p[39])
 		return (
       <svg
-        viewBox={viewBox}
         width="800"
         height="800"
         fill="currentcolor">
