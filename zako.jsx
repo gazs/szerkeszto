@@ -355,9 +355,9 @@ class Zako extends React.Component {
 			var paths = {};
 
 			// első rész
-			paths.elso = (`M${p[66].x},${p[66].y}
-								 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[42].x},${p[42].y}
-								 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,1 ${p[82].x},${p[82].y}
+			paths.elso = `M${p[66].x},${p[66].y}
+								 A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,1 ${p[42].x},${p[42].y}
+								 A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,1 ${p[82].x},${p[82].y}
 								 L${p[77].x},${p[77].y}
 								 A${nyakszelesseg},${nyakszelesseg} 0  0, 1 ${p[85].x},${p[85].y}
 								 L${p[85].x},${p[85].y}
@@ -375,17 +375,17 @@ class Zako extends React.Component {
 								 L${p[70].x},${p[70].y}
 								 Z
 
-								 `)
-			 paths.kihajto_dup = (`
+								 `
+		paths.kihajto_dup = `
 									M${p[85].x},${p[85].y}
 									${ '' /* L${p[84].x -1.5},${p[84].y} */ }
 									L${p['34a'].x},${p['34a'].y}
 									L${p['87b'].x},${p['87b'].y}
 									Z
-									`)
+									`
 
-				// oldalrész
-				paths.oldalresz = (`M${p[62].x},${p[62].y}
+		// oldalrész
+		paths.oldalresz = `M${p[62].x},${p[62].y}
 									 A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}
 									 L${p[59].x},${p[59].y}
 									 L${p[56].x},${p[56].y}
@@ -396,9 +396,9 @@ class Zako extends React.Component {
 									 L${p[65].x},${p[65].y}
 									 L${p[71].x},${p[71].y}
 									 Z
-									 `)
-				 // hát
-				 paths.hatresz = (`M${p[12].x},${p[12].y}
+									 `
+		// hát
+		paths.hatresz = `M${p[12].x},${p[12].y}
 										A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}
 										A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[18].x},${p[18].y}
 										L${p[17].x},${p[17].y}
@@ -415,15 +415,15 @@ class Zako extends React.Component {
 										L${p[11].x},${p[11].y}
 										L${p[13].x},${p[13].y}
 										Z
-										`)
+										`
 										//-----
 			//
-			paths.szivarzseb = (`M${p['40a'].x},${p['40a'].y}
+			paths.szivarzseb = `M${p['40a'].x},${p['40a'].y}
 													L${p['40b'].x},${p['40b'].y}
 													L${p['40b'].x},${p['40b'].y-2}
 													L${p['40a'].x},${p['40a'].y-2}
 													Z
-			`)
+			`
 
 			return {paths: paths, points: p};
 
