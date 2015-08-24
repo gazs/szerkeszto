@@ -203,7 +203,6 @@ var testtartasok = {
 
 var React = require('react');
 var {Dropdown, Measurements} = require('./range.jsx');
-var Zako = require('./zako.jsx');
 
 var Szerkesztes = require('./szerkesztes.jsx');
 var nadrag_sz = require('./nadrag.js')
