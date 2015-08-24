@@ -81,31 +81,36 @@ function render (m, sz) {
 			get length() {
 				return this.line.getLength();
 			}
+
+			copy () {
+				return this.line.copy()
+			}
 			get a() { return this.line.a}
 			get b() { return this.line.b}
 		}
 
 		
-		function l(str) {
-			let [p1, p2] = str.split('-')
-			let l = new Line2D(points[p1].vec, points[p2].vec).copy()
-			return l
+		let points = {};
 
+		function createL(points) {
+			return function l(str) {
+				let [p1, p2] = str.split('-')
+				return new line(points[p1],points[p2])
+			}
 		}
 
-		// intersectionOf(l('11-12'), l('13-14'))
+		var l = createL(points)
+
 		function intersectionOf(line1, line2) {
-				//lines.push(line1)
-				//lines.push(line2)
 			let pos = line1.copy().scale(2).intersectLine(line2.copy().scale(2)).pos;
 			if (pos) {
 			return new p(pos.x, pos.y)
 			} else {
+				console.warn('!!! points dont intersect', line1, line2)
 			}
 		}
 
 
-		let points = {};
 
 		points[1] = new p();
 		points[2] = points[1].up(nadrag_kulso_hossza + 1)
@@ -118,16 +123,28 @@ function render (m, sz) {
 		points[9] = points[8].left(csb /10)
 		points['9a'] = points[9].right(1.5)
 		points[10] = points[9].right(points[9].distance(points[7]) / 2)
-		points[11] = new p(points[10].x, points[2].y)
-		points[12] = new p(points[10].x, points[4].y)
-		points[13] = new p(points[10].x, points[1].y)
+		points[11] = intersectionOf(
+			points[10].verticalLine(),
+			points[2].horizontalLine()
+		)
+		points[12] = intersectionOf(
+			points[10].verticalLine(),
+			points[4].horizontalLine()
+		)
+		points[13] = intersectionOf(
+			points[10].verticalLine(),
+			points[1].horizontalLine()
+		)
 		points[14] = points[13].right(nadrag_aljaboseg / 4)
 		points[15] = points[13].left(nadrag_aljaboseg / 4)
 		points[16] = points[13].up(1)
 		points['14a'] = points[14].perpendicularToLineWith(points[16], 7, 'otherside');
 		points['15a'] = points[15].perpendicularToLineWith(points[16], 7);
-		points['17'] = intersectionOf(l('4-12').scale(5), l('15a-9').scale(5))
-		points['18'] = intersectionOf(l('4-12').scale(5), l('14a-6').scale(5))
+		points['17'] = intersectionOf(
+			points[4].horizontalLine(),
+			l('15a-9')
+		)
+		points['18'] = intersectionOf(points[4].horizontalLine(), l('14a-6'))
 		points['6a'] = intersectionOf(
 			points[6].horizontalLine(),
 			points[8].longlinePerpendicularToLineWith(points[3])
@@ -137,7 +154,7 @@ function render (m, sz) {
 			points[8].longlinePerpendicularToLineWith(points[3])
 		)
 		points[20] = points[19].right((db / 10) * 5 + 3)
-		points[21] = points[11].right(l('11-20').getLength() / 2)
+		points[21] = points[11].right(l('11-20').length / 2)
 		points[22] = intersectionOf(
 			points[21].verticalLine(),
 			points[6].horizontalLine()
@@ -156,43 +173,43 @@ function render (m, sz) {
 			points[12].horizontalLine(),
 			l('16-30')
 		)
-		points[31] = points[14].atAngle(new line(points[16], points[14]).angle, 2)
-		points[32] = points[15].atAngle(new line(points[16], points[15]).angle, 2)
+		points[31] = points[14].atAngle(l('16-14').angle, 2)
+		points[32] = points[15].atAngle(l('16-15').angle, 2)
 		points[33] = points[13].down(1)
 		points[34] = points[17].left(3 + 0.5)
 		points[35] = points[18].right(3 - 0.5)
 		points[36] = points[30].right(csb / 10 * 4 + 1) // ha bővebb nadrágot készítünk akkor +2 vagy + 3 cm
 		points[37] = points[30].left(csb / 10 * 4 + 1)
-		points[38] = points[34].atAngle(new line(points[34], points[37]).angle, new line(points[17], points[9]).length) // nem pont ott, hanem kicsit ívesebben!
+		points[38] = points[34].atAngle(l('34-37').angle, l('17-9').length) // nem pont ott, hanem kicsit ívesebben!
 		points[39] = points[37].right(csb / 10 * 3) // alámenet szélessége
 
 		points[40] = points[19].right(csb / 10)
 		points[41] = points[40].right(csb / 10 * 5 + 4)
-		points[42] = points[35].atAngle(new line(points[35], points[36]).angle, new line(points[18], points[20]).length) // TODO ez egy ív hosszát akarja egy másik ívre rámérni!!!
+		points[42] = points[35].atAngle(l('35-36').angle, l('18-20').length) // TODO ez egy ív hosszát akarja egy másik ívre rámérni!!!
 		points['40a'] = intersectionOf(
 			points['6a'].horizontalLine(),
 			l('39-40')
 		)
 		points[43] = new p(new Line2D(points['40a'].vec, points[40].vec).copy().scale(2).closestPointTo(points[42].vec))
-		console.warn(new line(points[40], points[43]).length, csb / 10 * 0.5, '40-43 == csb / 10 * 0.5 ellenőrzőméret')
+		console.warn(l('40-43').length, csb / 10 * 0.5, '40-43 == csb / 10 * 0.5 ellenőrzőméret')
 
-		// with line(42-43)
+		//// with line(42-43)
 		var l42_43 = new line(points[42], points[43])
 		var l43_42 = new line(points[43], points[42])
 		points[44] = points[43].atAngle(l42_43.angle, 0.5)
 		points[45] = points[44].atAngle(l42_43.angle, 2.5)
 		points[46] = points[40].left(2.5)
 		points[48] = points['40a'].left(1.5)
-		points[49] = points['40a'].right(csb + 3 /*a varrásra*/ + 0.5 - l('6-6a').getLength())
+		points[49] = points['40a'].right(csb + 3 /*a varrásra*/ + 0.5 - l('6-6a').length)
 		points[50] = points[44].atAngle(l43_42.angle, db / 10 * 5 + 4)
-		points[51] = points[44].atAngle(l43_42.angle, l('44-42').getLength() / 3 + 2)
-		var hatso_formazovarras1_szelessege = l('50-42').getLength() / 10 * 6;
+		points[51] = points[44].atAngle(l43_42.angle, l('44-42').length / 3 + 2)
+		var hatso_formazovarras1_szelessege = l('50-42').length / 10 * 6;
 		points[52] = points[51].atAngle(l42_43.angle, hatso_formazovarras1_szelessege / 2)
 		points[53] = points[51].atAngle(l43_42.angle, hatso_formazovarras1_szelessege / 2)
 		points[54] = points[51].atAngle(l42_43.angle + mathUtils.radians(270), 14)
 
-		points[55] = points[52].atAngle(l43_42.angle, l('52-42').getLength() / 2)
-		var hatso_formazovarras2_szelessege = l('50-42').getLength() / 10 * 4 / 2
+		points[55] = points[52].atAngle(l43_42.angle, l('52-42').length / 2)
+		var hatso_formazovarras2_szelessege = l('50-42').length / 10 * 4 / 2
 		points[56] = points[55].atAngle(l42_43.angle, hatso_formazovarras2_szelessege)
 		points[57] = points[55].atAngle(l43_42.angle, hatso_formazovarras2_szelessege)
 		points[58] = points[55].atAngle(l42_43.angle + mathUtils.radians(270), 11)
@@ -260,7 +277,6 @@ function render (m, sz) {
 				L('42'),
 				L('49'),
 				'Z'
-
 			)
 
 	return {points, paths, lines}
