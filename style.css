@@ -5,13 +5,11 @@ svg {
 }
 
 
-svg path, svg polyline {
+svg path, svg polyline, svg line {
 fill:rgba(0,0,0,0.2);
-stroke:rgba(0,0,0,0.2)
+stroke:rgba(0,0,0,0.6);
+stroke-width: 0.4px;
 }
-	svg {
-		position: fixed;
-	}
 
 @media (max-width: 768px) {
 	.configs {

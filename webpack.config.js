@@ -1,6 +1,6 @@
 module.exports = {
   entry: {
-    app: ["./zako.js"]
+    app: ["./main.js"]
   },
   output: {
     path: "./build",
