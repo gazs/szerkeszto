@@ -144,7 +144,9 @@ function render (m, sz) {
 			points[4].horizontalLine(),
 			l('15a-9')
 		)
-		points['18'] = intersectionOf(points[4].horizontalLine(), l('14a-6'))
+		points['18'] = intersectionOf(
+			points[4].horizontalLine(), l('14a-6')
+		)
 		points['6a'] = intersectionOf(
 			points[6].horizontalLine(),
 			points[8].longlinePerpendicularToLineWith(points[3])
