@@ -1,3 +1,6 @@
+var {point, line, createL, intersectionOf} =require("./szerkfunc")
+import mathUtils from "./toxi/math/mathUtils"
+
 function render (m, sz) {
 
 		let {testmagassag,
@@ -12,107 +15,18 @@ function render (m, sz) {
 			tm = testmagassag;
 
 
-		class p {
-			constructor (x, y) {
-				this.vec = new Vec2D(x, y);
-			}
-
-			get x() { return this.vec.x}
-			get y() { return this.vec.y}
-
-			atAngle (rad, distance) {
-				let v = new Vec2D(0, distance).rotate(rad)
-				return new p(this.vec.add(v.x, v.y))
-			}
-
-			left (distance) {
-				return this.atAngle(mathUtils.radians(90), distance)
-			}
-
-			right (distance) {
-				return this.atAngle(mathUtils.radians(270), distance)
-			}
-
-			up (distance) {
-				return this.atAngle(mathUtils.radians(180), distance)
-			}
-
-			down (distance) {
-				return this.atAngle(0, distance)
-			}
-
-			distance (p2) {
-				return new Line2D(this.vec, p2.vec).getLength();
-			}
-
-			perpendicularToLineWith (p2, distance, flip) {
-				let currentAngle = Math.atan2(p2.y - this.vec.y, p2.x - this.vec.x)
-				return this.atAngle(currentAngle + mathUtils.radians(flip ? 0 : 180), distance)
-			}
-
-
-			horizontalLine () {
-				return new Line2D(this.vec, this.left(1).vec).copy().scale(100)
-			}
-
-			verticalLine () {
-				return new Line2D(this.vec, this.up(1).vec).copy().scale(100)
-			}
-
-			longlinePerpendicularToLineWith (p2) {
-				let p3 = this.perpendicularToLineWith(p2, 20)
-				return new Line2D(this.vec, p3.vec);
-			}
-		}
 
 		let lines = []
 
-		class line {
-			constructor(p1, p2) {
-				this.line = new Line2D(p1.vec, p2.vec).copy()
-			}
-			atDistance (distance) {
-				let vec2d = this.line.toRay2D().getPointAtDistance(distance);
-				return new p(vec2d.x, vec2d.y);
-			}
-			get angle() {
-				return Math.atan2(this.line.b.y - this.line.a.y, this.line.b.x - this.line.a.x)+ mathUtils.radians(270) ///// W T F
-			}
-			get length() {
-				return this.line.getLength();
-			}
 
-			copy () {
-				return this.line.copy()
-			}
-			get a() { return this.line.a}
-			get b() { return this.line.b}
-		}
 
 		
 		let points = {};
 
-		function createL(points) {
-			return function l(str) {
-				let [p1, p2] = str.split('-')
-				return new line(points[p1],points[p2])
-			}
-		}
 
 		var l = createL(points)
 
-		function intersectionOf(line1, line2) {
-			let pos = line1.copy().scale(2).intersectLine(line2.copy().scale(2)).pos;
-			if (pos) {
-			return new p(pos.x, pos.y)
-			} else {
-				console.warn('!!! points dont intersect', line1, line2)
-			}
-		}
-
-
-
-		points[1] = new p();
+		points[1] = new point();
 		points[2] = points[1].up(nadrag_kulso_hossza + 1)
 		points[3] = points[1].up(nadrag_belso_hossza + 1)
 		points[4] = points[1].up((nadrag_belso_hossza + 1) / 2 + 5)
@@ -192,12 +106,13 @@ function render (m, sz) {
 			points['6a'].horizontalLine(),
 			l('39-40')
 		)
-		points[43] = new p(new Line2D(points['40a'].vec, points[40].vec).copy().scale(2).closestPointTo(points[42].vec))
-		console.warn(l('40-43').length, csb / 10 * 0.5, '40-43 == csb / 10 * 0.5 ellenőrzőméret')
+
+		points[43] = new point(l('40a-40').line.copy().scale(2).closestPointTo(points[42].vec))
+		//console.warn(l('40-43').length, csb / 10 * 0.5, '40-43 == csb / 10 * 0.5 ellenőrzőméret')
 
 		//// with line(42-43)
-		var l42_43 = new line(points[42], points[43])
-		var l43_42 = new line(points[43], points[42])
+		var l42_43 = l('42-43') //new line(points[42], points[43])
+		var l43_42 =l('43-42') // new line(points[43], points[42])
 		points[44] = points[43].atAngle(l42_43.angle, 0.5)
 		points[45] = points[44].atAngle(l42_43.angle, 2.5)
 		points[46] = points[40].left(2.5)

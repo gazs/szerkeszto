@@ -239,12 +239,12 @@ class Main extends React.Component {
 				<Szerkesztes
 					meretek={this.state.meretek}
 					szamok={this.state.szamok}
-					szerkesztofunc={nadrag_sz}
+					szerkesztofunc={zako_sz}
 				/>
 				<Szerkesztes
 					meretek={this.state.meretek}
 					szamok={this.state.szamok}
-					szerkesztofunc={zako_sz}
+					szerkesztofunc={nadrag_sz}
 				/>
 
 				<div className="configs col-xs-12 col-md-4 col-md-offset-8">

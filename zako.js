@@ -5,10 +5,12 @@ import Circle from "./toxi/geom/Circle"
 import mathUtils from "./toxi/math/mathUtils"
 import getIntersections from "./geometricFunctions"
 
-window.Vec2D = Vec2D
-window.Line2D = Line2D
-window.Ray2D = Ray2D
-window.mathUtils = mathUtils
+//window.Vec2D = Vec2D
+//window.Line2D = Line2D
+//window.Ray2D = Ray2D
+//window.mathUtils = mathUtils
+
+var {point, line, createL, intersectionOf} =require("./szerkfunc")
 
 function perpendicularLine(line, pointOnLine) {
 	return pointOnLine.add(line.getDirection().getRotated(mathUtils.radians(90)).scale(10))
@@ -43,6 +45,7 @@ function render (m, sz) {
 			var p = [];
 
 			p[1] = new Vec2D();
+			//p[1] = new point();
 
 			// HÁTA
 
