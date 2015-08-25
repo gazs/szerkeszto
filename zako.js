@@ -23,22 +23,22 @@ function intersection(line1, line2) {
 }
 
 function render (m, sz) {
-			var {testmagassag,
-						mellboseg,
-						csipoboseg,
-						derekhossza,
-						derekboseg,
-						zakohossza,
-						hataszelesseg,
-						vallszelesseg,
-						ujjahossza,
-						hata_egyensulymeret,
-						eleje_egyensulymeret} = m;
+	var {testmagassag,
+				mellboseg,
+				csipoboseg,
+				derekhossza,
+				derekboseg,
+				zakohossza,
+				hataszelesseg,
+				vallszelesseg,
+				ujjahossza,
+				hata_egyensulymeret,
+				eleje_egyensulymeret} = m;
 
-			var tm = testmagassag,
-			mb = mellboseg / 2,
-			db = derekboseg / 2,
-			csb = csipoboseg / 2;
+	var tm = testmagassag,
+	mb = mellboseg / 2,
+	db = derekboseg / 2,
+	csb = csipoboseg / 2;
 			//
 			var p = [];
 
@@ -336,85 +336,85 @@ function render (m, sz) {
 			//var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
 
 
-			function M(p_id) {
-				let p1 = p[p_id];
-				return `M${p1.x},${p1.y}`
-			}
-			function L(p_id) {
-				let p1 = p[p_id];
-				return `L${p1.x},${p1.y}`
-			}
-			function A(w, h, p_id) {
-				return `A${w},${h} 0 0,1 ${p[p_id].x},${p[p_id].y}`
-			}
-			function path() {
-				return Array.prototype.join.call(arguments, " ")
-			}
-			var paths = {};
+	function M(p_id) {
+		let p1 = p[p_id];
+		return `M${p1.x},${p1.y}`
+	}
+	function L(p_id) {
+		let p1 = p[p_id];
+		return `L${p1.x},${p1.y}`
+	}
+	function A(w, h, p_id) {
+		return `A${w},${h} 0 0,1 ${p[p_id].x},${p[p_id].y}`
+	}
+	function path() {
+		return Array.prototype.join.call(arguments, " ")
+	}
+	var paths = {};
 
 			// első rész
-			paths.elso = path(M(66),
-								A(honaljmelyseg/2, ujjaszelesseg/2, 42),
-								A(honaljmelyseg/2, ujjaszelesseg/2, 82),
-								L(77),
-								A(nyakszelesseg, nyakszelesseg, 85),
-								L(85),
-								L(87),
-								L('34a'),
-								L('35'),
-								`C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`,
-								L(72),
-								L(49),
-								L(48),
-								L(50),
-								L(51),
-								L(68),
-								L(70),
-								"Z")
+	paths.elso = path(M(66),
+						A(honaljmelyseg/2, ujjaszelesseg/2, 42),
+						A(honaljmelyseg/2, ujjaszelesseg/2, 82),
+						L(77),
+						A(nyakszelesseg, nyakszelesseg, 85),
+						L(85),
+						L(87),
+						L('34a'),
+						L('35'),
+						`C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`,
+						L(72),
+						L(49),
+						L(48),
+						L(50),
+						L(51),
+						L(68),
+						L(70),
+						"Z")
 
 
 
-		paths.kihajto_dup = path(M(85), L('34a'), L('87b'), 'Z')
+	paths.kihajto_dup = path(M(85), L('34a'), L('87b'), 'Z')
 
-		// oldalrész
-		paths.oldalresz = path(M(62),
-									 `A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}`,
-													 L(59),
-													 L(56),
-													 L(58),
-													 L(54),
-													 L(61),
-													 L('61a'),
-													 L(65),
-													 L(71),
-													 'Z')
-		// hát
-		paths.hatresz = path(M(12),
-										`A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}`,
-										`A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[18].x},${p[18].y}`,
-												 L(17),
-										`A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}`,
-										L(15),
-										L(5),
-										L(4),
-										L(19),
-										L(23),
-										L(20),
-										L(21),
-										L(22),
-										L(25),
-										L(11),
-										L(13),
-										'Z')
+	// oldalrész
+	paths.oldalresz = path(M(62),
+								 `A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}`,
+												 L(59),
+												 L(56),
+												 L(58),
+												 L(54),
+												 L(61),
+												 L('61a'),
+												 L(65),
+												 L(71),
+												 'Z')
+	// hát
+	paths.hatresz = path(M(12),
+									`A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}`,
+									`A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[18].x},${p[18].y}`,
+											 L(17),
+									`A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}`,
+									L(15),
+									L(5),
+									L(4),
+									L(19),
+									L(23),
+									L(20),
+									L(21),
+									L(22),
+									L(25),
+									L(11),
+									L(13),
+									'Z')
 
 			//
-			paths.szivarzseb = path(M('40a'),
-															L('40b'),
-															`L${p['40b'].x},${p['40b'].y-2}`,
-															`L${p['40a'].x},${p['40a'].y-2}`,
+	paths.szivarzseb = path(M('40a'),
+													L('40b'),
+													`L${p['40b'].x},${p['40b'].y-2}`,
+													`L${p['40a'].x},${p['40a'].y-2}`,
 													'Z')
 
-			return {paths: paths, points: p};
+	return {paths: paths, points: p};
 
 }
 module.exports = render
