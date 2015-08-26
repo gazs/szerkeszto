@@ -7,7 +7,7 @@ svg {
 
 
 body {
-	font-family: Gravur;
+	font-family: OSIFont;
 }
 
 svg path, svg polyline, svg line {
@@ -32,7 +32,7 @@ stroke-width: 0.4px;
 }
 
 @font-face {
-	font-family: Gravur;
-	src: url(gravuconlig.woff2);
+	font-family: OSIFont;
+	src: url(osifont.ttf);
 }
 
