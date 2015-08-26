@@ -193,7 +193,7 @@ function render (m, sz) {
 	var mellformazo_varras_felso_vege= eval(sz.mellformazo_varras_felso_vege);
 
 	p[47] = p[46].down(mellformazo_varras_felso_vege);
-	p[48] = p[47].left(-0.5); // segédpont
+	p[48] = p[47].left(0.5); // segédpont
 
 	p[49] = p[46].down((p[8].y - p[46].y) / 2 + 3)
 
