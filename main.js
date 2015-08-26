@@ -182,6 +182,7 @@ var szamok = {
 	//vallszelsseg1 ,??
 	galler_szelesseg: 3,
 	hajtoka_szelesseg: 'mb / 10 + 3',
+	hata_nyakmagassag: 'mb / 10 * 0.5 + 1.5',
 	ujjaszelesseg: 'mb / 10 * 2.5 + 11',
 	//honaljmelyseg: '(distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3'
 }
