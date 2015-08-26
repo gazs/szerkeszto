@@ -6,8 +6,9 @@ svg {
 }
 
 
-body {
+* {
 	font-family: OSIFont;
+	font-weight: 100 !important;
 }
 
 svg path, svg polyline, svg line {
