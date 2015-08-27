@@ -297,9 +297,11 @@ function render (m, sz) {
 	)
 
 
+
 	////var mellnyitas = kulcsszam / 2 + 0.8;
 	var mellnyitas = eval(sz.mellnyitas);
-	p[75] = p[33].up(mellnyitas);
+	//p[75] = p[33].up(mellnyitas);
+	p[75] = p[33].atAngle(mathUtils.radians(185), mellnyitas); // egy picit jobbra boruljon, a 39-79 az amúgy 187 fok lenne
 
 
 	p[76] = p[33].atAngleOf(l('33-40'), l('33-38').length)
@@ -385,6 +387,7 @@ function render (m, sz) {
 			var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
 			var ujjaszelesseg = eval(sz.ujjaszelesseg);
 			////var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
+
 
 
 	function M(p_id) {
