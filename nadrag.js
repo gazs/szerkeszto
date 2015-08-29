@@ -108,6 +108,7 @@ function render (m, sz) {
 		)
 
 		points[43] = new point(l('40a-40').line.copy().scale(2).closestPointTo(points[42].vec))
+		//points[43] = l('40a-40').closestPointTo(points[42])
 		//console.warn(l('40-43').length, csb / 10 * 0.5, '40-43 == csb / 10 * 0.5 ellenőrzőméret')
 
 		//// with line(42-43)
