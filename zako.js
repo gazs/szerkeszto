@@ -534,8 +534,8 @@ p[94] = new point(circleLineIntersect(
 			////
 	paths.szivarzseb = path(M('40a'),
 													L('40b'),
-													`L${p['40b'].x},${p['40b'].y-2.8}`,
-													`L${p['40a'].x},${p['40a'].y-2.8}`,
+													`L${p['40b'].x},${p['40b'].y-2}`,
+													`L${p['40a'].x},${p['40a'].y-2}`,
 													'Z')
 
 	return {paths: paths, points: p};
