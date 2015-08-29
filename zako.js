@@ -1,28 +1,12 @@
 import Vec2D from "./toxi/geom/Vec2D"
-import Line2D from "./toxi/geom/Line2D"
-import Ray2D from "./toxi/geom/Ray2D"
-import Circle from "./toxi/geom/Circle"
 import mathUtils from "./toxi/math/mathUtils"
 import getIntersections from "./geometricFunctions"
 
-//window.Vec2D = Vec2D
-//window.Line2D = Line2D
-//window.Ray2D = Ray2D
-//window.mathUtils = mathUtils
 
 var {point, line, createL, intersectionOf} =require("./szerkfunc")
 
-function perpendicularLine(line, pointOnLine) {
-	return pointOnLine.add(line.getDirection().getRotated(mathUtils.radians(90)).scale(10))
-}
 
-function distance(point1, point2) {
-	return new Line2D(point1, point2).getLength();
-}
 
-function intersection(line1, line2) {
-	return line1.intersectLine(line2).pos;
-}
 
 function render (m, sz) {
 	var {testmagassag,
@@ -46,7 +30,6 @@ function render (m, sz) {
 
 	var l = createL(p);
 
-	//p[1] = new Vec2D();
 	p[1] = new point();
 
 	// HÁTA
@@ -367,26 +350,56 @@ function render (m, sz) {
 	p['87b'] = p[86].perpendicularToLineWith(p[85], hajtoka_szelesseg, 'flip')
 
 
-	p[84] = p[34].up(8); // felső gomblyuk helye
+	var gombok = 2;
+
+	if (gombok === 2) {
+		p[84] = p[33].down(16);
+		p['84a'] = p[84].left(1.5);
+	} else if (gombok === 3) {
+		p['84'] = p[34].up(8); // felső gomblyuk helye
+		p['84a'] = p[84].left(1.5);
+	}
 
 	p['34a'] = p[34].left(1.5);
 
 
-			///// GALLÉR
-			//// 77, 83, 85, 86
-			////
-			//var galler1 = 3.5;
-			////p[87] = new Line2D(p[86], p[85]).toRay2D().getPointAtDistance(galler1);
-			////p[88] = new Line2D(p[85], p[83]).toRay2D().getPointAtDistance(distance(p[15], p[17])); // TODO: nyakív miatt nem légvonalban kéne
-			////p[89] = 
+
+	///// GALLÉR
+//77, 83, 85, 86
+//77, 83, 85, 87
+	
+
+// pontok  | 1x3 gomb csapott | 1x5 csapott | 1x2 sarkos angol | 1x1 sarkos
+// 87-87g  | 3.5              | 4           | 4                | 4.2
+// 83-88   | l('15-17')       | l('15-17')  | l('15-17')       | l('15-17')
+// 88-89   | mb/10            | mb/10 - 0.5 | mb/10 - 1        | mb/10 - 1.5
+// 89-90   | 3                | 3           | 3                | 3
+// 89-91   | 4                | 4           | 4                | 4
+// 83-92   | 4.5              | 4.5         | 4.5              | 4.5
+// 87-93   | 3.5              | 4           | 2                | X
+// 93-94   | 2.5              | 2           | X                | X
+// 87-94   | X                | X           | 4                | 5
+
+p['87g'] = p[87].atAngleOf(l('87-85'), 4);
+p[88] = p[83].atAngleOf(l('85-83'), l('15-17').length)
+p[89] = p[88].perpendicularToLineWith(p[83], mb / 10 -1)
+p[90] = p[89].perpendicularToLineWith(p[83], 3) // álló gallér szélessége
+p[91] = p[89].perpendicularToLineWith(p[83], 4, 'flip') // fekvő gallér szélessége
+p[92] = p[83].atAngleOf(l('77-83'), 4.5)
+p[93] = p['87g'].perpendicularToLineWith(p[86], 2)
+//p[94] = p[93].perpendicularToLineWith(p['87g'], 2.5, 'flip') // FIXME rossz
+p[94] = new point(circleLineIntersect(
+	l('91-92'),
+	p['87g'],
+	5,
+	'intersection1'
+	))
 
 
 
-			//////
 
-			var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
-			var ujjaszelesseg = eval(sz.ujjaszelesseg);
-			////var honaljmelyseg = (distance(p[11], p[18]) + distance(p[66], p[82]))/ 2 - 3;
+	var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
+	var ujjaszelesseg = eval(sz.ujjaszelesseg);
 
 
 
@@ -401,73 +414,114 @@ function render (m, sz) {
 	function A(w, h, p_id) {
 		return `A${w},${h} 0 0,1 ${p[p_id].x},${p[p_id].y}`
 	}
+	function Q(seged, vegpont) {
+		return `Q${p[seged].x},${p[seged].y} ${p[vegpont].x},${p[vegpont].y}`
+	}
+	function C(seged1, seged2, vegpont) {
+		let x1 = p[seged1] ? p[seged1].x : seged1.x;
+		let y1 = p[seged1] ? p[seged1].y : seged1.y;
+		let x2 = p[seged2] ? p[seged2].x : seged2.x;
+		let y2 = p[seged2] ? p[seged2].y : seged2.y;
+		let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+		let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+		return `C${x1},${y1} ${x2},${y2} ${x3},${y3}`
+	}
+
 	function path() {
 		return Array.prototype.join.call(arguments, " ")
 	}
 	var paths = {};
 
+
+	let kihajto;
+	if (gombok === 3 || gombok == 2) {
+		kihajto = path(
+			L(85),
+			L(87),
+			L('84a')
+		)
+		paths.kihajto_dup = path(
+			M(85),
+			L('87b'),
+			L('84a'),
+			'Z')
+	}
+
 			//// első rész
-	paths.elso = path(M(66),
-						A(honaljmelyseg/2, ujjaszelesseg/2, 42),
-						A(honaljmelyseg/2, ujjaszelesseg/2, 82),
-						L(77),
-						A(nyakszelesseg, nyakszelesseg, 85),
-						L(85),
-						L(87),
-						L('34a'),
-						L('35'),
-						`C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`,
-						L(72),
-						L(49),
-						L(48),
-						L(50),
-						L(51),
-						L(68),
-						L(70),
-						"Z")
+	paths.elso = path(
+		M(66),
+		C(40, p['40a'].up(l('66-82').length * 0.3), 82),
+		//A(honaljmelyseg/2, ujjaszelesseg/2, 42),
+		//A(honaljmelyseg/2, ujjaszelesseg/2, 82),
+		L(77),
+		A(nyakszelesseg, nyakszelesseg, 85),
+		kihajto,
+		L('35'),
+		`C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`,
+		L(72),
+		L(49),
+		L(48),
+		L(50),
+		L(51),
+		L(68),
+		L(70),
+		"Z");
 
 
-
-	paths.kihajto_dup = path(M(85), L('34a'), L('87b'), 'Z')
 
 	//// oldalrész
-	paths.oldalresz = path(M(62),
-								 `A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}`,
-												 L(59),
-												 L(56),
-												 L(58),
-												 L(54),
-												 L(61),
-												 //L('61b'),
-												 L('61a'),
-												 L(65),
-												 L(71),
-												 'Z')
+	paths.oldalresz = path(
+		M(62),
+		`A${honaljmelyseg/2},${ujjaszelesseg/2} 25 0,0 ${p[60].x},${p[60].y}`,
+		L(59),
+		L(56),
+		L(58),
+		L(54),
+		L('61b'),
+		L('61a'),
+		L('65a'),
+		Q(65, 71),
+		'Z')
 	//// hát
-	paths.hatresz = path(M(12),
-									`A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}`,
-									`A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[18].x},${p[18].y}`,
-											 L(17),
-									`A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}`,
-									L(15),
-									L(5),
-									L(4),
-									L(19),
-									L(23),
-									L(20),
-									//L(21),
-									L('21a'),
-									L(22),
-									L(25),
-									L(11),
-									L(13),
-									'Z')
+	paths.hatresz = path(
+		M(12),
+		//L(18),
+		C(10, p[10].up(l('18-12').length/3), 18),
+		//`A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[10].x},${p[10].y}`,
+		//`A${honaljmelyseg/2},${ujjaszelesseg/2} 0 0,0 ${p[18].x},${p[18].y}`,
+		L(17),
+		`A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}`,
+		L(15),
+		L(5),
+		L(4),
+		L(19),
+		L(23),
+		L(20),
+		//L(21),
+		L('21a'),
+		L(22),
+		L(25),
+		L(11),
+		L(13),
+		'Z')
+
+	//paths.galler = path(
+		//M(94),
+		//L(92),
+		//L(88),
+		//L(91),
+		//L(89),
+		//L(90),
+		//L(77),
+		//A(nyakszelesseg, nyakszelesseg, 85),
+		//L('87g'),
+		//'Z')
 
 			////
 	paths.szivarzseb = path(M('40a'),
 													L('40b'),
-													`L${p['40b'].x},${p['40b'].y-2}`,
-													`L${p['40a'].x},${p['40a'].y-2}`,
+													`L${p['40b'].x},${p['40b'].y-2.8}`,
+													`L${p['40a'].x},${p['40a'].y-2.8}`,
 													'Z')
 
 	return {paths: paths, points: p};
