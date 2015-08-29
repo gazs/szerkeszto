@@ -155,7 +155,7 @@ var meretek = {
 }
 
 var szamok = {
-	gombok: 1,
+	gombok: 2,
 	kulcsszam: 'db / 10 + ((mb / 10) * 0.5) - 5',
 	honaljmelyseg : 'tm / 10 + mb / 10',
 	csipomelyseg : 'tm / 10',
