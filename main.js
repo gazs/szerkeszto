@@ -155,6 +155,7 @@ var meretek = {
 }
 
 var szamok = {
+	gombok: 1,
 	kulcsszam: 'db / 10 + ((mb / 10) * 0.5) - 5',
 	honaljmelyseg : 'tm / 10 + mb / 10',
 	csipomelyseg : 'tm / 10',
@@ -209,7 +210,7 @@ var Szerkesztes = require('./szerkesztes.jsx');
 var nadrag_sz = require('./nadrag.js')
 var zako_sz = require('./zako.js')
 
-//var Zakoujja = require('./zakoujja.jsx');
+var zakoujja = require('./zakoujja.js');
 
 
 var BBModel = require('backbone-model').Model;
@@ -242,12 +243,19 @@ class Main extends React.Component {
 					szamok={this.state.szamok}
 					szerkesztofunc={zako_sz}
 				/>
+				{ /*
+				<Szerkesztes
+					meretek={this.state.meretek}
+					szamok={this.state.szamok}
+					szerkesztofunc={zakoujja}
+				/>
 				<Szerkesztes
 					meretek={this.state.meretek}
 					szamok={this.state.szamok}
 					szerkesztofunc={nadrag_sz}
 				/>
 
+					*/ }
 				<div className="configs col-xs-12 col-md-4 col-md-offset-8">
 					<form className="form-horizontal">
 						<Measurements items={this.state.meretek} model={this.meretekmodel}/>

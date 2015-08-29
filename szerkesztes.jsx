@@ -16,7 +16,8 @@ class Szerkesztes extends React.Component {
 	render () {
 		let {points, paths, lines} = this.props.szerkesztofunc(this.props.meretek, this.props.szamok)
 
-		lines = lines || []
+		lines  = lines || []
+		paths = paths || {}
 
 		return (
       <svg

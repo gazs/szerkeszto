@@ -350,9 +350,15 @@ function render (m, sz) {
 	p['87b'] = p[86].perpendicularToLineWith(p[85], hajtoka_szelesseg, 'flip')
 
 
-	var gombok = 2;
+	var gombok = sz.gombok;
+	//var gombok = 3;
 
+	if (gombok === 1) {
+		p[84] = p[34];
+		p['84a'] = p[84].left(1.5);
+	}
 	if (gombok === 2) {
+		//p[84] = p[34] //p[33].down(16);
 		p[84] = p[33].down(16);
 		p['84a'] = p[84].left(1.5);
 	} else if (gombok === 3) {
@@ -414,8 +420,12 @@ p[94] = new point(circleLineIntersect(
 	function A(w, h, p_id) {
 		return `A${w},${h} 0 0,1 ${p[p_id].x},${p[p_id].y}`
 	}
-	function Q(seged, vegpont) {
-		return `Q${p[seged].x},${p[seged].y} ${p[vegpont].x},${p[vegpont].y}`
+	function Q(seged1, vegpont) {
+		let x1 = p[seged1] ? p[seged1].x : seged1.x;
+		let y1 = p[seged1] ? p[seged1].y : seged1.y;
+		let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+		let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+		return `Q${x1},${y1} ${x3},${y3}`
 	}
 	function C(seged1, seged2, vegpont) {
 		let x1 = p[seged1] ? p[seged1].x : seged1.x;
@@ -434,16 +444,17 @@ p[94] = new point(circleLineIntersect(
 
 
 	let kihajto;
-	if (gombok === 3 || gombok == 2) {
+	if (gombok === 3 || gombok == 2 || gombok == 1) {
 		kihajto = path(
 			L(85),
 			L(87),
-			L('84a')
+			Q(p[87].atAngleOf(l('87-84a'), l('87-84a').length / 2).perpendicularToLineWith(p['87'], 1), '84a')
+			//L('84a')
 		)
 		paths.kihajto_dup = path(
 			M(85),
 			L('87b'),
-			L('84a'),
+			Q(p['87b'].atAngleOf(l('87b-84a'), l('87b-84a').length / 2).perpendicularToLineWith(p['84a'], 1), '84a'),
 			'Z')
 	}
 
@@ -453,9 +464,12 @@ p[94] = new point(circleLineIntersect(
 		C(40, p['40a'].up(l('66-82').length * 0.3), 82),
 		//A(honaljmelyseg/2, ujjaszelesseg/2, 42),
 		//A(honaljmelyseg/2, ujjaszelesseg/2, 82),
+		Q(81, l('77-81').line.getMidPoint(), 77),
 		L(77),
 		A(nyakszelesseg, nyakszelesseg, 85),
 		kihajto,
+		//Q(35),
+		L('34a'),
 		L('35'),
 		`C${p[74].x + 3},${p[74].y + 2},${p[74].x},${p[74].y},${p['72_bottom'].x},${p['72_bottom'].y}`,
 		L(72),
