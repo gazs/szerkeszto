@@ -1,4 +1,6 @@
 import React from "react";
+import svgPanZoom from "svg-pan-zoom"
+
 
 class Szerkesztes extends React.Component {
 	constructor(props) {
@@ -10,8 +12,8 @@ class Szerkesztes extends React.Component {
 		var $0 = React.findDOMNode(this)
 		var bbox = $0.getBBox();
 		$0.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
+		svgPanZoom($0, {controlIconsEnabled: true})
 	}
-
 
 	render () {
 		let {points, paths, lines} = this.props.szerkesztofunc(this.props.meretek, this.props.szamok)
@@ -20,9 +22,9 @@ class Szerkesztes extends React.Component {
 		paths = paths || {}
 
 		return (
-      <svg
-        width="800"
-        height="800">
+			<svg
+				width="800"
+				height="800">
 				{Object.keys(paths).map (key =>
 					<path d={paths[key]} key={'path_' + key}  />
 				)}

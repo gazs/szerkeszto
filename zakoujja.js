@@ -42,7 +42,7 @@ function render (m, sz) {
 	p[109] = p[107].right(1) // varrásszélesség
 	p[110] = p[107].left(6) // alsóujja helye
 	p[111] = p[110].left(1) // varrásszélesség
-	p[112] = p[101].down(ujjahossza + 1 + 2)
+	p[112] = p[101].down(ujjahossza - vallszelesseg + 1 + 2)
 	p[113] = intersectionOf(
 		p[112].horizontalLine(),
 		p[100].verticalLine()
@@ -68,10 +68,11 @@ function render (m, sz) {
 	p[119] = p[118].left(1)
 	p[120] = p[118].left(5)
 	// 110-115 = 119-115 - 0.5
-	p[121] = p[117].left(2.5)
+	p[121] = p[117].left(1.5)
 	p[122] = p[121].right(5.5)
 	p[123] = p[105].right(mb / 10 * 2.5 - 0.5)
 	p[124] = p[105].right(2)
+	p['124a'] = p[124].up(1).right(1)
 	p[125] = p[114].right(2)
 	p[126] = p[114].left(2)
 	p[127] = p[105].left(2)
@@ -92,6 +93,29 @@ function render (m, sz) {
 	function A(w, h, p_id) {
 		return `A${w},${h} 0 0,1 ${p[p_id].x},${p[p_id].y}`
 	}
+	function Q(seged1, vegpont) {
+		let x1 = p[seged1] ? p[seged1].x : seged1.x;
+		let y1 = p[seged1] ? p[seged1].y : seged1.y;
+		let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+		let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+		return `Q${x1},${y1} ${x3},${y3}`
+	}
+	function C(seged1, seged2, vegpont) {
+		let x1 = p[seged1] ? p[seged1].x : seged1.x;
+		let y1 = p[seged1] ? p[seged1].y : seged1.y;
+		let x2 = p[seged2] ? p[seged2].x : seged2.x;
+		let y2 = p[seged2] ? p[seged2].y : seged2.y;
+		let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+		let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+		return `C${x1},${y1} ${x2},${y2} ${x3},${y3}`
+	}
+	function S(seged1, vegpont) {
+		let x1 = p[seged1] ? p[seged1].x : seged1.x;
+		let y1 = p[seged1] ? p[seged1].y : seged1.y;
+		let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+		let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+		return `S${x1},${y1} ${x3},${y3}`
+	}
 	function path() {
 		return Array.prototype.join.call(arguments, " ")
 	}
@@ -100,22 +124,30 @@ function render (m, sz) {
 		M(125),
 		L(122),
 		L(124),
-		L(111),
+		L('124a'),
+		Q(l('123-124').atDistance(l('123-124') * 2/3).perpendicularToLineWith(p[124], 4),111),
+		//L(111),
+		L(110),
 		L('108a'),
 		L(120),
 		L(115),
 		"Z"
 	)
+	
 	ujjpaths.felso = path(
 		M(126),
 		L(121),
 		L(127),
-		L(106),
-		L(102),
+		C(p[127].right(l('127-105').length / 3), p[106].down(l('106-105').length/3), 106),
+		//L(106),
+		S(103,102),
+		//L(102),
+		S(104, 107),
 		L(107),
 		L(109),
-		L(119),
-		L(115),
+		Q(l('119-115').closestPointTo(p[119]).perpendicularToLineWith(p[115], 3), 115),
+		//L(119),
+		//L(115),
 		L(125),
 		L(114),
 		"Z"

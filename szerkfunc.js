@@ -62,6 +62,12 @@ class point {
 		return new Line2D(this.vec, p3.vec);
 	}
 
+	circleLineIntersect (line, radius, which = 'intersection2') {
+		var circlecenter = this;
+		var _p77 = getIntersections([line.a.x, line.a.y], [line.b.x, line.b.y], [circlecenter.x, circlecenter.y, radius]).points[which].coords;
+		return new point(_p77[0], _p77[1]);
+	}
+
 }
 
 class line {
@@ -81,6 +87,10 @@ class line {
 
 			closestPointTo (p) {
 				return new point(this.line.closestPointTo(p.vec));
+			}
+
+			getMidPoint() {
+				return new point(this.line.getMidPoint())
 			}
 
 			copy () {

@@ -284,32 +284,25 @@ function render (m, sz) {
 	////var mellnyitas = kulcsszam / 2 + 0.8;
 	var mellnyitas = eval(sz.mellnyitas);
 	//p[75] = p[33].up(mellnyitas);
-	p[75] = p[33].atAngle(mathUtils.radians(185), mellnyitas); // egy picit jobbra boruljon, a 39-79 az amúgy 187 fok lenne
+	p[75] = p[33].atAngle(mathUtils.radians(190), mellnyitas); // egy picit jobbra boruljon, a 39-79 az amúgy 187 fok lenne
 
 
 	p[76] = p[33].atAngleOf(l('33-40'), l('33-38').length)
-			//p[76] = p[38].add(0, -1.5); // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
+	//p[76] = p[38].add(0, -1.5); // TODO valójában tökre nem oda jelöli, cserébe nem magyarázza el hogy mi van.
 
-			//// a konfekciós részben így számolja a p[76]-ot (ott p[43])
-		//var hasszelesseg = db / 10 * 5;
-		////hasszelesseg / 2 + kulcsszam / 2
-		////p[76] = new Line2D(p[40], p[33]).toRay2D().getPointAtDistance(hasszelesseg / 2 + kulcsszam + 2);
+	//// a konfekciós részben így számolja a p[76]-ot (ott p[43])
+	//var hasszelesseg = db / 10 * 5;
+	////hasszelesseg / 2 + kulcsszam / 2
+	////p[76] = new Line2D(p[40], p[33]).toRay2D().getPointAtDistance(hasszelesseg / 2 + kulcsszam + 2);
 
-			//var l_76 = perpendicularLine(new Line2D(p[76], p[75]), p[76]);
 
-			function circleLineIntersect(line, circlecenter, radius, which) {
-				which = which ||  'intersection2';
-				var _p77 = getIntersections([line.a.x, line.a.y], [line.b.x, line.b.y], [circlecenter.x, circlecenter.y, radius]).points[which].coords;
-				return new Vec2D(_p77[0], _p77[1]);
-			}
 
 	// 45-től eleje-egyensúlyméret + 1 távolságra,
 	// a 76-ból induló merőlegest elmetszi valahol fent
-	p[77] = new point(circleLineIntersect(
+	p[77] = p[45].circleLineIntersect(
 		p[76].longlinePerpendicularToLineWith(p[75], 'flip'),
-		p[45],
 		eleje_egyensulymeret + 1
-	))
+	)
 
 	// nyakmélység
 	//var nyakmelyseg = mb / 10 + 3;
@@ -325,11 +318,10 @@ function render (m, sz) {
 
 	//var vallszelesseg1 = vallszelesseg + 1 + 0.5 -1; //distance(p[17], p[18]) -1;
 	var vallszelesseg1 = l('17-18').length - 1;
-	p[81]  = new point(circleLineIntersect(
+	p[81] = p[77].circleLineIntersect(
 		p[80].longlinePerpendicularToLineWith(p[77], 'flip'),
-		p[77],
 		vallszelesseg1
-	))
+	)
 
 			//var segedpont_82 = 0.6;
 	p[82] =p[81].atAngle(mathUtils.radians(30), 0.6);
@@ -374,6 +366,23 @@ function render (m, sz) {
 //77, 83, 85, 86
 //77, 83, 85, 87
 	
+var galler_variansok = {
+	'1x3_csapott': {
+	},
+	'1x5_csapott': {},
+	'1x2_sarkos': {
+		'87-87g': 4,
+		'88-89': mb / 10 - 1,
+		'87-93': 2,
+
+	},
+	'1x1_sarkos': {},
+}
+
+	var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
+	var ujjaszelesseg = eval(sz.ujjaszelesseg);
+
+var galler_varians = galler_variansok['1x2_sarkos']
 
 // pontok  | 1x3 gomb csapott | 1x5 csapott | 1x2 sarkos angol | 1x1 sarkos
 // 87-87g  | 3.5              | 4           | 4                | 4.2
@@ -385,27 +394,20 @@ function render (m, sz) {
 // 87-93   | 3.5              | 4           | 2                | X
 // 93-94   | 2.5              | 2           | X                | X
 // 87-94   | X                | X           | 4                | 5
+p['87g'] = l('87-85').atDistance(galler_varians['87-87g']);
 
-p['87g'] = p[87].atAngleOf(l('87-85'), 4);
-p[88] = p[83].atAngleOf(l('85-83'), l('15-17').length)
-p[89] = p[88].perpendicularToLineWith(p[83], mb / 10 -1)
-p[90] = p[89].perpendicularToLineWith(p[83], 3) // álló gallér szélessége
-p[91] = p[89].perpendicularToLineWith(p[83], 4, 'flip') // fekvő gallér szélessége
+
+var p1517 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+p1517.setAttribute('d', `M${p[17].x},${p[17].y} 	A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}`);
+p[88] = p[83].atAngleOf(l('85-83'), p1517.getTotalLength())
+
+p[89] = p[88].perpendicularToLineWith(p[83], galler_varians['88-89'])
+p[90] = p[89].perpendicularToLineWith(p[83], 3)
+p[91] = p[89].perpendicularToLineWith(p[83], 4, 'flip')
 p[92] = p[83].atAngleOf(l('77-83'), 4.5)
-p[93] = p['87g'].perpendicularToLineWith(p[86], 2)
-//p[94] = p[93].perpendicularToLineWith(p['87g'], 2.5, 'flip') // FIXME rossz
-p[94] = new point(circleLineIntersect(
-	l('91-92'),
-	p['87g'],
-	5,
-	'intersection1'
-	))
+p[93] = p['87g'].perpendicularToLineWith(p[87], 3.5, 'flip')
+p[94] = p[93].perpendicularToLineWith(p['87g'], 2.5, 'flip')
 
-
-
-
-	var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
-	var ujjaszelesseg = eval(sz.ujjaszelesseg);
 
 
 
@@ -519,17 +521,18 @@ p[94] = new point(circleLineIntersect(
 		L(13),
 		'Z')
 
-	//paths.galler = path(
-		//M(94),
-		//L(92),
-		//L(88),
-		//L(91),
-		//L(89),
-		//L(90),
-		//L(77),
-		//A(nyakszelesseg, nyakszelesseg, 85),
-		//L('87g'),
-		//'Z')
+	paths.galler = path(
+		M(94),
+		L(92),
+		L(88),
+		L(91),
+		L(89),
+		L(90),
+		L(77),
+		A(nyakszelesseg, nyakszelesseg, 85),
+		L('87g'),
+		'Z')
+
 
 			////
 	paths.szivarzseb = path(M('40a'),

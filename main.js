@@ -174,8 +174,6 @@ var szamok = {
 	mellkivet: 3,
 	csipomeret: 'csb + 7',
 	// segédpont
-	// p49 zsebvonal helye
-	zsebvonal_helye: 'p[47].add(0, (p[8].y - p[46].y) / 2 + 3)',
 	elejenyitas: 'kulcsszam / 2',
 	mellnyitas: 'kulcsszam / 2 + 0.8',
 	nyakmelyseg: 'mb / 10 + 3',
@@ -211,6 +209,7 @@ var nadrag_sz = require('./nadrag.js')
 var zako_sz = require('./zako.js')
 
 var zakoujja = require('./zakoujja.js');
+var zakoujja_k = require('./zakoujja-konfekcio.js');
 
 
 var BBModel = require('backbone-model').Model;
@@ -244,6 +243,11 @@ class Main extends React.Component {
 					szerkesztofunc={zako_sz}
 				/>
 				{ /*
+				<Szerkesztes
+					meretek={this.state.meretek}
+					szamok={this.state.szamok}
+					szerkesztofunc={zakoujja_k}
+				/>
 				<Szerkesztes
 					meretek={this.state.meretek}
 					szamok={this.state.szamok}
