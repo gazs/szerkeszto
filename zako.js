@@ -42,7 +42,6 @@ function render (m, sz) {
 	//var honaljmelyseg = tm / 10 + mb / 10
 	var honaljmelyseg = eval(sz.honaljmelyseg);
 
-	//p[3] = p[2].add(0,  honaljmelyseg);
 	p[3] = p[2].down(honaljmelyseg);
 	p[4] = p[2].down(honaljmelyseg / 2);
 	p[5] = p[2].down(honaljmelyseg / 4);
