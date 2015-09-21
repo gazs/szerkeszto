@@ -214,6 +214,10 @@ var zakoujja_k = require('./zakoujja-konfekcio.js');
 
 var BBModel = require('backbone-model').Model;
 
+var szerk = require('./szerk.pegjs');
+window.szerk = szerk;
+szerk.parse('1 = start');
+
 class Main extends React.Component {
 	constructor(props) {
 		super(props);

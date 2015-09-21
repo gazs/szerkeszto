@@ -1,0 +1,32 @@
+
+1 = start
+
+// HÁTA
+
+// kulcsszám
+var  kulcsszam = db / 10 + ((mb / 10) * 0.5) - 5cm
+
+1-2 = down kulcsszam
+
+var honaljmelyseg = tm / 10 + mb / 10
+	2-3 = down honaljmelyseg
+	2-4 = down honaljmelyseg / 2
+	2-5 = down honaljmelyseg / 4
+	1-6 = down derekhossza
+
+
+var csipomelyseg = tm / 10;
+
+6-7 = down csipomelyseg
+
+1-8 = down zakohossza
+2-9 = left hataszelesseg + 1cm
+
+10 = 9.verticalLine intersect 4.horizontalLine
+11 = 9.verticalLine intersect 3.horizontalLine
+
+10-12 = down 3cm
+12-13 = left 1cm
+
+15 = l(1-9) closestPointTo 5
+
