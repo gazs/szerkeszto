@@ -39,7 +39,6 @@ function render (m, sz) {
 
 	p[2] = p[1].down(kulcsszam)
 
-	//var honaljmelyseg = tm / 10 + mb / 10
 	var honaljmelyseg = eval(sz.honaljmelyseg);
 
 	p[3] = p[2].down(honaljmelyseg);
@@ -381,31 +380,31 @@ var galler_variansok = {
 	var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
 	var ujjaszelesseg = eval(sz.ujjaszelesseg);
 
-var galler_varians = galler_variansok['1x2_sarkos']
+/*var galler_varians = galler_variansok['1x2_sarkos']*/
 
-// pontok  | 1x3 gomb csapott | 1x5 csapott | 1x2 sarkos angol | 1x1 sarkos
-// 87-87g  | 3.5              | 4           | 4                | 4.2
-// 83-88   | l('15-17')       | l('15-17')  | l('15-17')       | l('15-17')
-// 88-89   | mb/10            | mb/10 - 0.5 | mb/10 - 1        | mb/10 - 1.5
-// 89-90   | 3                | 3           | 3                | 3
-// 89-91   | 4                | 4           | 4                | 4
-// 83-92   | 4.5              | 4.5         | 4.5              | 4.5
-// 87-93   | 3.5              | 4           | 2                | X
-// 93-94   | 2.5              | 2           | X                | X
-// 87-94   | X                | X           | 4                | 5
-p['87g'] = l('87-85').atDistance(galler_varians['87-87g']);
+//// pontok  | 1x3 gomb csapott | 1x5 csapott | 1x2 sarkos angol | 1x1 sarkos
+//// 87-87g  | 3.5              | 4           | 4                | 4.2
+//// 83-88   | l('15-17')       | l('15-17')  | l('15-17')       | l('15-17')
+//// 88-89   | mb/10            | mb/10 - 0.5 | mb/10 - 1        | mb/10 - 1.5
+//// 89-90   | 3                | 3           | 3                | 3
+//// 89-91   | 4                | 4           | 4                | 4
+//// 83-92   | 4.5              | 4.5         | 4.5              | 4.5
+//// 87-93   | 3.5              | 4           | 2                | X
+//// 93-94   | 2.5              | 2           | X                | X
+//// 87-94   | X                | X           | 4                | 5
+//p['87g'] = l('87-85').atDistance(galler_varians['87-87g']);
 
 
-var p1517 = document.createElementNS("http://www.w3.org/2000/svg", "path");
-p1517.setAttribute('d', `M${p[17].x},${p[17].y} 	A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}`);
-p[88] = p[83].atAngleOf(l('85-83'), p1517.getTotalLength())
+//var p1517 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+//p1517.setAttribute('d', `M${p[17].x},${p[17].y} 	A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}`);
+//p[88] = p[83].atAngleOf(l('85-83'), p1517.getTotalLength())
 
-p[89] = p[88].perpendicularToLineWith(p[83], galler_varians['88-89'])
-p[90] = p[89].perpendicularToLineWith(p[83], 3)
-p[91] = p[89].perpendicularToLineWith(p[83], 4, 'flip')
-p[92] = p[83].atAngleOf(l('77-83'), 4.5)
-p[93] = p['87g'].perpendicularToLineWith(p[87], 3.5, 'flip')
-p[94] = p[93].perpendicularToLineWith(p['87g'], 2.5, 'flip')
+//p[89] = p[88].perpendicularToLineWith(p[83], galler_varians['88-89'])
+//p[90] = p[89].perpendicularToLineWith(p[83], 3)
+//p[91] = p[89].perpendicularToLineWith(p[83], 4, 'flip')
+//p[92] = p[83].atAngleOf(l('77-83'), 4.5)
+//p[93] = p['87g'].perpendicularToLineWith(p[87], 3.5, 'flip')
+//p[94] = p[93].perpendicularToLineWith(p['87g'], 2.5, 'flip')
 
 
 
@@ -519,19 +518,6 @@ p[94] = p[93].perpendicularToLineWith(p['87g'], 2.5, 'flip')
 		L(11),
 		L(13),
 		'Z')
-
-	paths.galler = path(
-		M(94),
-		L(92),
-		L(88),
-		L(91),
-		L(89),
-		L(90),
-		L(77),
-		A(nyakszelesseg, nyakszelesseg, 85),
-		L('87g'),
-		'Z')
-
 
 			////
 	paths.szivarzseb = path(M('40a'),
