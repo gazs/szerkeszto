@@ -207,6 +207,7 @@ var {Dropdown, Measurements} = require('./range.jsx');
 var Szerkesztes = require('./szerkesztes.jsx');
 var nadrag_sz = require('./nadrag.js')
 var zako_sz = require('./zako.js')
+var galler_sz= require('./galler.js')
 
 var zakoujja = require('./zakoujja.js');
 var zakoujja_k = require('./zakoujja-konfekcio.js');
@@ -214,9 +215,6 @@ var zakoujja_k = require('./zakoujja-konfekcio.js');
 
 var BBModel = require('backbone-model').Model;
 
-var szerk = require('./szerk.pegjs');
-window.szerk = szerk;
-szerk.parse('1 = start');
 
 class Main extends React.Component {
 	constructor(props) {
