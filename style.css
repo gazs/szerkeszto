@@ -37,3 +37,6 @@ stroke-width: 0.4px;
 	src: url(osifont.ttf);
 }
 
+textarea {
+	font-family: Menlo, Monaco, monospace;
+}

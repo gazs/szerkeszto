@@ -44,6 +44,9 @@ class point {
 	}
 
 	perpendicularToLineWith (p2, distance, flip) {
+		if (!p2) {
+			debugger
+		}
 		let currentAngle = Math.atan2(p2.y - this.vec.y, p2.x - this.vec.x)
 		return this.atAngle(currentAngle + mathUtils.radians(flip ? 0 : 180), distance)
 	}
@@ -72,6 +75,9 @@ class point {
 
 class line {
 			constructor(p1, p2) {
+				if (!p1 || !p2) {
+					debugger
+				}
 				this.line = new Line2D(p1.vec, p2.vec).copy()
 			}
 			atDistance (distance) {
@@ -108,7 +114,7 @@ function createL(points) {
 }
 
 function intersectionOf(line1, line2) {
-	let pos = line1.copy().scale(2).intersectLine(line2.copy().scale(2)).pos;
+	let pos = line1.copy().scale(20).intersectLine(line2.copy().scale(20)).pos;
 	if (pos) {
 	return new point(pos.x, pos.y)
 	} else {
