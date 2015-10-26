@@ -212,6 +212,8 @@ var galler_sz= require('./galler.js')
 var zakoujja = require('./zakoujja.js');
 var zakoujja_k = require('./zakoujja-konfekcio.js');
 
+var frakkmelleny = require('./frakkmelleny.js')
+var frakk = require('./frakk.js')
 
 var BBModel = require('backbone-model').Model;
 
@@ -242,7 +244,12 @@ class Main extends React.Component {
 				<Szerkesztes
 					meretek={this.state.meretek}
 					szamok={this.state.szamok}
-					szerkesztofunc={zako_sz}
+					szerkesztofunc={frakkmelleny}
+				/>
+				<Szerkesztes
+					meretek={this.state.meretek}
+					szamok={this.state.szamok}
+					szerkesztofunc={frakk}
 				/>
 				{ /*
 				<Szerkesztes

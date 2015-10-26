@@ -11,11 +11,11 @@ svg {
 	font-weight: 100 !important;
 }
 
-svg path, svg polyline, svg line {
-fill:rgba(0,0,0,0.2);
-stroke:rgba(0,0,0,0.6);
-stroke-width: 0.4px;
-}
+/*svg path, svg polyline, svg line {*/
+/*fill:rgba(0,0,0,0.2);*/
+/*stroke:rgba(0,0,0,0.6);*/
+/*stroke-width: 0.4px;*/
+/*}*/
 
 @media (min-width: 768px) {
 	.configs {
@@ -39,4 +39,11 @@ stroke-width: 0.4px;
 
 textarea {
 	font-family: Menlo, Monaco, monospace;
+}
+
+@media print {
+	svg {display: block; }
+
+	.configs { display: none; }
+
 }
