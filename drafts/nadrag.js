@@ -1,5 +1,5 @@
-var {point, line, createL, intersectionOf} =require("./szerkfunc")
-import mathUtils from "./toxi/math/mathUtils"
+var {point, line, createL, intersectionOf} =require("../szerkfunc")
+import mathUtils from "../toxi/math/mathUtils"
 
 function render (m, sz) {
 

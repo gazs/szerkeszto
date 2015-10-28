@@ -1,9 +1,9 @@
-var {point, line, createL, intersectionOf} =require("./szerkfunc")
-import Vec2D from "./toxi/geom/Vec2D"
-import mathUtils from "./toxi/math/mathUtils"
-import getIntersections from "./geometricFunctions"
+var {point, line, createL, intersectionOf} =require("../szerkfunc")
+import Vec2D from "../toxi/geom/Vec2D"
+import mathUtils from "../toxi/math/mathUtils"
+import getIntersections from "../geometricFunctions"
 
-var zako = require('./zako')
+var zako = require('../zako')
 
 function circleLineIntersect(line, circlecenter, radius, which) {
 	which = which ||  'intersection2';

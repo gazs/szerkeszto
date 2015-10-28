@@ -1,12 +1,12 @@
 // az 1-2 szerkesztési ponttól a 30-31 pontig azonosan kell szerkeszteni a 45. ábra szerkesztésével
 
 
-import Vec2D from "./toxi/geom/Vec2D"
-import mathUtils from "./toxi/math/mathUtils"
-import getIntersections from "./geometricFunctions"
+import Vec2D from "../toxi/geom/Vec2D"
+import mathUtils from "../toxi/math/mathUtils"
+import getIntersections from "../geometricFunctions"
 
 
-var {point, line, createL, intersectionOf} =require("./szerkfunc")
+var {point, line, createL, intersectionOf} =require("../szerkfunc")
 
 export default function render (m, sz) {
 	var {testmagassag,
