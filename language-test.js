@@ -3,7 +3,7 @@ const fs = require('fs');
 const assert = require('assert');
 const PEG = require('./node_modules/pegjs-loader/node_modules/pegjs/lib/peg');
 
-const szerk_src = fs.readFileSync('./szerk2.pegjs').toString();
+const szerk_src = fs.readFileSync('./szerk.pegjs').toString();
 const szerk = PEG.buildParser(szerk_src);
 
 

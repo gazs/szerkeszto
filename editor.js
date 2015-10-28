@@ -1,6 +1,6 @@
 import React from 'react';
 
-import szerk from './szerk2.pegjs';
+import szerk from './szerk.pegjs';
 
 import {point, line, intersectionOf} from './szerkfunc';
 import _ from 'underscore';
