@@ -2,7 +2,7 @@ import Vec2D from "../toxi/geom/Vec2D"
 import mathUtils from "../toxi/math/mathUtils"
 import getIntersections from "../geometricFunctions"
 
-import zako from "../zako"
+import zako from ./"zako"
 
 var {point, line, createL, intersectionOf} =require("../szerkfunc")
 

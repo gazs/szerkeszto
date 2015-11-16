@@ -21,14 +21,34 @@ comment = "//" [^\n]* {
 	return {type: "comment", value: text()}
 }
 
+
+
 startingPoint
   = id:id _ "=" _ "start" { return {type: 'newpoint', id: id }}
 
 direction = "direction"
-   / "up"
-   / "down"
-   / "left"
-   / "right"
+   / "up" { return {type: 'angle', deg: 180}}
+   / "down" { return {type: 'angle', deg: 0}}
+   / "left" { return {type: 'angle', deg: 90}}
+   / "right"{ return {type: 'angle', deg: 270}}
+   / angle
+
+angle
+   = "angleOf" _ line:line { return {
+		type: 'angleOf',
+		line: line
+		}
+	}
+	 / "perpendicularTo" _ line:line { return {
+		type: 'perpendicularTo',
+		line: line
+		}
+	}
+	 / deg:[0-9.] "deg" { return {
+			type: 'angle',
+			deg: deg
+		}
+	}
 
 pointFromOtherPoint
   = id_startingpoint:id _ "-" _ id_newpoint:id _ "=" _ direction:direction _ distance:Expression {
@@ -41,10 +61,29 @@ pointFromOtherPoint
       }
     }
 
+closestPointToLine
+	= id_newpoint:id _ "=" _ line:line ".closestPointTo" _ point:id {
+		return {
+			type: 'closestPointTo',
+			id: id_newpoint,
+			line: line,
+			point: point
+		}
+	}
+
+point
+	= startingPoint
+	/ intersection
+	/ pointFromOtherPoint
+	/ closestPointToLine
+
+
+
 line
   = "[" _ id1:id _ "-" _ id2:id _ "]" { return {"type": "simpleLine", id1: id1, id2: id2}}
   / id:id ".vertical" {return {"type": "verticalLine", id: id}}
   / id:id ".horizontal" {return {"type": "horizontalLine", id: id}}
+	/ id:id ".perpendicularWith" _ l:line { return {type: "perpendicular", id: id, line: l}}
 
 intersection
   = id:id _ "=" _ "intersect" _ line1:line _ line2:line {
@@ -58,9 +97,7 @@ Expressions
 Expression
   = DefineVariable
   / comment
-  / startingPoint
-  / intersection
-  / pointFromOtherPoint
+	/ point
   / head:Term tail:(_ ("+" / "-") _ Term)* {
       var result = head, i;
 
@@ -99,7 +136,7 @@ Measurement
   / n:Number + "inch" { return 254 * n }
 
 DefineVariable
-  = "var" _ i:id _ "=" _ value:Expression { variables[i] = value; console.log(i, value); return {"variable": [i, value] }}
+  = "var" _ i:id _ "=" _ value:Expression { variables[i] = value; return {type:"variable", "variable": [i, value] }}
 
 id
  = [a-zA-Z0-9_]+[a-zA-Z0-9_]* { return text() }

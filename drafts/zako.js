@@ -72,7 +72,7 @@ export default function render (m, sz) {
 	//// nyakszélesség
 	//var nyakszelesseg = mb / 10 + 3.5;
 	var nyakszelesseg = eval(sz.nyakszelesseg);
-	p[16] = l('1-9').atDistance(nyakszelesseg)
+	p[16] = l('15-9').atDistance(nyakszelesseg)
 
 
 	var _p17a = p[6].up((hata_egyensulymeret + 1));
@@ -183,7 +183,7 @@ export default function render (m, sz) {
 	p[50] = p[45].right(mellkivet - 2) // TODO FIXME ez valamilyen szögben van
 
 
-	p[51] = p[49].right(mellkivet - 2 + 0.3);
+	p['_51'] = p[49].right(mellkivet - 2 + 0.3);
 	p[52] = p[49].left(2.5);
 
 	p[53] = p[35].right(mellkivet + kulcsszam / 4);
@@ -244,6 +244,9 @@ export default function render (m, sz) {
 
 
 	p[68] = p[65].atAngleOf(l('65-66'), l('43-66').length)
+
+	p['51a'] = intersectionOf(l('49-68'), l('50-_51'));
+
 	p[69] = p['64a'].atAngleOf(l('65-66'), l('43-66').length)
 
 	// karcsúsítás
@@ -490,7 +493,7 @@ p['g86'] =  p[87];
 		L(49),
 		L(48),
 		L(50),
-		L(51),
+		L('51a'),
 		L(68),
 		L(70),
 		Z);

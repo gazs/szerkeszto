@@ -29,15 +29,16 @@ var szamok = {
 
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var {Measurements} = require('./range.jsx');
 
 var Szerkesztes = require('./szerkesztes.jsx');
-//var nadrag_sz = require('./nadrag.js')
-//var zako_sz = require('./zako.js')
-//var galler_sz= require('./galler.js')
+var nadrag_sz = require('./drafts/nadrag.js')
+var zako_sz = require('./drafts/zako.js')
+//var galler_sz= require('./drafts/galler.js')
 
-//var zakoujja = require('./zakoujja.js');
-//var zakoujja_k = require('./zakoujja-konfekcio.js');
+var zakoujja = require('./drafts/zakoujja.js');
+var zakoujja_k = require('./drafts/zakoujja-konfekcio.js');
 
 var frakkmelleny = require('./drafts/frakkmelleny.js')
 var frakk = require('./drafts/frakk.js')
@@ -48,34 +49,35 @@ var BBModel = require('backbone-model').Model;
 
 
 
+
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.meretekmodel = new BBModel(this.props.meretek)
 		this.szamokmodel = new BBModel(this.props.szamok)
-		this.presetmodel = new BBModel({preset: 'normal'})
 
 		this.state = {
 			meretek: this.meretekmodel.toJSON(),
 			szamok: this.szamokmodel.toJSON(),
 		};
 	}
+
 	componentDidMount () {
 		this.meretekmodel.on('change', this._onChange.bind(this))
 		this.szamokmodel.on('change', this._onChange.bind(this))
 	}
-	_onChange () {
+	_onChange (state) {
 		this.setState({meretek: this.meretekmodel.toJSON(), szamok: this.szamokmodel.toJSON()});
 	}
 	render () {
 		var to_render = [
 			frakkmelleny,
 			frakk,
-			//zako_sz,
-			//zakoujja_k,
-			//zakoujja,
-			//nadrag_sz
+			zako_sz,
+			zakoujja_k,
+			zakoujja,
+			nadrag_sz
 		]
 		return (
 			<div>
@@ -102,7 +104,7 @@ class Main extends React.Component {
 fetch('sizes/normal.json')
 	.then(response => response.json())
 	.then(json => {
-		 React.render(
+		 ReactDOM.render(
 			 <Main meretek={json} szamok={szamok} />,
 			 document.querySelector('#gombok2'));
 	})

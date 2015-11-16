@@ -9,12 +9,13 @@
     "backbone-model": "~1.0.9",
     "pegjs-loader": "~0.1.1",
     "baconjs": "~0.7.73",
-    "react": "~0.13.3",
-    "react-tools": "~0.13.3",
+    "react": "*",
     "svg-pan-zoom": "~3.2.3",
     "svg-intersections": "~0.2.3",
     "webpack": "~1.11.0",
-    "kld-intersections": "~0.1.1"
+    "js-clipper": "~1.0.1",
+    "react-addons-update": "~0.14.1",
+    "react-dom": "~0.14.1"
   },
   "devDependencies": {},
   "scripts": {
@@ -27,5 +28,8 @@
   "author": "gazs",
   "bugs": {
     "url": "https://github.com/gazs/szerkeszto/issues"
-  }
+  },
+	"scripts": {
+		"start": "/opt/boxen/nodenv/versions/v0.10.21/bin/webpack-dev-server --progress --colors --devtool inline-source-map"
+	}
 }
