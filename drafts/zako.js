@@ -257,7 +257,7 @@ export default function render (m, sz) {
 
 			////var elejenyitas = kulcsszam / 2;
 	var elejenyitas = eval(sz.elejenyitas);
-	p[73] = p[34].down(0);
+	p[73] = p[34].down(elejenyitas);
 	p[74] = p[73].down(l('21-25').length + 1)
 
 	p['72_bottom'] = intersectionOf(
@@ -398,32 +398,6 @@ var galler_varians = galler_variansok['1x2_sarkos']
 //p['87g'] = l('87-85').atDistance(galler_varians['87-87g']);
 
 
-p['g77'] = p[77];
-p['g83'] =  p[83];
-p['z85'] =  p[85];
-p['g85'] =  p[86];
-p['g86'] =  p[87];
-
-	p['g87'] = l('87-85').atDistance(3.5)
-	
-		var nyakszelesseg = eval(sz.nyakszelesseg);
-		var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
-		var p1517 = document.createElementNS("http://www.w3.org/2000/svg", "path");
-		p1517.setAttribute('d', `
-											 M${p[17].x},${p[17].y}
-											 A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${p[15].x},${p[15].y}`);
-	p['g88'] = p[83].atAngleOf(l('84a-86'), p1517.getTotalLength())
-
-	p['g89'] = p['g88'].perpendicularToLineWith(p['g85'], mb/10)
-	p['g90'] = p['g89'].perpendicularToLineWith(p['g83'], 3)
-	p['g91'] = p['g89'].perpendicularToLineWith(p['g83'], 4, 'flip')
-	p['g92'] = p['g83'].atAngleOf(l('g77-g83'), 3.5)
-	p['g93'] = p['g87'].perpendicularToLineWith(p['g87'], 3.5)
-	p['g94'] = p['g93'].perpendicularToLineWith(p['g87'], 2, 'flip')
-
-
-
-
 
 	function M(p_id) {
 		let p1 = p[p_id];
@@ -535,32 +509,12 @@ p['g86'] =  p[87];
 		L(11),
 		L(13),
 		Z)
-
-		var galleralja = l('77-g90');
-		p['77a'] = galleralja.atDistance(galleralja.length * 0.25).perpendicularToLineWith(p['g90'], 0.25);
-		p['77b'] = galleralja.atDistance(galleralja.length * 0.75).perpendicularToLineWith(p['g90'], 0.25);
-		p['77c'] = p[77].right(0.5);
-
-		p['g92a'] = l('g92-g94').atDistance(l('g92-g94').length / 2).perpendicularToLineWith(p['g92'], -0.5)
-			////
+		////
 	paths.szivarzseb = path(M('40a'),
 													L('40b'),
 													`L${p['40b'].x},${p['40b'].y-2}`,
 													`L${p['40a'].x},${p['40a'].y-2}`,
 													Z)
-
-	paths.galler = path(M('g91'),
-										 L('g90'),
-										 //L('g77'),
-										//`L${p['g77'].x +0.5},${p['g77'].y}`,
-										 C('77b', '77a', '77c'),
-										 //`C${p[77].x},${p[77].y} ${p[77].x},${p[77].y} ${p[77].x + 1},${p[77].y + 1}`,
-										`A${nyakszelesseg}, ${nyakszelesseg} 0 0 1 ${p['85'].x} ${p['85'].y}`,
-										//`L${zp[85].x},${zp[85].y}`,
-										 L('g87'),
-										 L('g94'),
-										 C('g94', 'g92a', 'g92'),
-										 Z)
 
 	return {paths: paths, points: p};
 

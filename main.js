@@ -28,6 +28,7 @@ var szamok = {
 }
 
 
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var {Measurements} = require('./range.jsx');
@@ -35,6 +36,7 @@ var {Measurements} = require('./range.jsx');
 var Szerkesztes = require('./szerkesztes.jsx');
 var nadrag_sz = require('./drafts/nadrag.js')
 var zako_sz = require('./drafts/zako.js')
+var zako_magas_hajlott_sz = require('./drafts/zako_magashajlott.js')
 //var galler_sz= require('./drafts/galler.js')
 
 var zakoujja = require('./drafts/zakoujja.js');
@@ -72,21 +74,23 @@ class Main extends React.Component {
 	}
 	render () {
 		var to_render = [
-			frakkmelleny,
-			frakk,
+			//frakkmelleny,
+			//frakk,
 			zako_sz,
-			zakoujja_k,
-			zakoujja,
-			nadrag_sz
+			//zako_magas_hajlott_sz,
+			//zakoujja_k,
+			//zakoujja,
+			//nadrag_sz
 		]
 		return (
 			<div>
 			{/* <Print /> */}
-				{to_render.map (szerkfunc =>
+				{to_render.map ((szerkfunc,i) =>
 					<Szerkesztes
 						meretek={this.state.meretek}
 						szamok={this.state.szamok}
 						szerkesztofunc={szerkfunc}
+						key={i}
 					/>
 				)}
 
@@ -101,7 +105,8 @@ class Main extends React.Component {
 	}
 }
 
-fetch('sizes/normal.json')
+fetch('sizes/gazs.json')
+//fetch('sizes/normal.json')
 	.then(response => response.json())
 	.then(json => {
 		 ReactDOM.render(

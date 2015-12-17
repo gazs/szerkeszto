@@ -1,6 +1,14 @@
 {
-		"testmagassag": 178,
-		"mellboseg": 94,
-		"derekboseg": 78,
-		"hataszelesseg": 21
+	"testmagassag": 178,
+	"mellboseg": 94,
+	"derekboseg": 84,
+	"csipoboseg": 93,
+	"hataszelesseg": 39,
+	"derekhossza":47,
+	"zakohossza":78,
+	"hataszelesseg":22,
+	"vallszelesseg":14,
+	"ujjahossza":71,
+	"hata_egyensulymeret": 47,
+	"eleje_egyensulymeret":45
 }

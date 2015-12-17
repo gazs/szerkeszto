@@ -14,7 +14,8 @@ module.exports = {
 		loaders: [
 			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},
 			{ test: /\.jsx$/, exclude: /node_modules/, loader: "babel-loader"},
-			{ test: /\.pegjs$/, exclude: /node_modules/, loader: "pegjs-loader"}
+			{ test: /\.pegjs$/, exclude: /node_modules/, loader: "pegjs-loader"},
+			{ test: /\.ohm$/, exclude: /node_modules/, loader: "ohm-loader"}
 		]
 	},
 	plugins: [new Webpack.HotModuleReplacementPlugin()]
