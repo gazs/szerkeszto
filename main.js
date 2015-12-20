@@ -79,7 +79,7 @@ class Main extends React.Component {
 			zako_sz,
 			//zako_magas_hajlott_sz,
 			//zakoujja_k,
-			//zakoujja,
+			zakoujja,
 			//nadrag_sz
 		]
 		return (

@@ -2,6 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import svgPanZoom from "svg-pan-zoom"
 
+class SaveElement extends React.Component {
+	render () {
+		return (
+			<a download="szerk.svg"
+				href="data:image/svg+xml;utf8,">
+				💾
+			</a>
+		)
+	}
+}
 
 class Szerkesztes extends React.Component {
 	constructor(props) {
@@ -20,6 +30,12 @@ class Szerkesztes extends React.Component {
 		$0.setAttribute("height", bbox.height+ "cm")
 		$0.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
 
+		// ugh WHY DO YOU HATE ME REACTJS?
+		$0.setAttribute('xmlns:inkscape', 'http://www.inkscape.org/namespaces/inkscape');
+		$0.setAttribute('xmlns:sodipodi', 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd')
+		var namedView = document.createElement('sodipodi:namedview');
+		namedView.setAttribute("inkscape:document-units", "mm");
+		$0.appendChild(namedView);
 	}
 
 	download () {
@@ -40,9 +56,11 @@ class Szerkesztes extends React.Component {
 			<svg
 				ref={(ref) => this.svgElement = ref}
 				width="800"
-				height="800">
+				height="800"
+				units="mm"
+				>
 				{Object.keys(paths).map (key =>
-					<path d={paths[key]} key={'path_' + key}  fill="rgba(0,0,0,0.2)" stroke="rgba(0,0,0,0.6)" strokeWidth="0.2px" />
+					<path d={paths[key]} key={'path_' + key}  style={{fill:"none", stroke:"#000000", strokeWidth:"0.1px"}} />
 				)}
 				{lines.map (line =>
 					<line x1={line.a.x} y1={line.a.y} x2={line.b.x} y2={line.b.y} />
