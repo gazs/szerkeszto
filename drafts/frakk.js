@@ -180,7 +180,7 @@ export default function render (m, sz) {
 	p[68] = p[64].atAngle(l('64-55').angle, 1.2)
 
 
-	p[69] = intersectionOf(l('68-53'), l('43-61'))
+	p[69] = intersectionOf(l('68-55'), l('43-61'))
 	p[70] = p[69].atAngle(l('69-68').angle, 1)
 	p[71] = p[69].atAngle(l('69-55').angle, 1)
 	
@@ -188,11 +188,30 @@ export default function render (m, sz) {
 	p[73] = l('33-37').atDistance(l('33-38').length)
 	//
 	
-	//p[74] = p[73] l('17-17b').length - 2
+	p['17b'] = intersectionOf(l('17-24'), p[3].horizontalLine())
+	p[74] = p[73].perpendicularToLineWith(p[72],  (l('17-17b').length - 2), 'ugh flip')
 	// nyakmélység
-	//var nyakmelyseg = mb / 10 + 3;
-	var nyakmelyseg = eval(sz.nyakmelyseg);
+	var nyakmelyseg = mb / 10 + 3;
+	p[75] = l('74-73').atDistance(nyakmelyseg)
 
+	p[76] = l('74-65').atDistance(kulcsszam + 4)
+	p[77] = p[74].circleLineIntersect(
+		p[76].longlinePerpendicularToLineWith(p[74], 'flip'),
+		l('17-18').length - 1
+	)
+	p[78] = l('77-40').atDistance(0.8)
+
+	p[79] = p[74].atAngle(l('77-74').angle, 3) //állógallér szélessége
+	p['79a'] = l('79-63').atDistance(l('74-75').length - 0.5)
+
+	p[80] = l('79a-63').atDistance(4.5)
+	p[81] = p[80].perpendicularToLineWith(p[79], 3.7)
+	p[82] = p[80].perpendicularToLineWith(p[79], 8) // kihajtó szélessége
+	p[83] = p[82].perpendicularToLineWith(p[80], 3.5)
+
+	p[84] = p[33].down(mb/10 * 0.5)
+	p[85] = l('40-33').atDistance(mb/10 -1)
+	p[86] = l('85-84').atDistance(mb/10 + 6)
 
 	p[90] = p[49].left(1)
 	p[91] = p[90].down(tm/10 +1) // csíipővonal helye
@@ -259,40 +278,52 @@ export default function render (m, sz) {
 		L(21),
 		L(22),
 		L(25),
-		L(27),
-		L(29),
-		L(10),
+		L(24),
+		C(p[26].down(1), p[26].up(1), 10),
+		//L(27),
+		//L(29),
+		//L(10),
 		Z)
 
 	paths.oldalresz= path(
 		M(51),
-		L('52a'),
-		L(46),
-		L(48),
+		Q(p[52].perpendicularToLineWith(p[46], l('28-29').length + 5), 46),
+		C(p[46].down(8), p[48].up(8), 49),
 		L(54),
-		L(58),
+		Q(l('54-58').getMidPoint().right(1), 58),
+		//L(58),
 		L(59),
+		C(59, p[59].up(l('51-59').length/3).right(1.5), 51),
 		Z
 	)
+
+	var sosz_origo_to_p90 = (new line(l('94-95').getMidPoint(), p[90])).length
+
 	paths.sosz = path(
 		M(90),
-		L(93),
-		L(94),
+		Q(l('90-94').getMidPoint().perpendicularToLineWith(p[94], 4), 94),
 		Q(95, 98),
 		L(97),
-		L(53),
+		`A${sosz_origo_to_p90},${sosz_origo_to_p90} 0 0,1 ${p[53].x},${p[53].y}`,
 		L(99),
 		L(54),
+		`A${sosz_origo_to_p90},${sosz_origo_to_p90} 0 0,1 ${p[90].x},${p[90].y}`,
 		Z
 	)
 
 	paths.eleje = path(
-		M(42),
-		L('43a'),
+		M(74),
+		Q(l('74-77').atDistance(l('74-77').length * 0.8).perpendicularToLineWith(p[77], 1), 78),
+		//L(78),
+		C(p[42].left(4), p['40'].up(l('78-43a').length * 0.15), '43a'),
+		//L(42),
+		//L('43a'),
+		Q(p['44a'].left(2), 57),
 		L(57),
 		L(56),
 		L(44),
-		L(55),
+		Q(l('44-55').atDistance(l('44-55').length * 0.8).perpendicularToLineWith(p[44], 0.5), 55),
+		//L(55),
 		L(71),
 		L(43),
 		L(70),
@@ -301,9 +332,18 @@ export default function render (m, sz) {
 		L(67),
 		L('35a'),
 		L(63),
-		L(72),
+		Q(l('63-83').getMidPoint().perpendicularToLineWith(p[83], 5), 83),
+		L(81),
+		L('79a'),
+		Q(p[76].left(1).up(1), 74),
 		Z
 	)
+
+	paths.szivarzseb = path(M('86'),
+													L('85'),
+													`L${p['85'].x},${p['85'].y-2}`,
+													`L${p['86'].x},${p['86'].y-2}`,
+													Z)
 
 	return {paths: paths, points: p};
 

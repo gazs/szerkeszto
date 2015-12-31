@@ -196,6 +196,60 @@ function render (m, sz) {
 				L('49'),
 				'Z'
 			)
+		paths.eleje = path(
+			M(6),
+			L(7),
+			L(14),
+			L(16),
+			L(15),
+			L(9),
+			L('6a'), // TODO ív
+			L(26),
+			L(24),
+			L(23),
+			L(25),
+			L(20),
+			"Z")
+
+		paths.eleje_keskenyebb = path(
+			M(6),
+			L(7),
+			L(14),
+			L(16),
+			L(15),
+			L('9a'),
+			L('6a'), // TODO kicsit arrébb
+			L(26),
+			L(24),
+			L(23),
+			L(25),
+			L(20),
+			"Z")
+
+			paths.hata = path(
+				M(36),
+				L(35),
+				L(31),
+				L(33),
+				L(32),
+				L(34),
+				L(37),
+				L(38),
+				L(8),
+				L('40a'),
+				L('43'),
+				L('53'),
+				L('54'),
+				L('52'),
+				L('56'),
+				L('58'),
+				L('57'),
+				L('42'),
+				L('49'),
+				'Z'
+			)
+
+
 
 	return {points, paths, lines}
 }
