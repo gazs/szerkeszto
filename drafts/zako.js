@@ -325,22 +325,22 @@ export default function render (m, sz) {
 	)
 
 			//var segedpont_82 = 0.6;
-	p[82] =p[81].atAngle(mathUtils.radians(30), 0.6);
+	p[82] =p[81].atAngle(mathUtils.radians(30), 0.8);
 
 	//var galler_szelesseg = 3;
 	var galler_szelesseg = eval(sz.galler_szelesseg);
 	p[83] = p[77].atAngleOf(l('81-77'), galler_szelesseg)
 
-	////var hajtoka_szelesseg = mb / 10 + 3;
-	var hajtoka_szelesseg = eval(sz.hajtoka_szelesseg);
+	////var kihajto_szelesseg = mb / 10 + 3;
+	var kihajto_szelesseg = eval(sz.kihajto_szelesseg);
 	//var kihajto_alja = p[39];
 
 	p[85] = p[83].atAngleOf(l('83-39'), l('77-78').length -0.5)
 	p[86] = p[85].atAngleOf(l('83-39'), 4.5)
 
 
-	p[87] = p[86].perpendicularToLineWith(p[85], hajtoka_szelesseg)
-	p['87b'] = p[86].perpendicularToLineWith(p[85], hajtoka_szelesseg, 'flip')
+	p[87] = p[86].perpendicularToLineWith(p[85], kihajto_szelesseg)
+	p['87b'] = p[86].perpendicularToLineWith(p[85], kihajto_szelesseg, 'flip')
 
 
 	var gombok = sz.gombok;
