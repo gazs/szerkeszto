@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import svgPanZoom from "svg-pan-zoom"
+import { connect } from 'react-redux';
+
+//import svgPanZoom from "svg-pan-zoom"
 
 class SaveElement extends React.Component {
 	render () {
@@ -14,10 +16,6 @@ class SaveElement extends React.Component {
 }
 
 class Szerkesztes extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = this.props;
-	}
 
 	componentDidMount () {
 		var $0 = this.svgElement;
@@ -68,7 +66,7 @@ class Szerkesztes extends React.Component {
 				{Object.keys(points).map (key =>
 					<g key={key}>
 						<circle cx={points[key].x} cy={points[key].y} r={0.2} key={key}/>
-						{ /* <text x={points[key].x} y={points[key].y} fontSize="2">{key}</text> */ }
+						<text x={points[key].x} y={points[key].y} fontSize="2">{key}</text>
 					</g>
 				)}
 			</svg>
@@ -77,4 +75,9 @@ class Szerkesztes extends React.Component {
 		)
 	}
 }
-module.exports = Szerkesztes
+
+function selector(state) {
+	return state //.foo;
+}
+
+export default connect(selector)(Szerkesztes)

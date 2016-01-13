@@ -79,8 +79,14 @@ export default function render (m, sz) {
 	p[16] = l('1-9').atDistance(nyakszelesseg)
 	
 	var nyakmagassag = mb / 10 * 0.5 + 1.5;
-	p[17] = p[16].up(nyakmagassag);
+	//p[17] = p[16].up(nyakmagassag);
+	var _p17a = p[6].up((hata_egyensulymeret + 1));
 
+	var l17b = new line(p[16], p[16].perpendicularToLineWith(p[1], 10))
+	p[17] = intersectionOf(
+		_p17a.horizontalLine(),
+		l17b
+	)
 	// 17a
 	// 17b
 
