@@ -75,8 +75,11 @@ class point {
 
 class line {
 			constructor(p1, p2) {
-				if (!p1 || !p2) {
-					debugger
+				if (!p1) {
+					throw new Error("p1 is falsy")
+				}
+				if (!p2) {
+					throw new Error("p2 is falsy")
 				}
 				this.line = new Line2D(p1.vec, p2.vec).copy()
 			}
@@ -116,9 +119,9 @@ function createL(points) {
 function intersectionOf(line1, line2) {
 	let pos = line1.copy().scale(20).intersectLine(line2.copy().scale(20)).pos;
 	if (pos) {
-	return new point(pos.x, pos.y)
+		return new point(pos.x, pos.y)
 	} else {
-		console.warn('!!! points dont intersect', line1, line2)
+		throw Error('!!! points dont intersect', line1, line2)
 	}
 }
 
