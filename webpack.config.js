@@ -2,7 +2,6 @@ var Webpack = require('webpack');
 module.exports = {
   entry: {
     app: "./main.js",
-		adjust: "./adjust.js",
 		editor: "./editor.js"
   },
   output: {
