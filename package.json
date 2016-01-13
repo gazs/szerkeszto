@@ -10,7 +10,6 @@
     "baconjs": "~0.7.73",
     "js-clipper": "~1.0.1",
     "ohm-loader": "0.0.0",
-    "pdfkit": "^0.7.1",
     "pegjs-loader": "~0.1.1",
     "react": "*",
     "react-addons-update": "~0.14.1",
