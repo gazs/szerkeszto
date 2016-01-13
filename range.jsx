@@ -1,20 +1,5 @@
 import React from "react";
 
-class Dropdown extends React.Component {
-	handleChange (e) {
-		this.props.model.set({preset: e.target.value});
-	}
-	render () {
-		return (
-			<select className="form-control" value={this.props.selected} onChange={this.handleChange.bind(this)}>
-				{Object.keys(this.props.options).map( name =>
-					<option key={name} value={name} >{name}</option>
-				) }
-			</select>
-		)
-	}
-}
-
 class Measurement extends React.Component {
 
 	render () {
@@ -68,4 +53,4 @@ class Measurements extends React.Component {
 }
 
 
-module.exports = {Dropdown, Measurements}
+module.exports = {Measurements}
