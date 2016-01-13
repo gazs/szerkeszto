@@ -22,7 +22,7 @@ var szamok = {
 	nyakmelyseg: 'mb / 10 + 3',
 	vallmagassag: 'kulcsszam + 4',
 	galler_szelesseg: 3,
-	hajtoka_szelesseg: 'mb / 10 + 3',
+	kihajto_szelesseg: 'mb / 10 + 3',
 	hata_nyakmagassag: 'mb / 10 * 0.5 + 1.5',
 	ujjaszelesseg: 'mb / 10 * 2.5 + 11',
 }
@@ -75,7 +75,7 @@ class Main extends React.Component {
 	render () {
 		var to_render = [
 			//frakkmelleny,
-			//frakk,
+			frakk,
 			zako_sz,
 			//zako_magas_hajlott_sz,
 			//zakoujja_k,
@@ -85,11 +85,11 @@ class Main extends React.Component {
 		return (
 			<div>
 			{/* <Print /> */}
-				{to_render.map ((szerkfunc,i) =>
+				{to_render.map ((to_render,i) =>
 					<Szerkesztes
 						meretek={this.state.meretek}
 						szamok={this.state.szamok}
-						szerkesztofunc={szerkfunc}
+						szerkesztofunc={to_render}
 						key={i}
 					/>
 				)}
@@ -97,7 +97,6 @@ class Main extends React.Component {
 				<div className="configs col-xs-12 col-md-4 col-md-offset-8">
 					<form className="form-horizontal">
 						<Measurements items={this.state.meretek} model={this.meretekmodel}/>
-						<Measurements items={this.state.szamok} model={this.szamokmodel}/>
 					</form>
 				</div>
 			</div>
