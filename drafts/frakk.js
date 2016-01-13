@@ -209,6 +209,7 @@ export default function render (m, sz) {
 	p[82] = p[80].perpendicularToLineWith(p[79], 8) // kihajtó szélessége
 	p[83] = p[82].perpendicularToLineWith(p[80], 3.5)
 
+
 	p[84] = p[33].down(mb/10 * 0.5)
 	p[85] = l('40-33').atDistance(mb/10 -1)
 	p[86] = l('85-84').atDistance(mb/10 + 6)
@@ -223,6 +224,13 @@ export default function render (m, sz) {
 	p[97] = p[96].atAngle(l('96-95').angle, l('44-44a').length + 1.5)
 	p[98] = l('97-95').getMidPoint()
 	p[99] = p[54].atAngle(l('44a-44').angle, 7)
+
+
+	// gombok
+	p['g1'] = intersectionOf(l('35a-65'), p[34].horizontalLine())
+
+	p['g2'] = l('g1-65').atDistance(l('35a-g1').length)
+	p['g3'] = l('g2-65').atDistance(l('35a-g1').length)
 
 	// ----
 	function M(p_id) {
@@ -315,7 +323,7 @@ export default function render (m, sz) {
 		M(74),
 		Q(l('74-77').atDistance(l('74-77').length * 0.8).perpendicularToLineWith(p[77], 1), 78),
 		//L(78),
-		C(p[42].left(4), p['40'].up(l('78-43a').length * 0.15), '43a'),
+		C(p[42].left(4).down(3), p['40'].up(l('78-43a').length * 0.1).right(1.5), '43a'),
 		//L(42),
 		//L('43a'),
 		Q(p['44a'].left(2), 57),
