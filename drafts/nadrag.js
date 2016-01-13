@@ -17,14 +17,10 @@ function render (m, sz) {
 
 
 		let lines = []
-
-
-
-		
 		let points = {};
 
 
-		var l = createL(points)
+		let l = createL(points)
 
 		points[1] = new point();
 		points[2] = points[1].up(nadrag_kulso_hossza + 1)
@@ -113,7 +109,7 @@ function render (m, sz) {
 
 		//// with line(42-43)
 		var l42_43 = l('42-43') //new line(points[42], points[43])
-		var l43_42 =l('43-42') // new line(points[43], points[42])
+		var l43_42 = l('43-42') // new line(points[43], points[42])
 		points[44] = points[43].atAngle(l42_43.angle, 0.5)
 		points[45] = points[44].atAngle(l42_43.angle, 2.5)
 		points[46] = points[40].left(2.5)
@@ -132,6 +128,56 @@ function render (m, sz) {
 		points[57] = points[55].atAngle(l43_42.angle, hatso_formazovarras2_szelessege)
 		points[58] = points[55].atAngle(l42_43.angle + mathUtils.radians(270), 11)
 
+
+		class SVGPathString {
+			constructor(points) {
+				this.points = points;
+				this.pathstring = '';
+			}
+			M (p_id) {
+				let p = points[p_id];
+				this.pathstring += `M${p.x},${p.y} `
+				return this;
+			}
+			L (p_id) {
+				let p = points[p_id];
+				this.pathstring += `L${p.x},${p.y} `
+				return this;
+			}
+			Z () {
+				this.pathstring += `Z`
+				return this.pathstring;
+			}
+			A(w, h, p_id) {
+				let p = points[p_id];
+				this.pathstring += `A${w},${h} 0 0,1 ${p[p_id].x},${p[p_id].y}`
+				return this;
+			}
+			Q(seged1, vegpont) {
+				let p = points;
+				let x1 = p[seged1] ? p[seged1].x : seged1.x;
+				let y1 = p[seged1] ? p[seged1].y : seged1.y;
+				let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+				let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+				this.pathstring += `Q${x1},${y1} ${x3},${y3}`
+				return this;
+			}
+			C(seged1, seged2, vegpont) {
+				let p = points;
+				let x1 = p[seged1] ? p[seged1].x : seged1.x;
+				let y1 = p[seged1] ? p[seged1].y : seged1.y;
+				let x2 = p[seged2] ? p[seged2].x : seged2.x;
+				let y2 = p[seged2] ? p[seged2].y : seged2.y;
+				let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+				let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+				this.pathstring += `C${x1},${y1} ${x2},${y2} ${x3},${y3}`
+				return this;
+			}
+			add(str) {
+				this.pathstring += str;
+			}
+		}
+
 		function M(p_id) {
 			let p = points[p_id];
 			return `M${p.x},${p.y}`
@@ -144,111 +190,57 @@ function render (m, sz) {
 			return Array.prototype.join.call(arguments, " ")
 		}
 		var paths = {}
-		paths.eleje = path(
-			M(6),
-			L(7),
-			L(14),
-			L(16),
-			L(15),
-			L(9),
-			L('6a'), // TODO ív
-			L(26),
-			L(24),
-			L(23),
-			L(25),
-			L(20),
-			"Z")
+		paths.eleje = new SVGPathString(points)
+			.M(6)
+			.L(7)
+			.L(14)
+			.L(16)
+			.L(15)
+			.L(9)
+			.L('6a') // TODO ív
+			.L(26)
+			.L(24)
+			.L(23)
+			.L(25)
+			.L(20)
+			.Z()
 
-		paths.eleje_keskenyebb = path(
-			M(6),
-			L(7),
-			L(14),
-			L(16),
-			L(15),
-			L('9a'),
-			L('6a'), // TODO kicsit arrébb
-			L(26),
-			L(24),
-			L(23),
-			L(25),
-			L(20),
-			"Z")
+		paths.eleje_keskenyebb = new SVGPathString(points)
+			.M(6)
+			.L(7)
+			.L(14)
+			.L(16)
+			.L(15)
+			.L('9a')
+			.L('6a') // TODO kicsit arrébb
+			.L(26)
+			.L(24)
+			.L(23)
+			.L(25)
+			.L(20)
+			.Z()
 
-			paths.hata = path(
-				M(36),
-				L(35),
-				L(31),
-				L(33),
-				L(32),
-				L(34),
-				L(37),
-				L(38),
-				L(8),
-				L('40a'),
-				L('43'),
-				L('53'),
-				L('54'),
-				L('52'),
-				L('56'),
-				L('58'),
-				L('57'),
-				L('42'),
-				L('49'),
-				'Z'
-			)
-		paths.eleje = path(
-			M(6),
-			L(7),
-			L(14),
-			L(16),
-			L(15),
-			L(9),
-			L('6a'), // TODO ív
-			L(26),
-			L(24),
-			L(23),
-			L(25),
-			L(20),
-			"Z")
-
-		paths.eleje_keskenyebb = path(
-			M(6),
-			L(7),
-			L(14),
-			L(16),
-			L(15),
-			L('9a'),
-			L('6a'), // TODO kicsit arrébb
-			L(26),
-			L(24),
-			L(23),
-			L(25),
-			L(20),
-			"Z")
-
-			paths.hata = path(
-				M(36),
-				L(35),
-				L(31),
-				L(33),
-				L(32),
-				L(34),
-				L(37),
-				L(38),
-				L(8),
-				L('40a'),
-				L('43'),
-				L('53'),
-				L('54'),
-				L('52'),
-				L('56'),
-				L('58'),
-				L('57'),
-				L('42'),
-				L('49'),
-				'Z'
-			)
-
+			paths.hata = new SVGPathString(points)
+				.M(36)
+				.L(35)
+				.L(31)
+				.L(33)
+				.L(32)
+				.L(34)
+				.L(37)
+				.L(38)
+				.L(8)
+				.L('40a')
+				.L('43')
+				.L('53')
+				.L('54')
+				.L('52')
+				.L('56')
+				.L('58')
+				.L('57')
+				.L('42')
+				.L('49')
+				.Z()
 
 
 	return {points, paths, lines}
