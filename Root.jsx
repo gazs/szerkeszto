@@ -9,56 +9,75 @@ import DevTools from './devtools'
 
 import { mondvacsinaltApp } from './reducers'
 
-//import {reducer as formReducer} from 'redux-form';
-
-//const reducers = combineReducers({
-	//foo: mondvacsinaltApp,
-	////form: formReducer
-//})
-
 //let store = compose( DevTools.instrument())(createStore)(reducers)
 let store = compose( DevTools.instrument())(createStore)(mondvacsinaltApp)
 
 import Szerkesztes from './szerkesztes.jsx'
 import MeasurementForm from './form.jsx'
 
-import nadrag_sz from './drafts/nadrag.js'
-import zako_sz from './drafts/zako.js'
-import zako_magas_hajlott_sz from './drafts/zako_magashajlott.js'
-//import galler_sz from './drafts/galler.js'
 
-import zakoujja from './drafts/zakoujja.js'
-import zakoujja_k from './drafts/zakoujja-konfekcio.js'
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 
-import frakkmelleny from './drafts/frakkmelleny.js'
-import frakk from './drafts/frakk.js'
+var drafts_map = {
+	'frakk': require('./drafts/frakk'),
+	'frakkmelleny': require('./drafts/frakkmelleny'),
+	'zako': require('./drafts/zako'),
+	'zakoujja-konfekcio': require('./drafts/zakoujja-konfekcio'),
+	'zakoujja': require('./drafts/zakoujja'),
+	'nadrag': require('./drafts/nadrag')
+}
+class App extends React.Component {
+	render() {
+		return <div>
+			{this.props.children}
+
+			<List />
+			<MeasurementForm />
+
+			<DevTools />
+
+		</div>
+	}
+}
+
+class SzerkesztesWrap extends React.Component {
+	render () {
+		const szerkesztofunc = drafts_map[this.props.params.draftName];
+		if (szerkesztofunc) {
+		return ( <div>
+			<h1>{szerkesztofunc}</h1>
+			<Szerkesztes szerkesztofunc={szerkesztofunc} />
+		</div>)
+		}
+		else {
+			return <h1>404, nincs ilyen minta</h1>
+		}
+	}
+}
+
+class List extends React.Component {
+	render () {
+	return 	<ul>
+		{Object.keys(drafts_map).map( draftName =>
+			<li key={draftName}>
+			<Link to={`/${draftName}`}>{draftName}</Link>
+			</li>
+		)}
+		</ul>
+	}
+}
+
+import Print from './print.jsx'
 
 class Root extends React.Component {
 	render () {
-		const to_render = [
-			//frakkmelleny,
-			frakk,
-			//zako_sz,
-			//zako_magas_hajlott_sz,
-			//zakoujja_k,
-			//zakoujja,
-			//nadrag_sz
-		]
 		return (
 			<Provider store={store}>
-				<div>
-				{/* <Print /> */}
-					{to_render.map ((to_render,i) =>
-						<Szerkesztes
-							szerkesztofunc={to_render}
-							key={i}
-						/>
-					)}
-					<MeasurementForm fields={['testmagassag']}/>
-
-					<DevTools />
-
-				</div>
+				<Router history={browserHistory}>
+					<Route path="/" component={App}>
+						<Route path=":draftName" component={SzerkesztesWrap} />
+					</Route>
+				</Router>
 			</Provider>
 		)
 	}
