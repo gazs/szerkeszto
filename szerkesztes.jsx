@@ -16,6 +16,12 @@ class SaveElement extends React.Component {
 }
 
 class Szerkesztes extends React.Component {
+	constructor () {
+		super();
+		this.state = {
+			showLabels: false
+		}
+	}
 
 	componentDidMount () {
 		var $0 = this.svgElement;
@@ -43,6 +49,7 @@ class Szerkesztes extends React.Component {
 		link.click();
 	}
 
+
 	render () {
 		let {points, paths, lines} = this.props.szerkesztofunc(this.props.meretek, this.props.szamok)
 
@@ -50,7 +57,7 @@ class Szerkesztes extends React.Component {
 		paths = paths || {}
 
 		return (
-			<div>
+		<div>
 			<svg
 				ref={(ref) => this.svgElement = ref}
 				width="800"
@@ -66,12 +73,17 @@ class Szerkesztes extends React.Component {
 				{Object.keys(points).map (key =>
 					<g key={key}>
 						<circle cx={points[key].x} cy={points[key].y} r={0.2} key={key}/>
-						<text x={points[key].x} y={points[key].y} fontSize="2">{key}</text>
+						{this.state.showLabels ? <text x={points[key].x} y={points[key].y} fontSize="2">{key}</text> : null }
 					</g>
 				)}
 			</svg>
-			<button onClick={this.download.bind(this)}>💾</button>
+			<div>
+				<label><input type="checkbox" checked={this.state.showLabels} onChange={ () => this.setState({showLabels: !this.state.showLabels})}/> 🔢</label>
 			</div>
+			<div>
+				<button onClick={this.download.bind(this)}>💾</button>
+			</div>
+		</div>
 		)
 	}
 }
