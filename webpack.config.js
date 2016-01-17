@@ -9,6 +9,9 @@ module.exports = {
     publicPath: "/build/",
     filename: "[name]bundle.js"
   },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
 	module: {
 		loaders: [
 			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},
