@@ -12,8 +12,8 @@ import { mondvacsinaltApp } from './reducers'
 //let store = compose( DevTools.instrument())(createStore)(reducers)
 let store = compose( DevTools.instrument())(createStore)(mondvacsinaltApp)
 
-import Szerkesztes from './szerkesztes.jsx'
-import MeasurementForm from './form.jsx'
+import Szerkesztes from './szerkesztes'
+import MeasurementForm from './form'
 
 
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
@@ -67,13 +67,15 @@ class List extends React.Component {
 	}
 }
 
-import Print from './print.jsx'
+import Print from './print'
+import AddMeasurement from './AddMeasurement'
 
 class Root extends React.Component {
 	render () {
 		return (
 			<Provider store={store}>
 				<Router history={browserHistory}>
+					<Route path="/add" component={AddMeasurement} />
 					<Route path="/" component={App}>
 						<Route path=":draftName" component={SzerkesztesWrap} />
 					</Route>
@@ -85,4 +87,4 @@ class Root extends React.Component {
 
 
 
-ReactDOM.render(<Root />, document.querySelector('#gombok2'));
+ReactDOM.render(<Root />, document.querySelector('#app'));
