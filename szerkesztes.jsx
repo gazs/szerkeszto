@@ -24,6 +24,13 @@ class Szerkesztes extends React.Component {
 	}
 
 	componentDidMount () {
+		this.zoomAndFixSVG();
+	}
+
+	componentDidUpdate () {
+		this.zoomAndFixSVG();
+	}
+	zoomAndFixSVG () {
 		var $0 = this.svgElement;
 		var bbox = $0.getBBox();
 		//svgPanZoom($0, {controlIconsEnabled: true})
