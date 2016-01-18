@@ -8,11 +8,6 @@ This is an app that I'm writing to learn about frontend tools as well as pattern
 - editor.html is (failed?) attempt at writing a DSL for describing the steps in a draft. `szerk.pegjs` is a parser written in [PEG.js](http://pegjs.org) that can render the jacket draft until point #49
 - the rest is a React playground / battlefield.
 
-
-## This is the reference drawing from my book:
-
-<img src="https://raw.githubusercontent.com/gazs/szerkeszto/master/zako.jpg">
-
 ## to run
 
 `webpack-dev-server --progress --colors --devtool inline-source-map`
@@ -31,3 +26,8 @@ https://rawgit.com/gazs/szerkeszto/master/index.html
 
 * http://testreszabas.cink.hu/bevasarlas-ferfi-es-fiuruhak-szerkesztese-es-szabasa-1721955504
 * http://testreszabas.cink.hu/csak-nem-tudtam-megallni-hogy-ne-kezdjek-el-kodolni-1723067528
+
+
+## This is the reference drawing from my book:
+
+<img src="https://raw.githubusercontent.com/gazs/szerkeszto/master/zako.jpg">
