@@ -5,6 +5,7 @@ This is an app that I'm writing to learn about frontend tools as well as pattern
 
 - drafts are functions that take an object of measurements (measurements look like [this](https://github.com/gazs/szerkeszto/blob/master/sizes/normal.json)) and return something like `{points: {}, paths: {}}`
 - szerkesztes.jsx renders an SVG  after executing the passed in draft function
+- editor.html is (failed?) attempt at writing a DSL for describing the steps in a draft. `szerk.pegjs` is a parser written in [PEG.js](http://pegjs.org) that can render the jacket draft until point #49
 - the rest is a React playground / battlefield.
 
 
