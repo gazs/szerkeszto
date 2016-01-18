@@ -2,51 +2,40 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { connect } from 'react-redux';
 
-//import svgPanZoom from "svg-pan-zoom"
-
-class SaveElement extends React.Component {
-	render () {
-		return (
-			<a download="szerk.svg"
-				href="data:image/svg+xml;utf8,">
-				💾
-			</a>
-		)
-	}
-}
 
 class Szerkesztes extends React.Component {
 	constructor () {
 		super();
 		this.state = {
-			showLabels: false
+			showLabels: false,
 		}
 	}
 
 	componentDidMount () {
-		this.zoomAndFixSVG();
+		this.zoomSVG();
+		const $0 = this.svgElement;
+
+		// ugh WHY DO YOU HATE ME REACTJS?
+		$0.setAttribute('xmlns:inkscape', 'http://www.inkscape.org/namespaces/inkscape');
+		$0.setAttribute('xmlns:sodipodi', 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd')
+		const namedView = document.createElement('sodipodi:namedview');
+		namedView.setAttribute("inkscape:document-units", "mm");
+		$0.appendChild(namedView);
 	}
 
 	componentDidUpdate () {
-		this.zoomAndFixSVG();
+		this.zoomSVG();
 	}
-	zoomAndFixSVG () {
-		var $0 = this.svgElement;
-		var bbox = $0.getBBox();
-		//svgPanZoom($0, {controlIconsEnabled: true})
-		//
+	zoomSVG () {
+		const $0 = this.svgElement;
+		const bbox = $0.getBBox();
+
 		$0.setAttribute('xmlns', "http://www.w3.org/2000/svg");
 
 		$0.setAttribute("width", bbox.width + "cm")
 		$0.setAttribute("height", bbox.height+ "cm")
 		$0.setAttribute("viewBox", [bbox.x, bbox.y, bbox.width, bbox.height].join(" "));
 
-		// ugh WHY DO YOU HATE ME REACTJS?
-		$0.setAttribute('xmlns:inkscape', 'http://www.inkscape.org/namespaces/inkscape');
-		$0.setAttribute('xmlns:sodipodi', 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd')
-		var namedView = document.createElement('sodipodi:namedview');
-		namedView.setAttribute("inkscape:document-units", "mm");
-		$0.appendChild(namedView);
 	}
 
 	download () {
@@ -58,10 +47,11 @@ class Szerkesztes extends React.Component {
 
 
 	render () {
-		let {points, paths, lines} = this.props.szerkesztofunc(this.props.meretek, this.props.szamok)
+		let {points, paths, lines} = this.props.szerkesztofunc(this.props.meretek)
 
 		lines  = lines || []
 		paths = paths || {}
+
 
 		return (
 		<div>
