@@ -20,7 +20,10 @@ todo: automate build process / publishing to gh-pages?
 
 ## to see live version
 
-https://rawgit.com/gazs/szerkeszto/master/index.html
+- https://rawgit.com/gazs/szerkeszto/master/index.html#/zako
+- https://rawgit.com/gazs/szerkeszto/master/editor.html
+
+
 
 ## more info (in Hungarian)
 
