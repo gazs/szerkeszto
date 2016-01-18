@@ -1,8 +1,15 @@
 # pattern drafting js thing
 
-**DO NOT USE yet**
+This is an app that I'm writing to learn about frontend tools as well as pattern drafting and tailoring.
 
-the goal is to be able to draft this for various body types:
+
+- drafts are functions that take an object of measurements (measurements look like [this](https://github.com/gazs/szerkeszto/blob/master/sizes/normal.json)) and return something like `{points: {}, paths: {}}`
+- szerkesztes.jsx renders an SVG  after executing the passed in draft function
+- the rest is a React playground / battlefield.
+
+
+This is the reference drawing from my book:
+
 
 <img src="https://raw.githubusercontent.com/gazs/szerkeszto/master/zako.jpg">
 
