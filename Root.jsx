@@ -34,7 +34,7 @@ class App extends React.Component {
 			<List />
 			<MeasurementForm />
 
-			<DevTools />
+			{/* <DevTools /> */}
 
 		</div>
 	}
@@ -45,12 +45,12 @@ class SzerkesztesWrap extends React.Component {
 		const szerkesztofunc = drafts_map[this.props.params.draftName];
 		if (szerkesztofunc) {
 		return ( <div>
-			<h1>{szerkesztofunc}</h1>
+			<h1>{this.props.params.draftName}</h1>
 			<Szerkesztes szerkesztofunc={szerkesztofunc} />
 		</div>)
 		}
 		else {
-			return <h1>404, nincs ilyen minta</h1>
+			return <h1>404, nincs ilyen minta :(</h1>
 		}
 	}
 }
