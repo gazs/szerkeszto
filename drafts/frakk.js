@@ -33,22 +33,21 @@ export default function render (m, sz) {
 	p[1] = new point();
 
 	// HÁTA
-	var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
+	var hata_nyakmagassag = mb / 10 * 0.5 + 1.5;
 
 	// kulcsszám
-	var kulcsszam = eval(sz.kulcsszam);
+	var kulcsszam = db / 10 + ((mb / 10) * 0.5) - 5;
 
 	p[2] = p[1].down(kulcsszam)
 
-	var honaljmelyseg = eval(sz.honaljmelyseg);
+	var honaljmelyseg = tm / 10 + mb / 10;
 
 	p[3] = p[2].down(honaljmelyseg);
 	p[4] = p[2].down(honaljmelyseg / 2);
 	p[5] = p[2].down(honaljmelyseg / 4);
 	p[6] = p[1].down(derekhossza);
 
-	//var csipomelyseg = tm / 10;
-	var csipomelyseg = eval(sz.csipomelyseg);
+	var csipomelyseg = tm / 10;
 
 	p[7] = p[6].down(csipomelyseg);
 
@@ -74,8 +73,7 @@ export default function render (m, sz) {
 
 	p[15] = l('1-9').closestPointTo(p[5])
 	//// nyakszélesség
-	//var nyakszelesseg = mb / 10 + 3.5;
-	var nyakszelesseg = eval(sz.nyakszelesseg);
+	var nyakszelesseg = mb / 10 + 3.5;
 	p[16] = l('1-9').atDistance(nyakszelesseg)
 	
 	var nyakmagassag = mb / 10 * 0.5 + 1.5;
@@ -92,12 +90,10 @@ export default function render (m, sz) {
 
 	p[18] = p[17].atAngleOf(l('17-9'), vallszelesseg + 1 + 0.5)
 
-	//var derekbeallitas = 3;
-	var derekbeallitas = eval(sz.derekbeallitas);
+	var derekbeallitas = 3;
 	p[19] = p[6].left(derekbeallitas);
 
-	//var aljabeallitas = 4;
-	var aljabeallitas = eval(sz.aljabeallitas);
+	var aljabeallitas = 4;
 	p[20] = p[8].left(aljabeallitas);
 
 
@@ -131,14 +127,12 @@ export default function render (m, sz) {
 	p[35] = p[34].down(8)
 	p['35a'] = p[35].right(5)
 
-	//var derekszelesseg = db / 10 * 5;
-	var derekszelesseg = eval(sz.derekszelesseg);
+	var derekszelesseg = db / 10 * 5;
 	p[36] = p[33].right(db / 10 * 5)
 	p[37] = p[36].up(kulcsszam);
 	p[38] = p[36].left(derekszelesseg / 2 + kulcsszam / 2);
 	p[39] = p[38].left(mb / 10 * 2) // ebben az esetben a 33 és a 39 pont megegyezik
-	//var mellszelesseg = mb / 10 * 4 + 4;
-	var mellszelesseg = eval(sz.mellszelesseg);
+	var mellszelesseg = mb / 10 * 4 + 4;
 
 	p[40] = p[39].atAngleOf(l('39-37'), mellszelesseg)
 	p[41] = intersectionOf(

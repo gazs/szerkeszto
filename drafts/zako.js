@@ -35,19 +35,18 @@ export default function render (m, sz) {
 	// HÁTA
 
 	// kulcsszám
-	var kulcsszam = eval(sz.kulcsszam);
+	var kulcsszam = db / 10 + ((mb / 10) * 0.5) - 5;
 
 	p[2] = p[1].down(kulcsszam)
 
-	var honaljmelyseg = eval(sz.honaljmelyseg);
+	var honaljmelyseg = tm / 10 + mb / 10;
 
 	p[3] = p[2].down(honaljmelyseg);
 	p[4] = p[2].down(honaljmelyseg / 2);
 	p[5] = p[2].down(honaljmelyseg / 4);
 	p[6] = p[1].down(derekhossza);
 
-	//var csipomelyseg = tm / 10;
-	var csipomelyseg = eval(sz.csipomelyseg);
+	var csipomelyseg = tm / 10;
 
 	p[7] = p[6].down(csipomelyseg);
 
@@ -70,8 +69,7 @@ export default function render (m, sz) {
 	p[15] = l('1-9').closestPointTo(p[5])
 
 	//// nyakszélesség
-	//var nyakszelesseg = mb / 10 + 3.5;
-	var nyakszelesseg = eval(sz.nyakszelesseg);
+	var nyakszelesseg = mb / 10 + 3.5;
 	p[16] = l('15-9').atDistance(nyakszelesseg)
 
 
@@ -85,16 +83,13 @@ export default function render (m, sz) {
 
 	p[18] = p[17].atAngleOf(l('17-9'), vallszelesseg + 1 + 0.5)
 
-	//var derekbeallitas = 3;
-	var derekbeallitas = eval(sz.derekbeallitas);
+	var derekbeallitas = 3;
 	p[19] = p[6].left(derekbeallitas);
 
-	//var aljabeallitas = 4;
-	var aljabeallitas = eval(sz.aljabeallitas);
+	var aljabeallitas = 4;
 	p[20] = p[8].left(aljabeallitas);
 
-	//var aljaszelesseg = csb / 10 * 3.5;
-	var aljaszelesseg = eval(sz.aljaszelesseg);
+	var aljaszelesseg = csb / 10 * 3.5;
 	p[21] = p[20].perpendicularToLineWith(p[19], aljaszelesseg);
 
 
@@ -115,8 +110,7 @@ export default function render (m, sz) {
 	)
 
 
-	//var hat_karcsusitas = 1;
-	var hat_karcsusitas= eval(sz.hat_karcsusitas);
+	var hat_karcsusitas = 1;
 	p[25] = p[24].right(hat_karcsusitas);
 
 	p['21a'] =intersectionOf(
@@ -126,21 +120,18 @@ export default function render (m, sz) {
 	//
 			//// ELEJE
 
-			////var eleje_tavolsag = 25;
-	var eleje_tavolsag = eval(sz.eleje_tavolsag);
+	var eleje_tavolsag = 25;
 	p[33] = p[3].left(mb + eleje_tavolsag);
 	p[34] = p[6].left(mb + eleje_tavolsag);
 	p[35] = p[7].left(mb + eleje_tavolsag);
 
-	//var derekszelesseg = db / 10 * 5;
-	var derekszelesseg = eval(sz.derekszelesseg);
+	var derekszelesseg = db / 10 * 5;
 	p[36] = p[33].right(derekszelesseg);
 	p[37] = p[36].up(kulcsszam);
 	p[38] = p[36].left(derekszelesseg / 2 + kulcsszam / 2);
 	p[39] = p[38].left(mb / 10 * 2) // ebben az esetben a 33 és a 39 pont megegyezik
 
-	//var mellszelesseg = mb / 10 * 4 + 4;
-	var mellszelesseg = eval(sz.mellszelesseg);
+	var mellszelesseg = mb / 10 * 4 + 4;
 
 	p[40] = p[39].atAngleOf(l('39-37'), mellszelesseg)
 	p[41] = intersectionOf(
@@ -149,19 +140,16 @@ export default function render (m, sz) {
 	)
 	p[42] = p[40].perpendicularToLineWith(p[37], 3, 'flip')
 
-	//var kis_oldalvarras = 5;
-	var kis_oldalvarras= eval(sz.kis_oldalvarras);
+	var kis_oldalvarras = 5;
 
 	p[43] = p[41].right(kis_oldalvarras);
 
-	//var honaljszelesseg = mb / 10 * 2.5 + 3;
-	var honaljszelesseg= eval(sz.honaljszelesseg);
+	var honaljszelesseg = mb / 10 * 2.5 + 3;
 
 	p[44] = p[41].right(honaljszelesseg);
 
 	// mellformázó varrás helye
-	//var mellformazo_varras_helye = db / 10 * 2 + 6;
-	var mellformazo_varras_helye = eval(sz.mellformazo_varras_helye);;
+	var mellformazo_varras_helye = db / 10 * 2 + 6;
 
 	p[45] = p[34].right(mellformazo_varras_helye);
 
@@ -170,16 +158,14 @@ export default function render (m, sz) {
 		p[3].horizontalLine()
 	)
 
-	//var mellformazo_varras_felso_vege = 3;
-	var mellformazo_varras_felso_vege= eval(sz.mellformazo_varras_felso_vege);
+	var mellformazo_varras_felso_vege = 3;
 
 	p[47] = p[46].down(mellformazo_varras_felso_vege);
 	p[48] = p[47].left(0.5); // segédpont
 
 	p[49] = p[46].down((p[8].y - p[46].y) / 2 + 3)
 
-	//var mellkivet = 3;
-	var mellkivet = eval(sz.mellkivet);
+	var mellkivet = 3;
 	p[50] = p[45].right(mellkivet - 2) // TODO FIXME ez valamilyen szögben van
 
 
@@ -188,8 +174,7 @@ export default function render (m, sz) {
 
 	p[53] = p[35].right(mellkivet + kulcsszam / 4);
 
-	//var csipomeret = csb + 7;
-	var csipomeret = eval(sz.csipomeret);
+	var csipomeret = csb + 7;
 	p[54] = p[53].right(csipomeret - l('22-23').length);
 
 
@@ -255,8 +240,7 @@ export default function render (m, sz) {
 
 	p[72] = p[65].left(l('35-53').length)
 
-			////var elejenyitas = kulcsszam / 2;
-	var elejenyitas = eval(sz.elejenyitas);
+	var elejenyitas = kulcsszam / 2;
 	p[73] = p[34].down(elejenyitas);
 	p[74] = p[73].down(l('21-25').length + 1)
 
@@ -282,8 +266,7 @@ export default function render (m, sz) {
 
 
 
-	////var mellnyitas = kulcsszam / 2 + 0.8;
-	var mellnyitas = eval(sz.mellnyitas);
+	var mellnyitas = kulcsszam / 2 + 0.8;
 	//p[75] = p[33].up(mellnyitas);
 	p[75] = p[33].atAngle(mathUtils.radians(190), mellnyitas); // egy picit jobbra boruljon, a 39-79 az amúgy 187 fok lenne
 
@@ -306,15 +289,13 @@ export default function render (m, sz) {
 	)
 
 	// nyakmélység
-	//var nyakmelyseg = mb / 10 + 3;
-	var nyakmelyseg = eval(sz.nyakmelyseg);
+	var nyakmelyseg = mb / 10 + 3;
 
 	p[78] = p[77].atAngleOf(l('77-76'), nyakmelyseg)
 	p[79] = p[78].perpendicularToLineWith(p[77], l('15-16').length + 1)
 
 
-	//var vallmagassag = kulcsszam + 4;
-	var vallmagassag = eval(sz.vallmagassag);
+	var vallmagassag = kulcsszam + 4;
 	p[80] = p[77].atAngleOf(l('77-45'), vallmagassag)
 
 	//var vallszelesseg1 = vallszelesseg + 1 + 0.5 -1; //distance(p[17], p[18]) -1;
@@ -327,12 +308,10 @@ export default function render (m, sz) {
 			//var segedpont_82 = 0.6;
 	p[82] =p[81].atAngle(mathUtils.radians(30), 0.8);
 
-	//var galler_szelesseg = 3;
-	var galler_szelesseg = eval(sz.galler_szelesseg);
+	var galler_szelesseg = 3;
 	p[83] = p[77].atAngleOf(l('81-77'), galler_szelesseg)
 
-	////var kihajto_szelesseg = mb / 10 + 3;
-	var kihajto_szelesseg = eval(sz.kihajto_szelesseg);
+	var kihajto_szelesseg = mb / 10 + 3;
 	//var kihajto_alja = p[39];
 
 	p[85] = p[83].atAngleOf(l('83-39'), l('77-78').length -0.5)
@@ -343,7 +322,7 @@ export default function render (m, sz) {
 	p['87b'] = p[86].perpendicularToLineWith(p[85], kihajto_szelesseg, 'flip')
 
 
-	var gombok = sz.gombok;
+	var gombok = 2;
 	//var gombok = 3;
 
 	if (gombok === 1) {
@@ -380,8 +359,8 @@ var galler_variansok = {
 	'1x1_sarkos': {},
 }
 
-	var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
-	var ujjaszelesseg = eval(sz.ujjaszelesseg);
+var hata_nyakmagassag = mb / 10 * 0.5 + 1.5;
+var ujjaszelesseg = mb / 10 * 2.5 + 11;
 
 var galler_varians = galler_variansok['1x2_sarkos']
 

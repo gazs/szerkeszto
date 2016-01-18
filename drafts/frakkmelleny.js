@@ -154,7 +154,7 @@ export default function render (m, sz) {
 	}
 	var paths = {};
 	var nyakszelesseg = mb / 10 + 3.5;
-	var hata_nyakmagassag = eval(sz.hata_nyakmagassag);
+	var hata_nyakmagassag = mb / 10 * 0.5 + 1.5;
 
 	paths.hat= path(
 		M(1),
