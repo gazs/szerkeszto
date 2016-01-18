@@ -9,10 +9,23 @@ This is an app that I'm writing to learn about frontend tools as well as pattern
 - the rest is a React playground / battlefield.
 
 
-This is the reference drawing from my book:
-
+## This is the reference drawing from my book:
 
 <img src="https://raw.githubusercontent.com/gazs/szerkeszto/master/zako.jpg">
+
+## to run
+
+`webpack-dev-server --progress --colors --devtool inline-source-map`
+
+## to build
+
+`webpack -p`
+
+todo: automate build process / publishing to gh-pages?
+
+## to see live version
+
+https://rawgit.com/gazs/szerkeszto/master/index.html
 
 ## more info (in Hungarian)
 
