@@ -5,7 +5,6 @@ import szerk from './szerk.pegjs';
 import mathUtils from "./toxi/math/mathUtils"
 
 import {point, line, intersectionOf} from './szerkfunc';
-import _ from 'underscore';
 
 class Playground extends React.Component {
 	constructor(props) {
