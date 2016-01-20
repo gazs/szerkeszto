@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {reduxForm} from 'redux-form';
 import { connect } from 'react-redux';
 
 import {changeMeasurement } from './actions'
@@ -26,16 +25,7 @@ class MeasurementsForm extends Component {
   }
 }
 function selector(state) {
-	return state //.foo;
+	return state;
 }
 
 export default connect(selector)(MeasurementsForm)
-
-//export default reduxForm({
-//form: 'dynamic',
-//},
-//state => ({ // mapStateToProps
-  //initialValues: state.foo.meretek
-//}),
-//{load: data => ({type: 'DUNNO_LOL'})} 
-												//)(MeasurementsForm);
