@@ -17,7 +17,7 @@ module.exports = {
   },
   output: {
     path: "./build",
-    publicPath: "/build/",
+    publicPath: "/",
     filename: "[name]bundle.js"
   },
   resolve: {
@@ -28,12 +28,9 @@ module.exports = {
 			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},
 			{ test: /\.jsx$/, exclude: /node_modules/, loader: "babel-loader"},
 			{ test: /\.pegjs$/, exclude: /node_modules/, loader: "pegjs-loader"},
-			{ test: /\.ohm$/, exclude: /node_modules/, loader: "ohm-loader"}
 		]
 	},
 	plugins: [
-		//new Webpack.HotModuleReplacementPlugin(),
 		new Webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
-
 	]
 };
