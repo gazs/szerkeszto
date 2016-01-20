@@ -28,6 +28,7 @@ module.exports = {
 			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},
 			{ test: /\.jsx$/, exclude: /node_modules/, loader: "babel-loader"},
 			{ test: /\.pegjs$/, exclude: /node_modules/, loader: "pegjs-loader"},
+			{ test: /\.szerk/, exclude: /node_modules/, loader: "raw-loader"},
 		]
 	},
 	plugins: [

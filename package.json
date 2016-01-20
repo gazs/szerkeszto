@@ -8,6 +8,7 @@
     "babel-loader": "~5.3.2",
     "history": "^1.17.0",
     "pegjs-loader": "~0.1.1",
+    "raw-loader": "^0.5.1",
     "react": "*",
     "react-addons-update": "~0.14.1",
     "react-dom": "~0.14.1",
