@@ -16,8 +16,6 @@ This is an app that I'm writing to learn about frontend tools as well as pattern
 
 `webpack -p && GIT_DEPLOY_DIR=build ./deploy.sh && rm build/*.js`
 
-todo: automate build process / publishing to gh-pages?
-
 ## to see live version
 
 -http://gazs.github.io/szerkeszto/#/zako
