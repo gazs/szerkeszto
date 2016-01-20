@@ -1,6 +1,6 @@
 {
   "name": "mondvacsinalt",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "svg-based drafting tool for tailored clothing",
   "main": "main.js",
   "dependencies": {
@@ -32,5 +32,6 @@
   "author": "gazs",
   "bugs": {
     "url": "https://github.com/gazs/szerkeszto/issues"
-  }
+  },
+	"license": "AGPL-3.0"
 }
