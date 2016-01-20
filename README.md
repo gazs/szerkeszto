@@ -12,9 +12,9 @@ This is an app that I'm writing to learn about frontend tools as well as pattern
 
 `webpack-dev-server --progress --colors --devtool inline-source-map`
 
-## to build
+## to deploy
 
-`webpack -p`
+`webpack -p && GIT_DEPLOY_DIR=build ./deploy.sh && rm build/*.js`
 
 todo: automate build process / publishing to gh-pages?
 
