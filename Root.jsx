@@ -4,14 +4,15 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, compose } from 'redux'
 import { Provider } from 'react-redux'
 
-import DevTools from './devtools'
+
 
 
 import { mondvacsinaltApp } from './reducers'
 
+//import DevTools from './devtools'
+let store = createStore(mondvacsinaltApp)
 //let store = compose( DevTools.instrument())(createStore)(reducers)
-let store = compose( DevTools.instrument())(createStore)(mondvacsinaltApp)
-
+//let store = compose( DevTools.instrument())(createStore)(mondvacsinaltApp)
 import Szerkesztes from './szerkesztes'
 import MeasurementForm from './form'
 
