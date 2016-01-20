@@ -15,15 +15,17 @@
     "react-router": "^1.0.3",
     "redux": "^3.0.5",
     "svg-intersections": "~0.2.3",
-    "webpack": "~1.11.0"
+    "webpack": "^1.11.0"
   },
   "devDependencies": {
     "redux-devtools": "^3.0.1",
     "redux-devtools-dock-monitor": "^1.0.1",
-    "redux-devtools-log-monitor": "^1.0.2"
+    "redux-devtools-log-monitor": "^1.0.2",
+    "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "start": "/opt/boxen/nodenv/versions/v0.10.21/bin/webpack-dev-server --progress --colors --devtool inline-source-map"
+    "start": "webpack-dev-server --progress --colors --devtool inline-source-map",
+    "deploy": "webpack -p && GIT_DEPLOY_DIR=build ./deploy.sh && rm build/*.js"
   },
   "repository": {
     "type": "git",
@@ -33,5 +35,5 @@
   "bugs": {
     "url": "https://github.com/gazs/szerkeszto/issues"
   },
-	"license": "AGPL-3.0"
+  "license": "AGPL-3.0"
 }
