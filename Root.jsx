@@ -43,7 +43,6 @@ class App extends React.Component {
 	}
 	render() {
 		return <div>
-			{this.props.children}
 
 			<List />
 			<Modal
@@ -55,6 +54,8 @@ class App extends React.Component {
 
 			<button onClick={this.openModal.bind(this)}>📏 edit</button>
 
+			{this.props.children}
+
 			{/* <DevTools /> */}
 
 		</div>
@@ -65,7 +66,7 @@ class SzerkesztesWrap extends React.Component {
 	render () {
 		const szerkesztofunc = drafts_map[this.props.params.draftName] || 'zako';
 		if (szerkesztofunc) {
-		return ( <div>
+		return ( <div className="col-md-8">
 			<h1>{this.props.params.draftName}</h1>
 			<Szerkesztes szerkesztofunc={szerkesztofunc} />
 		</div>)
@@ -78,7 +79,7 @@ class SzerkesztesWrap extends React.Component {
 
 class List extends React.Component {
 	render () {
-	return 	<ul>
+	return 	<ul className="col-md-4 list-unstyled">
 		{Object.keys(drafts_map).map( draftName =>
 			<li key={draftName}>
 			<Link to={`/${draftName}`}>{draftName}</Link>
