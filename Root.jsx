@@ -6,6 +6,8 @@ import { Provider } from 'react-redux'
 
 
 
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
+import Modal from 'react-modal'
 
 import { mondvacsinaltApp } from './reducers'
 
@@ -17,7 +19,6 @@ import Szerkesztes from './szerkesztes'
 import MeasurementForm from './form'
 
 
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 
 var drafts_map = {
 	'frakk': require('./drafts/frakk'),
@@ -28,12 +29,31 @@ var drafts_map = {
 	'nadrag': require('./drafts/nadrag')
 }
 class App extends React.Component {
+	constructor () {
+		super();
+		this.state = {
+			modalIsOpen: false,
+		}
+	}
+	openModal () {
+		this.setState({modalIsOpen:true})
+	}
+	closeModal () {
+		this.setState({modalIsOpen:false})
+	}
 	render() {
 		return <div>
 			{this.props.children}
 
 			<List />
-			<MeasurementForm />
+			<Modal
+				isOpen={this.state.modalIsOpen}
+			>
+				<MeasurementForm />
+				<button onClick={this.closeModal.bind(this)}>close</button>
+			</Modal>
+
+			<button onClick={this.openModal.bind(this)}>📏 edit</button>
 
 			{/* <DevTools /> */}
 
@@ -43,7 +63,7 @@ class App extends React.Component {
 
 class SzerkesztesWrap extends React.Component {
 	render () {
-		const szerkesztofunc = drafts_map[this.props.params.draftName];
+		const szerkesztofunc = drafts_map[this.props.params.draftName] || 'zako';
 		if (szerkesztofunc) {
 		return ( <div>
 			<h1>{this.props.params.draftName}</h1>
