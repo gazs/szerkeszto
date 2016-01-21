@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
-import {changeMeasurement } from './actions'
+import {changeMeasurement, changeCurrentName } from './actions'
 
 class MeasurementsForm extends Component {
 
@@ -20,6 +20,7 @@ class MeasurementsForm extends Component {
             </div>
           </div>);
         })}
+				<label>name of measures:<input type="text" value={this.props.name} onChange={ e => dispatch(changeCurrentName(e.target.value))}/></label>
       </form>
     );
   }

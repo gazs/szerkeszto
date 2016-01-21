@@ -136,7 +136,7 @@ function render (m, sz) {
 	
 	ujjpaths.felso = path(
 		M(126),
-		L(121),
+		L(117),
 		L(127),
 		C(p[127].right(l('127-105').length / 3), p[106].down(l('106-105').length/3), 106),
 		//L(106),

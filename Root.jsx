@@ -9,12 +9,12 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 import Modal from 'react-modal'
 
-import { mondvacsinaltApp } from './reducers'
+import { changeCurrentPattern} from './reducers'
 
-//import DevTools from './devtools'
-let store = createStore(mondvacsinaltApp)
+import DevTools from './devtools'
+//let store = createStore(changeCurrentPattern)
 //let store = compose( DevTools.instrument())(createStore)(reducers)
-//let store = compose( DevTools.instrument())(createStore)(mondvacsinaltApp)
+let store = compose( DevTools.instrument())(createStore)(changeCurrentPattern)
 import Szerkesztes from './szerkesztes'
 import MeasurementForm from './form'
 
@@ -56,7 +56,7 @@ class App extends React.Component {
 
 			{this.props.children}
 
-			{/* <DevTools /> */}
+			<DevTools />
 
 		</div>
 	}

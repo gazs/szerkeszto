@@ -86,7 +86,7 @@ class Szerkesztes extends React.Component {
 }
 
 function selector(state) {
-	return state //.foo;
+	return state;
 }
 
 export default connect(selector)(Szerkesztes)
