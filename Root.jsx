@@ -9,12 +9,14 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 import Modal from 'react-modal'
 
-import { changeCurrentPattern} from './reducers'
+import  changeCurrentPattern from './reducers'
+
+import persistState from 'redux-localstorage'
 
 import DevTools from './devtools'
 //let store = createStore(changeCurrentPattern)
 //let store = compose( DevTools.instrument())(createStore)(reducers)
-let store = compose( DevTools.instrument())(createStore)(changeCurrentPattern)
+let store = compose( DevTools.instrument(), persistState())(createStore)(changeCurrentPattern)
 import Szerkesztes from './szerkesztes'
 import MeasurementForm from './form'
 

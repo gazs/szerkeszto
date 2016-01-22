@@ -1,7 +1,8 @@
-import { CHANGE_MEASUREMENT, CHANGE_CURRENT_NAME } from './actions'
+import { CHANGE_MEASUREMENT, CHANGE_CURRENT_NAME, SAVE_CURRENT_PATTERN } from './actions'
 
-const initialState = {
-	currentPattern: {
+import { combineReducers } from 'redux'
+
+const initialCurrentPattern = {
 		name: '',
 		meretek:	{
 			"testmagassag": 178,
@@ -17,15 +18,14 @@ const initialState = {
 			"hata_egyensulymeret": 47,
 			"eleje_egyensulymeret":45
 		},
-	},
-	patterns: []
+}
+const initialPatterns = [];
+
+function merge(oldState, newState) {
+	return Object.assign({}, oldState, newState);
 }
 
-function merge(old, nnew) {
-	return Object.assign({}, old, nnew);
-}
-
-export function changeCurrentPattern(state = initialState.currentPattern, action) {
+function currentPattern(state = initialCurrentPattern, action) {
 	switch (action.type) {
 		case CHANGE_MEASUREMENT:
 			return merge(state, {
@@ -36,3 +36,16 @@ export function changeCurrentPattern(state = initialState.currentPattern, action
 			return state;
 	}
 }
+function patterns(state = initialPatterns, action) {
+	switch (action.type) {
+		case SAVE_CURRENT_PATTERN:
+			return [...state, action.payload]
+		default:
+			return state;
+	}
+}
+
+export default combineReducers({
+	currentPattern,
+	patterns
+})
