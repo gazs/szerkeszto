@@ -1,6 +1,6 @@
 # pattern drafting js thing
 
-This is an app that I'm writing to learn about frontend tools as well as pattern drafting and tailoring.
+This is an app that I'm writing to play with newish frontend tools as well as pattern drafting and tailoring.
 
 
 - drafts are functions that take an object of measurements (measurements look like [this](https://github.com/gazs/szerkeszto/blob/master/sizes/normal.json)) and return something like `{points: {}, paths: {}}`
@@ -18,7 +18,7 @@ This is an app that I'm writing to learn about frontend tools as well as pattern
 
 ## to see live version
 
--http://gazs.github.io/szerkeszto/#/zako
+- http://gazs.github.io/szerkeszto/#/zako
 - http://gazs.github.io/szerkeszto/editor.html
 
 
