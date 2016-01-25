@@ -1,14 +1,9 @@
-import Vec2D from "../toxi/geom/Vec2D"
-import mathUtils from "../toxi/math/mathUtils"
-import getIntersections from "../geometricFunctions"
+import zako from './zako';
+import { SVGPathString, createL, point } from '../szerkfunc';
 
-import zako from ./"zako"
-
-var {point, line, createL, intersectionOf} =require("../szerkfunc")
-
-
-export default function render (m, sz) {
-	var {testmagassag,
+export default function render (m) {
+	const zako_rendered = zako(m);
+	const {testmagassag,
 				mellboseg,
 				csipoboseg,
 				derekhossza,
@@ -19,89 +14,88 @@ export default function render (m, sz) {
 				ujjahossza,
 				hata_egyensulymeret,
 				eleje_egyensulymeret} = m;
+	const tm = testmagassag,
+		mb = mellboseg / 2,
+		db = derekboseg / 2,
+		csb = csipoboseg / 2;
 
-	var tm = testmagassag,
-	mb = mellboseg / 2,
-	db = derekboseg / 2,
-	csb = csipoboseg / 2;
-	const zp = zako(m,sz).points;
-	// 77, 83, 85, 86
-	let p = {
-		'g77': zp[77],
-		'g83': zp[83],
-		'z85': zp[85],
-		'g85': zp[86],
-		'g86': zp[87]
-	}
-	var l = createL(p);
-	var lZ = createL(zp);
-
-	p['g87'] = lZ('87-85').atDistance(3.5)
-	
-		var nyakszelesseg = eval(sz.nyakszelesseg);
-		var hata_nyakmagassag = eval(sz.hata_nyakmagassag)
-		var p1517 = document.createElementNS("http://www.w3.org/2000/svg", "path");
-		p1517.setAttribute('d', `
-											 M${zp[17].x},${zp[17].y}
-											 A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${zp[15].x},${zp[15].y}`);
-	p['g88'] = zp[83].atAngleOf(lZ('84a-86'), p1517.getTotalLength())
-
-	p['g89'] = p['g88'].perpendicularToLineWith(p['g85'], mb/10)
-	p['g90'] = p['g89'].perpendicularToLineWith(p['g83'], 3)
-	p['g91'] = p['g89'].perpendicularToLineWith(p['g83'], 4, 'flip')
-	p['g92'] = p['g83'].atAngleOf(l('g77-g83'), 4.5)
-	p['g93'] = p['g87'].perpendicularToLineWith(p['g87'], 2)
-	p['g94'] = p['g93'].perpendicularToLineWith(p['g87'], 2.5, 'flip')
-
-
-
-
+	const zako_points = zako_rendered.points
+	const zako_paths = zako_rendered.paths;
+	//let points = {}
 	//
-
-	function M(p_id) {
-		let p1 = p[p_id];
-		return `M${p1.x},${p1.y}`
-	}
-	function L(p_id) {
-		let p1 = p[p_id];
-		return `L${p1.x},${p1.y}`
-	}
-	function A(w, h, p_id) {
-		return `A${w},${h} 0 0,1 ${zp[p_id].x},${zp[p_id].y}`
-	}
-	function Q(seged1, vegpont) {
-		let x1 = p[seged1] ? p[seged1].x : seged1.x;
-		let y1 = p[seged1] ? p[seged1].y : seged1.y;
-		let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
-		let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
-		return `Q${x1},${y1} ${x3},${y3}`
-	}
-	function C(seged1, seged2, vegpont) {
-		let x1 = p[seged1] ? p[seged1].x : seged1.x;
-		let y1 = p[seged1] ? p[seged1].y : seged1.y;
-		let x2 = p[seged2] ? p[seged2].x : seged2.x;
-		let y2 = p[seged2] ? p[seged2].y : seged2.y;
-		let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
-		let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
-		return `C${x1},${y1} ${x2},${y2} ${x3},${y3}`
-	}
-	var Z = "Z";
-
-	function path() {
-		return Array.prototype.join.call(arguments, " ")
+	const nyakszelesseg = mb / 10 + 3.5;
+	var points = {
+		'z83': zako_points[83],
+		'z87': zako_points[87],
+		'z85': zako_points[85],
+		'z77': zako_points[77],
 	}
 
-	var paths = {}
-	paths.galler = path(M('g91'),
-										 L('g90'),
-										 L('g77'),
-										 //`C${p[77].x},${p[77].y} ${p[77].x},${p[77].y} ${p[77].x + 1},${p[77].y + 1}`,
-										A(nyakszelesseg, nyakszelesseg, '85'),
-										//`L${zp[85].x},${zp[85].y}`,
-										 L('g87'),
-										 L('g94'),
-										 //L(92),
-										 Z)
+	const p = points;
+	const l = createL(p)
+	const zP = zako_points;
+	const zL = createL(zako_points);
 
-	return {points: p, paths:paths}
+	p[87] = zL('87-85').atDistance(3.5)
+	p['87a'] = p[87].perpendicularToLineWith(zP[87], 0.6)
+
+	const hata_nyakmagassag = mb / 10 * 0.5 + 1.5;
+	const p1517 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	p1517.setAttribute('d', `
+										 M${zP[17].x},${zP[17].y}
+										 A${nyakszelesseg},${hata_nyakmagassag} 0 0,0 ${zP[15].x},${zP[15].y}`);
+
+										 console.log(p1517.getTotalLength(), zL('15-17').length)
+	p[88] = zP[83].atAngleOf(zL('86-83'), p1517.getTotalLength())
+
+	//p[88] = zP[83].atAngleOf(zL('85-83'), zL('15-17').length)
+
+	//p[89] = p[88].perpendicularToLineWith(zP[85], (mb / 10 - 1))
+	console.log(mb/10 -1 , 1.3)
+	p[89] = p[88].perpendicularToLineWith(zP[85], 1.6) // Cabrera
+
+	//p[90] = p[89].perpendicularToLineWith(zP[83], 3) // álló gallér
+	
+	p['90a'] = zP[77].atAngleOf(l('z83-89'), l('z83-89').length)
+	p[90] = l('z77-90a').closestPointTo(p[89])
+
+	//p[91] = p[89].perpendicularToLineWith(zP[83], 4, 'flip') // fekvő gallér
+	p[91] = p[89].atAngleOf(l('90-89'), 3.8) // Cabrera
+	p[92] = zP[83].atAngleOf(zL('77-83'), 4.5)
+
+	p[93] = p[87].perpendicularToLineWith(zP[87], 3.5, 'flip')
+	p[94] = p[93].perpendicularToLineWith(p[87], 2.5, 'flip')
+
+	// find Schneidermeistersystem 'k'
+	const z77z85 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	z77z85.setAttribute('d', `
+										 M${zP[77].x},${zP[77].y}
+										 A${nyakszelesseg},${nyakszelesseg} 0 0,1 ${zP[85].x},${zP[85].y}`);
+p['k'] = new point(z77z85.getPointAtLength(3.5))
+
+	const paths = {
+		'zakodarab': new SVGPathString(zako_points)
+										.M(81)
+										.L(77)
+										//.L(85)
+										.A(nyakszelesseg,nyakszelesseg,85)
+										.L(87)
+										.pathstring,
+		'kihajtovonal': new SVGPathString(zako_points)
+										.M(39)
+										.L(85)
+										.pathstring,
+		'galler': new SVGPathString(points)
+										.M(91)
+										.L(90)
+										//.L('z85')
+										.L('z77')
+										.A(nyakszelesseg,nyakszelesseg,'z85')
+										.L('87a')
+										.L(94)
+										.L(92)
+										.Z()
+
+	}
+	return {paths, points};
 }

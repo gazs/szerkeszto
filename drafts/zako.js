@@ -8,7 +8,7 @@ var {point, line, createL, intersectionOf} =require("../szerkfunc")
 
 
 
-export default function render (m, sz) {
+export default function render (m) {
 	var {testmagassag,
 				mellboseg,
 				csipoboseg,
