@@ -19,7 +19,12 @@ const initialCurrentPattern = {
 			"eleje_egyensulymeret":45
 		},
 }
-const initialPatterns = [];
+const initialPatterns = [
+	{
+		name: 'normal',
+		meretek: require('./sizes/normal')
+	}
+];
 
 function merge(oldState, newState) {
 	return Object.assign({}, oldState, newState);
