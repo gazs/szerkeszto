@@ -7,7 +7,7 @@ class Szerkesztes extends React.Component {
 	constructor () {
 		super();
 		this.state = {
-			showLabels: false,
+			showLabels: true,
 		}
 	}
 
@@ -40,7 +40,7 @@ class Szerkesztes extends React.Component {
 
 	download () {
 		let link = document.createElement('a');
-		link.download = "szerk.svg";
+		link.download = `${this.props.szerkesztofuncname}.svg`;
 		link.href = `data:image/svg+xml;utf8,${this.svgElement.outerHTML}`;
 		link.click();
 	}

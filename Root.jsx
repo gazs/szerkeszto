@@ -20,6 +20,7 @@ let store = compose( DevTools.instrument(), persistState())(createStore)(changeC
 import Szerkesztes from './szerkesztes'
 import MeasurementForm from './form'
 
+import ListMeasurements from './ListMeasurements'
 
 
 var drafts_map = {
@@ -28,7 +29,8 @@ var drafts_map = {
 	'zako': require('./drafts/zako'),
 	'zakoujja-konfekcio': require('./drafts/zakoujja-konfekcio'),
 	'zakoujja': require('./drafts/zakoujja'),
-	'nadrag': require('./drafts/nadrag')
+	'nadrag': require('./drafts/nadrag'),
+	'gallér': require('./drafts/galler')
 }
 class App extends React.Component {
 	constructor () {
@@ -47,6 +49,7 @@ class App extends React.Component {
 		return <div>
 
 			<List />
+			{/* <ListMeasurements /> */}
 			<Modal
 				isOpen={this.state.modalIsOpen}
 			>
@@ -70,7 +73,10 @@ class SzerkesztesWrap extends React.Component {
 		if (szerkesztofunc) {
 		return ( <div className="col-md-8">
 			<h1>{this.props.params.draftName}</h1>
-			<Szerkesztes szerkesztofunc={szerkesztofunc} />
+			<Szerkesztes
+				szerkesztofunc={szerkesztofunc}
+				szerkesztofuncname={this.props.params.draftName}
+				/>
 		</div>)
 		}
 		else {
@@ -90,6 +96,7 @@ class List extends React.Component {
 		</ul>
 	}
 }
+
 
 import Print from './print'
 import AddMeasurement from './AddMeasurement'
