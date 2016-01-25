@@ -125,9 +125,60 @@ function intersectionOf(line1, line2) {
 	}
 }
 
+
+class SVGPathString {
+			constructor(points) {
+				this.points = points;
+				this.pathstring = '';
+			}
+			M (p_id) {
+				let p = this.points[p_id];
+				this.pathstring += `M${p.x},${p.y} `
+				return this;
+			}
+			L (p_id) {
+				let p = this.points[p_id];
+				this.pathstring += `L${p.x},${p.y} `
+				return this;
+			}
+			Z () {
+				this.pathstring += `Z`
+				return this.pathstring;
+			}
+			A(w, h, p_id) {
+				let p = this.points[p_id];
+				this.pathstring += `A${w},${h} 0 0,1 ${p.x},${p.y}`
+				return this;
+			}
+			Q(seged1, vegpont) {
+				let p = this.points;
+				let x1 = p[seged1] ? p[seged1].x : seged1.x;
+				let y1 = p[seged1] ? p[seged1].y : seged1.y;
+				let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+				let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+				this.pathstring += `Q${x1},${y1} ${x3},${y3}`
+				return this;
+			}
+			C(seged1, seged2, vegpont) {
+				let p = this.points;
+				let x1 = p[seged1] ? p[seged1].x : seged1.x;
+				let y1 = p[seged1] ? p[seged1].y : seged1.y;
+				let x2 = p[seged2] ? p[seged2].x : seged2.x;
+				let y2 = p[seged2] ? p[seged2].y : seged2.y;
+				let x3 = p[vegpont] ? p[vegpont].x : vegpont.x;
+				let y3 = p[vegpont] ? p[vegpont].y : vegpont.y;
+				this.pathstring += `C${x1},${y1} ${x2},${y2} ${x3},${y3}`
+				return this;
+			}
+			add(str) {
+				this.pathstring += str;
+			}
+		}
+
 module.exports = {
 	point,
 	line,
 	createL,
-	intersectionOf
+	intersectionOf,
+	SVGPathString
 }
