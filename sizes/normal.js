@@ -1,4 +1,4 @@
-{
+export default  {
 		"testmagassag": 170,
 		"mellboseg": 100,
 		"derekboseg": 88,
@@ -14,4 +14,4 @@
 		"nadrag_kulso_hossza": 100,
 		"nadrag_belso_hossza": 76,
 		"nadrag_aljaboseg": 44
-	}
+}
